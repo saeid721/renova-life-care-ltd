@@ -12,12 +12,12 @@ import "./HeroSection.css";
 export default function HeroSection() {
   // Background slider images
   const sliderImages = [
-    "/images/slider/01.jpg",
-    "/images/slider/02.jpg",
-    "/images/slider/03.jpg",
-    "/images/slider/04.jpg",
-    "/images/slider/05.jpg",
-    "/images/slider/06.jpg",
+    "/images/sliders/01.jpg",
+    "/images/sliders/02.jpg",
+    "/images/sliders/03.jpg",
+    "/images/sliders/04.jpg",
+    "/images/sliders/05.jpg",
+    "/images/sliders/06.jpg",
   ];
 
   const [currentSlide, setCurrentSlide] = useState(0);

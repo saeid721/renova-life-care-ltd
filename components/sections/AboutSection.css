@@ -1,0 +1,299 @@
+/* AboutSection Styles */
+.about-grid {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .about-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem;
+  }
+}
+
+/* Left - Image Styles */
+.about-image-wrapper {
+  position: relative;
+}
+
+.about-image-container {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(4, 65, 125, 0.08);
+}
+
+.about-image {
+  object-fit: cover;
+}
+
+/* Overlay Badge */
+.about-overlay-badge {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px) {
+  .about-overlay-badge {
+    padding: 1rem;
+  }
+}
+
+.about-badge-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.about-badge-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  background-color: rgba(66, 138, 38, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-badge-title {
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+.about-badge-subtitle {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Floating Stats Card */
+.about-floating-card {
+  position: absolute;
+  bottom: -1.5rem;
+  right: -1.5rem;
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  box-shadow: 0 4px 24px rgba(4, 65, 125, 0.08);
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .about-floating-card {
+    display: block;
+  }
+}
+
+.about-floating-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.about-floating-stat {
+  text-align: center;
+}
+
+.about-floating-value {
+  font-family: 'Sen', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #428a26;
+  margin: 0;
+}
+
+.about-floating-label {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.about-floating-divider {
+  width: 1px;
+  height: 2.5rem;
+  background-color: #e2e8f0;
+}
+
+/* Right - Content Styles */
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Features */
+.about-features {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.about-feature-item {
+  display: flex;
+  gap: 1rem;
+}
+
+.about-feature-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.about-feature-title {
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+}
+
+.about-feature-description {
+  color: #64748b;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Stats Grid */
+.about-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding-top: 1rem;
+}
+
+.about-stat-item {
+  text-align: center;
+  padding: 1rem;
+  background-color: #f8fafc;
+  border-radius: 0.75rem;
+}
+
+.about-stat-value {
+  font-family: 'Sen', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #428a26;
+  margin: 0;
+}
+
+.about-stat-label {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+/* Buttons */
+.about-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-top: 0.5rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .about-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .about-buttons a {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .about-stats-grid {
+    gap: 0.75rem;
+  }
+  
+  .about-stat-item {
+    padding: 0.75rem;
+  }
+  
+  .about-stat-value {
+    font-size: 1.125rem;
+  }
+  
+  .about-overlay-badge {
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .about-badge-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  
+  .about-badge-icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  
+  .about-badge-title {
+    font-size: 0.875rem;
+  }
+  
+  .about-badge-subtitle {
+    font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  .about-stat-value {
+    font-size: 1.25rem;
+  }
+  
+  .about-floating-card {
+    bottom: -1rem;
+    right: -1rem;
+    padding: 1rem;
+  }
+  
+  .about-floating-value {
+    font-size: 1.25rem;
+  }
+  
+  .about-feature-item {
+    gap: 0.75rem;
+  }
+  
+  .about-feature-icon {
+    font-size: 1.25rem;
+  }
+}
+
+/* Animation Classes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .about-floating-card {
+    display: none;
+  }
+  
+  .about-overlay-badge {
+    background-color: white;
+    border: 1px solid #e2e8f0;
+  }
+}

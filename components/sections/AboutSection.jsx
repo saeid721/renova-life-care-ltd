@@ -5,6 +5,7 @@ import Image from "next/image";
 import { siteConfig, stats } from "@/constants/siteData";
 import Button from "@/components/common/Button";
 import { Section, SectionHeader } from "@/components/common/Section";
+import "./AboutSection.css";
 
 // Animation variants
 const fadeInUp = {
@@ -15,7 +16,7 @@ const fadeInUp = {
 export default function AboutSection() {
   return (
     <Section id="about" variant="alternate">
-      <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="about-grid">
         
         {/* Left - Image */}
         <motion.div
@@ -23,29 +24,29 @@ export default function AboutSection() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="relative"
+          className="about-image-wrapper"
         >
-          <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-card">
+          <div className="about-image-container">
             <Image
-              src="/images/doctor-7.jpg"
+              src="/images/doctor-7.jpeg"
               alt="Renova Life Care medical team"
               fill
-              className="object-cover"
+              className="about-image"
               sizes="(max-width: 1024px) 100vw, 50vw"
               priority
             />
             {/* Overlay Badge */}
-            <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+            <div className="about-overlay-badge">
+              <div className="about-badge-content">
+                <div className="about-badge-icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#428a26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                     <polyline points="9 12 11 14 15 10"/>
                   </svg>
                 </div>
                 <div>
-                  <p className="font-semibold text-slate-900">BMDC Certified</p>
-                  <p className="text-sm text-slate-500">All doctors verified</p>
+                  <p className="about-badge-title">BMDC Certified</p>
+                  <p className="about-badge-subtitle">All doctors verified</p>
                 </div>
               </div>
             </div>
@@ -53,21 +54,21 @@ export default function AboutSection() {
           
           {/* Floating Stats Card */}
           <motion.div 
-            className="absolute -bottom-6 -right-6 bg-white rounded-2xl p-5 shadow-card hidden md:block"
+            className="about-floating-card"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            <div className="flex items-center gap-4">
-              <div className="text-center">
-                <p className="font-heading font-bold text-3xl text-primary">15+</p>
-                <p className="text-xs text-slate-500">Years</p>
+            <div className="about-floating-content">
+              <div className="about-floating-stat">
+                <p className="about-floating-value">15+</p>
+                <p className="about-floating-label">Years</p>
               </div>
-              <div className="w-px h-10 bg-slate-200" />
-              <div className="text-center">
-                <p className="font-heading font-bold text-3xl text-primary">50K+</p>
-                <p className="text-xs text-slate-500">Patients</p>
+              <div className="about-floating-divider" />
+              <div className="about-floating-stat">
+                <p className="about-floating-value">50K+</p>
+                <p className="about-floating-label">Patients</p>
               </div>
             </div>
           </motion.div>
@@ -79,7 +80,7 @@ export default function AboutSection() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="space-y-6"
+          className="about-content"
         >
           <SectionHeader
             label="About Us"
@@ -89,7 +90,7 @@ export default function AboutSection() {
             titleClassName="!text-left"
           />
 
-          <div className="space-y-4">
+          <div className="about-features">
             {[
               { icon: "🩺", title: "Expert Doctors", desc: "BMDC-certified specialists with international training" },
               { icon: "🏥", title: "Modern Facilities", desc: "State-of-the-art equipment and hygienic environment" },
@@ -97,34 +98,34 @@ export default function AboutSection() {
             ].map((item, i) => (
               <motion.div
                 key={item.title}
-                className="flex gap-4"
+                className="about-feature-item"
                 variants={fadeInUp}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
               >
-                <span className="text-2xl flex-shrink-0">{item.icon}</span>
+                <span className="about-feature-icon">{item.icon}</span>
                 <div>
-                  <h4 className="font-semibold text-slate-900 mb-1">{item.title}</h4>
-                  <p className="text-slate-500 text-sm">{item.desc}</p>
+                  <h4 className="about-feature-title">{item.title}</h4>
+                  <p className="about-feature-description">{item.desc}</p>
                 </div>
               </motion.div>
             ))}
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-4 pt-4">
+          <div className="about-stats-grid">
             {stats.map((stat) => (
-              <div key={stat.label} className="text-center p-4 bg-slate-50 rounded-xl">
-                <p className="font-heading font-bold text-2xl text-primary">{stat.value}</p>
-                <p className="text-xs text-slate-500 mt-1">{stat.label}</p>
+              <div key={stat.label} className="about-stat-item">
+                <p className="about-stat-value">{stat.value}</p>
+                <p className="about-stat-label">{stat.label}</p>
               </div>
             ))}
           </div>
 
           {/* CTA */}
-          <div className="flex flex-wrap gap-4 pt-2">
+          <div className="about-buttons">
             <Button variant="primary" href="/about">
               Learn More About Us
             </Button>

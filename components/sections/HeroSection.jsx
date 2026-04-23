@@ -1,39 +1,72 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { siteConfig, stats } from "@/constants/siteData";
 import "./HeroSection.css";
 
 /**
- * HeroSection — Primary landing section with stats and CTAs.
- * Designed for high conversion and trust-building.
+ * HeroSection — Primary landing section with animated background slider, stats and CTAs.
+ * Designed for high conversion, trust-building, and professional healthcare presentation.
  */
 export default function HeroSection() {
+  // Background slider images
+  const sliderImages = [
+    "/images/slider/01.jpg",
+    "/images/slider/02.jpg",
+    "/images/slider/03.jpg",
+    "/images/slider/04.jpg",
+    "/images/slider/05.jpg",
+    "/images/slider/06.jpg",
+  ];
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Auto-rotate slider every 6 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % sliderImages.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [sliderImages.length]);
+
   return (
     <section
       className="hero-section"
       aria-label="Welcome to Renova Life Care"
     >
-      {/* Background Decorations */}
-      <div className="hero-bg-decorations" aria-hidden="true">
-        {/* Large gradient blob — top right */}
-        <div className="hero-blob-top-right" />
-        {/* Small blob — bottom left */}
-        <div className="hero-blob-bottom-left" />
-        {/* Geometric grid dots */}
-        <div className="hero-grid-dots" />
-        {/* Curved divider shape */}
-        <div className="hero-curved-divider">
-          <svg viewBox="0 0 600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M150 0 Q50 450 200 900 L600 900 L600 0 Z" fill="url(#heroGrad)" />
-            <defs>
-              <linearGradient id="heroGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#05417d" stopOpacity="0.06" />
-                <stop offset="50%" stopColor="#428a26" stopOpacity="0.05" />
-                <stop offset="100%" stopColor="#86b437" stopOpacity="0.04" />
-              </linearGradient>
-            </defs>
-          </svg>
+      {/* Animated Background Slider */}
+      <div className="hero-bg-slider" aria-hidden="true">
+        {sliderImages.map((src, index) => (
+          <div
+            key={src}
+            className={`hero-bg-slide ${
+              index === currentSlide ? "active" : ""
+            }`}
+          >
+            <img
+              src={src}
+              alt={`Healthcare background ${index + 1}`}
+              className="hero-bg-image"
+              loading={index === 0 ? "eager" : "lazy"}
+            />
+            <div className="hero-bg-overlay" />
+          </div>
+        ))}
+        
+        {/* Slider Navigation Dots */}
+        <div className="hero-slider-dots">
+          {sliderImages.map((_, index) => (
+            <button
+              key={index}
+              className={`hero-slider-dot ${
+                index === currentSlide ? "active" : ""
+              }`}
+              onClick={() => setCurrentSlide(index)}
+              aria-label={`Go to slide ${index + 1}`}
+              aria-current={index === currentSlide ? "true" : "false"}
+            />
+          ))}
         </div>
       </div>
 
@@ -223,13 +256,6 @@ export default function HeroSection() {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Bottom Wave */}
-      <div className="hero-bottom-wave" aria-hidden="true">
-        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 40C360 10 720 60 1080 30C1260 15 1380 35 1440 40V60H0V40Z" fill="#f0f7ed" opacity="0.6" />
-        </svg>
       </div>
     </section>
   );

@@ -1,6 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import { blogs } from "@/constants/siteData";
 import { Section, SectionHeader } from "@/components/common/Section";
+import "./BlogSection.css";
 
 export default function BlogSection() {
   return (
@@ -11,48 +13,59 @@ export default function BlogSection() {
         subtitle="Expert articles and health tips from our specialist team — written in easy-to-understand language."
       />
 
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="blog-grid">
         {blogs.map((post) => (
           <Link
             key={post.id}
             href={post.href}
-            className="group bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1.5 flex flex-col h-full border border-slate-100"
+            className="blog-card"
           >
-            {/* Image Placeholder */}
-            <div className="h-48 bg-gradient-to-br from-primary/10 via-secondary/10 to-authority/10 relative overflow-hidden flex items-center justify-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="48"
-                height="48"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#428a26"
-                strokeWidth="1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-              </svg>
-              <div className="absolute top-4 left-4">
-                <span className="bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full">
+            {/* Image Container */}
+            <div className="blog-image-container">
+              <Image
+                src={`/images/blog/image${post.id}.jpg`}
+                alt={post.title}
+                fill
+                className="blog-image"
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
+              {/* Fallback Icon */}
+              <div className="blog-fallback" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="48"
+                  height="48"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#428a26"
+                  strokeWidth="1"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                </svg>
+              </div>
+              <div className="blog-category-badge">
+                <span className="blog-category">
                   {post.category}
                 </span>
               </div>
             </div>
+            
             {/* Content */}
-            <div className="p-6 flex flex-col gap-3 flex-1">
-              <div className="flex items-center gap-3 text-xs text-slate-400">
+            <div className="blog-content">
+              <div className="blog-meta">
                 <span>{post.date}</span>
-                <span>·</span>
+                <span className="blog-meta-separator">·</span>
                 <span>{post.readTime}</span>
               </div>
-              <h3 className="font-heading font-bold text-lg text-slate-900 leading-snug group-hover:text-primary transition-colors line-clamp-2">
+              <h3 className="blog-title">
                 {post.title}
               </h3>
-              <p className="text-slate-500 text-sm leading-relaxed line-clamp-3 flex-1">
+              <p className="blog-excerpt">
                 {post.excerpt}
               </p>
-              <div className="flex items-center gap-2 mt-2 text-sm font-semibold text-primary">
+              <div className="blog-read-more">
                 Read More
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +77,7 @@ export default function BlogSection() {
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="transition-transform group-hover:translate-x-1"
+                  className="blog-read-more-icon"
                 >
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
@@ -74,8 +87,8 @@ export default function BlogSection() {
         ))}
       </div>
 
-      <div className="flex justify-center mt-12">
-        <Link href="/blog" className="btn-secondary inline-flex items-center gap-2">
+      <div className="blog-view-all">
+        <Link href="/blog" className="blog-view-all-btn">
           Read All Articles
           <svg
             xmlns="http://www.w3.org/2000/svg"

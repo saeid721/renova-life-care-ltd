@@ -1,8 +1,10 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { shopProducts } from "@/constants/siteData";
 import { Section, SectionHeader } from "@/components/common/Section";
+import "./ShopSection.css";
 
 export default function ShopSection() {
   const [cart, setCart] = useState([]);
@@ -23,22 +25,23 @@ export default function ShopSection() {
         subtitle="Trusted medical devices, supplements, and health kits from certified brands — all in one place."
       />
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="shop-grid">
         {shopProducts.map((product) => (
           <div
             key={product.id}
-            className="group bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1.5 border border-slate-100"
+            className="shop-product-card"
           >
             {/* Product Image */}
-            <div className="relative h-48 bg-gradient-to-br from-slate-50 to-primary/8 flex items-center justify-center overflow-hidden">
-              <div
-                className="w-20 h-20 rounded-xl flex items-center justify-center"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(66,138,38,0.2), rgba(134,180,55,0.2))",
-                }}
-                aria-hidden="true"
-              >
+            <div className="shop-product-image-container">
+              <Image
+                src={`/images/shop/image${product.id}.jpg`}
+                alt={product.name}
+                fill
+                className="shop-product-image"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              />
+              {/* Fallback Icon (shown if image fails to load) */}
+              <div className="shop-product-fallback" aria-hidden="true">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="32"
@@ -49,19 +52,18 @@ export default function ShopSection() {
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  aria-hidden="true"
                 >
                   <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                 </svg>
               </div>
               {product.badge && (
                 <span
-                  className={`absolute top-3 left-3 text-xs font-bold px-2.5 py-1 rounded-full ${
+                  className={`shop-product-badge ${
                     product.badge === "Best Seller"
-                      ? "bg-amber-100 text-amber-700"
+                      ? "shop-badge-bestseller"
                       : product.badge === "New"
-                      ? "bg-primary/15 text-primary"
-                      : "bg-red-100 text-red-600"
+                      ? "shop-badge-new"
+                      : "shop-badge-sale"
                   }`}
                   aria-label={product.badge}
                 >
@@ -71,15 +73,15 @@ export default function ShopSection() {
             </div>
 
             {/* Product Info */}
-            <div className="p-5">
-              <p className="text-xs text-slate-400 font-medium mb-1">
+            <div className="shop-product-info">
+              <p className="shop-product-category">
                 {product.category}
               </p>
-              <h3 className="font-heading font-bold text-base text-slate-900 mb-2 group-hover:text-primary transition-colors line-clamp-2">
+              <h3 className="shop-product-name">
                 {product.name}
               </h3>
-              <div className="flex items-center gap-1.5 mb-3">
-                <div className="flex" aria-label={`${product.rating} star rating`}>
+              <div className="shop-product-rating">
+                <div className="shop-product-stars" aria-label={`${product.rating} star rating`}>
                   {[...Array(5)].map((_, i) => (
                     <svg
                       key={i}
@@ -97,17 +99,17 @@ export default function ShopSection() {
                     </svg>
                   ))}
                 </div>
-                <span className="text-xs text-slate-400">
+                <span className="shop-product-reviews">
                   ({product.reviews})
                 </span>
               </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-baseline gap-2">
-                  <span className="font-heading font-bold text-xl text-primary">
+              <div className="shop-product-price-section">
+                <div className="shop-product-prices">
+                  <span className="shop-product-current-price">
                     ৳{product.price.toLocaleString()}
                   </span>
                   {product.oldPrice && (
-                    <span className="text-sm text-slate-400 line-through">
+                    <span className="shop-product-old-price">
                       ৳{product.oldPrice.toLocaleString()}
                     </span>
                   )}
@@ -115,10 +117,8 @@ export default function ShopSection() {
                 <button
                   type="button"
                   onClick={() => addToCart(product.id)}
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all duration-300 ${
-                    cart.includes(product.id)
-                      ? "bg-primary text-white"
-                      : "bg-primary/10 text-primary hover:bg-primary hover:text-white"
+                  className={`shop-product-cart-btn ${
+                    cart.includes(product.id) ? "added" : ""
                   }`}
                   aria-label={cart.includes(product.id) ? `${product.name} added to cart` : `Add ${product.name} to cart`}
                 >
@@ -146,10 +146,10 @@ export default function ShopSection() {
         ))}
       </div>
 
-      <div className="flex justify-center mt-12">
+      <div className="shop-view-all">
         <Link
           href="/shop"
-          className="btn-secondary inline-flex items-center gap-2"
+          className="shop-view-all-btn"
           aria-label="Browse all products"
         >
           Browse All Products

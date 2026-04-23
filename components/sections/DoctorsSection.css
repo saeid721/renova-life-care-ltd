@@ -35,7 +35,7 @@
 /* Image Container */
 .doctor-image-container {
   position: relative;
-  height: 14rem;
+  height: 20rem;
   background: linear-gradient(135deg, rgba(66, 138, 38, 0.1), rgba(5, 65, 125, 0.1));
   overflow: hidden;
 }
@@ -128,7 +128,7 @@
 }
 
 .doctor-name {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Sen', sans-serif;
   font-weight: 700;
   font-size: 1.125rem;
   color: #0f172a;

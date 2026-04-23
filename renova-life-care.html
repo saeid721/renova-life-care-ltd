@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Renova Life Care Ltd. | Caring Today, Healthy Tomorrow</title>
+<meta name="description" content="Renova Life Care Ltd. delivers world-class healthcare services across Bangladesh. Expert doctors, modern facilities, 24/7 emergency care."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* ── RESET & BASE ─────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#428a26;--primary-dark:#2e6a1a;--secondary:#86b437;
+  --accent:#007ab9;--authority:#05417d;
+  --white:#fff;--black:#000;
+  --gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;
+  --gray-400:#94a3b8;--gray-500:#64748b;--gray-600:#475569;
+  --gray-700:#334155;--gray-800:#1e293b;--gray-900:#0f172a;
+  --bg-section:#f0f7ed;
+  --font-heading:'Playfair Display',serif;
+  --font-body:'DM Sans',sans-serif;
+  --shadow-card:0 4px 24px rgba(4,65,125,.08);
+  --shadow-hover:0 12px 40px rgba(4,65,125,.16);
+  --shadow-btn:0 4px 16px rgba(66,138,38,.38);
+  --radius:16px;--trans:all .3s ease;
+}
+html{scroll-behavior:smooth;font-size:16px;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-body);color:var(--gray-800);background:#fff;overflow-x:hidden;line-height:1.6}
+h1,h2,h3,h4,h5,h6{font-family:var(--font-heading);line-height:1.2;color:var(--gray-900)}
+h1{font-size:clamp(2.2rem,5vw,3.8rem)}
+h2{font-size:clamp(1.8rem,3.5vw,2.75rem)}
+h3{font-size:clamp(1.2rem,2.5vw,1.55rem)}
+h4{font-size:1.15rem}
+p{color:var(--gray-500);line-height:1.75}
+a{color:inherit;text-decoration:none;transition:var(--trans)}
+img{max-width:100%;height:auto}
+button{font-family:var(--font-body);cursor:pointer;border:none;background:none}
+input,select,textarea{font-family:var(--font-body)}
+::selection{background:var(--primary);color:#fff}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:var(--primary);border-radius:4px}
+
+/* ── UTILITIES ────────────────────────────────────────────────── */
+.container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+.section{padding:5rem 0}
+.section-sm{padding:3.5rem 0}
+.section-label{display:inline-flex;align-items:center;gap:.6rem;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--primary);margin-bottom:.75rem}
+.section-label::before{content:'';display:block;width:28px;height:2px;background:var(--primary);border-radius:2px}
+.section-dark .section-label{color:var(--secondary)}
+.section-dark .section-label::before{background:var(--secondary)}
+.text-center{text-align:center}
+.text-white{color:#fff}
+.text-primary{color:var(--primary)}
+.grid{display:grid}
+.flex{display:flex}
+.hidden{display:none}
+
+/* ── BUTTONS ──────────────────────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;padding:.875rem 1.75rem;border-radius:999px;font-weight:600;font-size:.95rem;font-family:var(--font-body);transition:var(--trans);cursor:pointer;border:none;white-space:nowrap}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;box-shadow:var(--shadow-btn)}
+.btn-primary:hover{background:linear-gradient(135deg,var(--primary-dark),var(--primary));transform:translateY(-1px);box-shadow:0 6px 24px rgba(66,138,38,.45)}
+.btn-secondary{background:transparent;color:var(--authority);border:2px solid var(--authority)}
+.btn-secondary:hover{background:var(--authority);color:#fff}
+.btn-white-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.7)}
+.btn-white-outline:hover{background:#fff;color:var(--primary)}
+.btn-sm{padding:.625rem 1.25rem;font-size:.875rem}
+.btn-lg{padding:1.1rem 2.25rem;font-size:1.05rem}
+
+/* ── GRAD TEXT ────────────────────────────────────────────────── */
+.grad-green{background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.grad-blue{background:linear-gradient(135deg,var(--authority),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* ── TOP BAR ──────────────────────────────────────────────────── */
+.topbar{background:var(--authority);color:#fff;font-size:.78rem;font-weight:500;padding:.5rem 0}
+.topbar .container{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.topbar-left,.topbar-right{display:flex;align-items:center;gap:1.5rem}
+.topbar-item{display:flex;align-items:center;gap:.4rem;opacity:.9}
+.topbar-emergency{color:var(--secondary);font-weight:700}
+
+/* ── NAVBAR ───────────────────────────────────────────────────── */
+.navbar{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--gray-100);transition:var(--trans)}
+.navbar.scrolled{box-shadow:0 2px 20px rgba(5,65,125,.1)}
+.navbar .container{display:flex;align-items:center;justify-content:space-between;height:72px;gap:1rem}
+.logo{display:flex;align-items:center;gap:.75rem;flex-shrink:0}
+.logo-mark{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-text{display:flex;flex-direction:column;line-height:1}
+.logo-name{font-family:var(--font-heading);font-weight:700;font-size:1.1rem;color:var(--gray-900)}
+.logo-slogan{font-size:.7rem;color:var(--primary);font-weight:600;letter-spacing:.02em;margin-top:1px}
+.nav-links{display:flex;align-items:center;gap:.25rem;list-style:none}
+.nav-links a{padding:.5rem .9rem;border-radius:10px;font-size:.88rem;font-weight:500;color:var(--gray-600);transition:var(--trans)}
+.nav-links a:hover{color:var(--primary);background:rgba(66,138,38,.07)}
+.nav-actions{display:flex;align-items:center;gap:.75rem}
+.nav-call{display:flex;align-items:center;gap:.4rem;font-size:.85rem;font-weight:600;color:var(--authority);padding:.5rem .75rem;transition:var(--trans)}
+.nav-call:hover{color:var(--primary)}
+.hamburger{display:none;flex-direction:column;gap:5px;padding:.5rem;border-radius:8px;cursor:pointer;transition:var(--trans)}
+.hamburger span{display:block;width:22px;height:2px;background:var(--gray-700);border-radius:2px;transition:var(--trans)}
+
+/* ── MOBILE MENU ──────────────────────────────────────────────── */
+.mobile-menu{display:none;flex-direction:column;background:#fff;border-top:1px solid var(--gray-100);padding:1rem 1.5rem 1.5rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{padding:.75rem 1rem;border-radius:10px;font-weight:500;color:var(--gray-700);transition:var(--trans)}
+.mobile-menu a:hover{color:var(--primary);background:rgba(66,138,38,.07)}
+.mobile-menu-actions{display:flex;flex-direction:column;gap:.75rem;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--gray-100)}
+
+/* ── HERO ─────────────────────────────────────────────────────── */
+.hero{position:relative;min-height:92vh;display:flex;align-items:center;overflow:hidden;background:#fff}
+.hero-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.hero-blob-1{position:absolute;top:-100px;right:-100px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(66,138,38,.07),transparent 70%);filter:blur(40px)}
+.hero-blob-2{position:absolute;bottom:-80px;left:-80px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(5,65,125,.06),transparent 70%);filter:blur(40px)}
+.hero-dots{position:absolute;inset:0;opacity:.025;background-image:radial-gradient(circle,#428a26 1.5px,transparent 1.5px);background-size:30px 30px}
+.hero-shape{position:absolute;right:0;top:0;height:100%;width:48%;pointer-events:none}
+.hero .container{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;padding-top:3rem;padding-bottom:3rem}
+.hero-content{display:flex;flex-direction:column;gap:1.75rem;max-width:540px}
+.trust-badge{display:inline-flex;align-items:center;gap:.65rem;background:rgba(66,138,38,.08);border:1.5px solid rgba(66,138,38,.2);border-radius:999px;padding:.5rem 1rem;width:fit-content}
+.trust-badge-dot{width:20px;height:20px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.trust-badge-text{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--primary)}
+.hero-headline{position:relative}
+.hero-headline h1{color:var(--gray-900);font-weight:800;margin-bottom:1rem}
+.hero-headline .highlight{position:relative;display:inline-block}
+.hero-underline{position:absolute;bottom:-6px;left:0;width:100%}
+.hero-desc{font-size:1.05rem;color:var(--gray-500);line-height:1.8}
+.hero-cta{display:flex;flex-wrap:wrap;gap:.875rem;align-items:center}
+.btn-call{display:inline-flex;align-items:center;gap:.65rem;padding:.875rem 1.5rem;border-radius:999px;border:2px solid var(--gray-200);font-weight:600;font-size:.95rem;color:var(--gray-700);transition:var(--trans)}
+.btn-call:hover{border-color:var(--authority);color:var(--authority)}
+.btn-call-icon{width:34px;height:34px;border-radius:50%;background:rgba(5,65,125,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hero-trust{display:flex;align-items:center;gap:.875rem}
+.doctor-avatars{display:flex}
+.doctor-avatar{width:36px;height:36px;border-radius:50%;border:2.5px solid #fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#fff;margin-left:-10px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.doctor-avatar:first-child{margin-left:0}
+.hero-rating-stars{display:flex;gap:2px;margin-bottom:3px}
+.hero-rating-text{font-size:.78rem;color:var(--gray-500)}
+.hero-rating-text strong{color:var(--gray-700)}
+
+/* ── HERO VISUAL CARD ─────────────────────────────────────────── */
+.hero-visual{position:relative;display:flex;align-items:center;justify-content:center}
+.hero-card{position:relative;background:#fff;border-radius:24px;box-shadow:0 20px 60px rgba(5,65,125,.14);padding:2.25rem;border:1px solid var(--gray-100);overflow:hidden;width:100%;max-width:400px}
+.hero-card-bg{position:absolute;top:-60px;right:-60px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(66,138,38,.08),rgba(134,180,55,.06));pointer-events:none}
+.hero-card-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:1.5rem;text-align:center}
+.hero-cross{width:80px;height:80px;border-radius:18px;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(66,138,38,.35)}
+.hero-card-name{font-family:var(--font-heading);font-weight:700;font-size:1.35rem;color:var(--gray-900)}
+.hero-card-slogan{font-size:.8rem;color:var(--primary);font-weight:600}
+.hero-stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;width:100%}
+.hero-stat-pill{display:flex;flex-direction:column;align-items:center;gap:.25rem;background:var(--gray-50);border-radius:14px;padding:1rem}
+.hero-stat-val{font-family:var(--font-heading);font-weight:700;font-size:1.3rem;color:var(--primary)}
+.hero-stat-lbl{font-size:.7rem;color:var(--gray-500);text-align:center}
+.hero-available{display:flex;align-items:center;gap:.6rem;background:#f0fdf4;border-radius:999px;padding:.6rem 1.1rem;width:100%;justify-content:center}
+.available-dot{width:10px;height:10px;border-radius:50%;background:#22c55e;animation:pulse 2s infinite}
+.available-text{font-size:.82rem;font-weight:600;color:#15803d}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.7;transform:scale(1.15)}}
+
+/* Floating badges */
+.badge-float{position:absolute;border-radius:16px;padding:.75rem 1rem;display:flex;align-items:center;gap:.65rem;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.badge-top-left{top:-20px;left:-20px;background:var(--authority);color:#fff}
+.badge-bottom-right{bottom:-16px;right:-16px;background:#fff}
+.badge-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.badge-title{font-size:.78rem;font-weight:700}
+.badge-sub{font-size:.68rem;opacity:.75}
+
+/* ── STATS STRIP ──────────────────────────────────────────────── */
+.stats-strip{background:linear-gradient(135deg,var(--authority),var(--accent));padding:2.5rem 0}
+.stats-strip .container{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+.stat-item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:.4rem}
+.stat-val{font-family:var(--font-heading);font-size:2.2rem;font-weight:800;color:#fff}
+.stat-lbl{font-size:.82rem;color:rgba(255,255,255,.7);font-weight:500}
+.stat-divider{width:1px;background:rgba(255,255,255,.15)}
+
+/* ── SERVICES ─────────────────────────────────────────────────── */
+.services{background:var(--gray-50)}
+.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
+.service-card{display:flex;flex-direction:column;gap:1.1rem;padding:1.5rem;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-card);border:1.5px solid transparent;transition:var(--trans);cursor:pointer;text-decoration:none}
+.service-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-hover);border-color:rgba(66,138,38,.1)}
+.service-icon{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;transition:var(--trans)}
+.service-card:hover .service-icon{transform:scale(1.1)}
+.service-title{font-family:var(--font-heading);font-weight:700;font-size:1.05rem;color:var(--gray-900);transition:color .3s}
+.service-card:hover .service-title{color:var(--primary)}
+.service-desc{font-size:.85rem;color:var(--gray-500);line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.service-link{display:flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:600;margin-top:auto;transition:gap .3s}
+.service-card:hover .service-link{gap:.7rem}
+.center-cta{display:flex;justify-content:center;margin-top:2.75rem}
+
+/* ── ABOUT ────────────────────────────────────────────────────── */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-visual{position:relative}
+.about-main-card{border-radius:24px;overflow:hidden;background:linear-gradient(145deg,var(--authority),var(--accent));aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 20px 60px rgba(5,65,125,.2)}
+.about-main-inner{position:relative;z-index:1;text-align:center;padding:2.5rem}
+.about-pattern{position:absolute;inset:0;opacity:.08;background-image:radial-gradient(circle,white 1.5px,transparent 1.5px);background-size:22px 22px}
+.about-year{font-family:var(--font-heading);font-weight:800;font-size:3.5rem;color:#fff}
+.about-year-lbl{font-size:.85rem;color:rgba(255,255,255,.7);font-weight:500;margin-bottom:1rem}
+.about-year-desc{font-size:.9rem;color:rgba(255,255,255,.7);max-width:240px;margin:0 auto}
+.about-stats-overlay{position:absolute;bottom:-28px;right:-24px;background:#fff;border-radius:20px;padding:1.25rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;box-shadow:var(--shadow-hover);min-width:220px}
+.overlay-stat{text-align:center}
+.overlay-stat-val{font-family:var(--font-heading);font-weight:700;font-size:1.4rem;color:var(--primary)}
+.overlay-stat-lbl{font-size:.7rem;color:var(--gray-500);margin-top:2px}
+.cert-badge{position:absolute;top:-16px;left:-16px;background:var(--primary);color:#fff;border-radius:16px;padding:.7rem 1rem;display:flex;align-items:center;gap:.6rem;box-shadow:0 8px 24px rgba(66,138,38,.3)}
+.cert-badge-title{font-size:.78rem;font-weight:700}
+.cert-badge-sub{font-size:.68rem;opacity:.8}
+.about-content{display:flex;flex-direction:column;gap:2rem}
+.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.feature-item{display:flex;gap:.875rem;background:var(--gray-50);border-radius:14px;padding:1.25rem;transition:var(--trans)}
+.feature-item:hover{background:rgba(66,138,38,.05)}
+.feature-icon-wrap{width:44px;height:44px;border-radius:12px;background:rgba(66,138,38,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--primary)}
+.feature-title{font-family:var(--font-heading);font-weight:700;font-size:1rem;color:var(--gray-900);margin-bottom:.35rem}
+.feature-desc{font-size:.82rem;color:var(--gray-500);line-height:1.6}
+
+/* ── DOCTORS ──────────────────────────────────────────────────── */
+.doctors{background:var(--gray-50)}
+.doctors-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
+.doctor-card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-card);transition:var(--trans)}
+.doctor-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-hover)}
+.doctor-img{height:200px;background:linear-gradient(135deg,rgba(66,138,38,.1),rgba(5,65,125,.1));display:flex;align-items:center;justify-content:center;position:relative}
+.doctor-avatar-big{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:700;font-size:1.4rem;color:#fff}
+.doctor-avail-badge{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.95);border-radius:999px;padding:.35rem .75rem;display:flex;align-items:center;gap:.4rem;font-size:.72rem;font-weight:600;color:var(--gray-700)}
+.avail-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;animation:pulse 2s infinite}
+.doctor-info{padding:1.25rem}
+.doctor-name{font-family:var(--font-heading);font-weight:700;font-size:1.05rem;color:var(--gray-900);margin-bottom:.25rem}
+.doctor-specialty{color:var(--primary);font-size:.82rem;font-weight:600;margin-bottom:.2rem}
+.doctor-qual{color:var(--gray-400);font-size:.72rem;margin-bottom:.875rem}
+.doctor-meta{display:flex;align-items:center;justify-content:space-between;font-size:.75rem;color:var(--gray-500);border-top:1px solid var(--gray-100);padding-top:.875rem;margin-bottom:.875rem}
+.doctor-rating{display:flex;align-items:center;gap:.3rem}
+.doctor-book-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:.4rem;padding:.625rem 1rem;border-radius:12px;border:2px solid var(--primary);color:var(--primary);font-size:.82rem;font-weight:600;transition:var(--trans);cursor:pointer;background:none}
+.doctor-book-btn:hover{background:var(--primary);color:#fff}
+
+/* ── SECTION HEADER ───────────────────────────────────────────── */
+.section-header{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:3.5rem}
+.section-header h2{max-width:560px;margin:0 auto .875rem}
+.section-header p{max-width:520px;margin:0 auto;font-size:1.05rem}
+.section-header-left{align-items:flex-start;text-align:left}
+.section-header-left h2,.section-header-left p{margin-left:0}
+
+/* ── APPOINTMENT CTA ──────────────────────────────────────────── */
+.appt-section{position:relative;padding:5rem 0;overflow:hidden}
+.appt-bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--authority) 0%,#0a5ba8 60%,var(--accent) 100%)}
+.appt-dots{position:absolute;inset:0;opacity:.08;background-image:radial-gradient(circle,#fff 1.5px,transparent 1.5px);background-size:26px 26px}
+.appt-blob1{position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:rgba(66,138,38,.2);filter:blur(60px)}
+.appt-blob2{position:absolute;bottom:-60px;left:-60px;width:280px;height:280px;border-radius:50%;background:rgba(134,180,55,.15);filter:blur(60px)}
+.appt-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:1}
+.appt-content{color:#fff}
+.appt-content h2{font-size:clamp(1.8rem,3vw,2.6rem);color:#fff;margin-bottom:1.1rem;line-height:1.25}
+.appt-content h2 span{color:var(--secondary)}
+.appt-content p{color:rgba(255,255,255,.75);font-size:1.05rem;margin-bottom:2rem;line-height:1.75}
+.appt-btns{display:flex;flex-wrap:wrap;gap:.875rem}
+.appt-form-card{background:rgba(255,255,255,.1);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.2);border-radius:24px;padding:2rem}
+.appt-form-title{font-family:var(--font-heading);font-weight:700;font-size:1.15rem;color:#fff;margin-bottom:1.5rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.875rem;margin-bottom:.875rem}
+.form-group{margin-bottom:.875rem}
+.form-group:last-of-type{margin-bottom:1.25rem}
+.form-label{display:block;font-size:.82rem;font-weight:500;color:rgba(255,255,255,.8);margin-bottom:.5rem}
+.form-input,.form-select{width:100%;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);color:#fff;border-radius:12px;padding:.75rem 1rem;font-size:.88rem;font-family:var(--font-body);transition:var(--trans);outline:none}
+.form-input::placeholder{color:rgba(255,255,255,.45)}
+.form-input:focus,.form-select:focus{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.18)}
+.form-select option{color:var(--gray-800);background:#fff}
+.form-submit{width:100%;justify-content:center}
+
+/* ── SHOP ─────────────────────────────────────────────────────── */
+.shop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
+.product-card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-card);border:1.5px solid var(--gray-100);transition:var(--trans)}
+.product-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-hover)}
+.product-img{height:180px;display:flex;align-items:center;justify-content:center;position:relative;background:linear-gradient(135deg,var(--gray-50),rgba(66,138,38,.06))}
+.product-badge{position:absolute;top:10px;left:10px;font-size:.7rem;font-weight:700;padding:.3rem .65rem;border-radius:999px}
+.badge-bestseller{background:#fef3c7;color:#b45309}
+.badge-new{background:rgba(66,138,38,.12);color:var(--primary)}
+.badge-discount{background:#fee2e2;color:#b91c1c}
+.product-info{padding:1.1rem}
+.product-cat{font-size:.72rem;color:var(--gray-400);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem}
+.product-name{font-family:var(--font-heading);font-weight:700;font-size:.95rem;color:var(--gray-900);margin-bottom:.5rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;transition:color .3s;min-height:2.6em}
+.product-card:hover .product-name{color:var(--primary)}
+.product-stars{display:flex;gap:2px;margin-bottom:.75rem;align-items:center;gap:.35rem}
+.product-footer{display:flex;align-items:center;justify-content:space-between}
+.product-price{font-family:var(--font-heading);font-weight:700;font-size:1.2rem;color:var(--primary)}
+.product-old-price{font-size:.82rem;color:var(--gray-400);text-decoration:line-through;margin-left:.3rem}
+.add-cart-btn{display:flex;align-items:center;gap:.35rem;background:rgba(66,138,38,.1);color:var(--primary);border:none;border-radius:10px;padding:.5rem .85rem;font-size:.78rem;font-weight:600;font-family:var(--font-body);cursor:pointer;transition:var(--trans)}
+.add-cart-btn:hover,.add-cart-btn.added{background:var(--primary);color:#fff}
+
+/* ── PORTFOLIO ────────────────────────────────────────────────── */
+.portfolio{background:var(--gray-50)}
+.portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:220px 220px;gap:1rem}
+.portfolio-item{position:relative;border-radius:var(--radius);overflow:hidden;cursor:pointer}
+.portfolio-item.large{grid-column:1;grid-row:1/3}
+.portfolio-overlay{position:absolute;inset:0;background:rgba(0,0,0,.32);transition:background .3s}
+.portfolio-item:hover .portfolio-overlay{background:rgba(0,0,0,.5)}
+.portfolio-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1.25rem}
+.portfolio-cat{display:inline-block;background:rgba(255,255,255,.18);backdrop-filter:blur(4px);color:#fff;font-size:.72rem;font-weight:600;padding:.3rem .7rem;border-radius:999px;margin-bottom:.5rem;width:fit-content}
+.portfolio-title{font-family:var(--font-heading);font-weight:700;color:#fff;font-size:1rem;line-height:1.3}
+
+/* ── PRICING ──────────────────────────────────────────────────── */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;align-items:center}
+.pricing-card{border-radius:24px;padding:2.25rem;position:relative;transition:var(--trans)}
+.pricing-default{background:#fff;box-shadow:var(--shadow-card)}
+.pricing-default:hover{box-shadow:var(--shadow-hover);transform:translateY(-3px)}
+.pricing-popular{background:linear-gradient(145deg,var(--authority),var(--accent));transform:scale(1.05);box-shadow:0 24px 60px rgba(5,65,125,.28)}
+.pricing-authority{background:#fff;box-shadow:var(--shadow-card)}
+.pricing-authority:hover{box-shadow:var(--shadow-hover);transform:translateY(-3px)}
+.popular-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--secondary);color:#fff;font-size:.72rem;font-weight:700;padding:.35rem 1.1rem;border-radius:999px;white-space:nowrap;box-shadow:0 4px 12px rgba(134,180,55,.4)}
+.pricing-plan-name{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem}
+.pricing-plan-name.dark{color:rgba(255,255,255,.7)}
+.pricing-plan-name.light{color:var(--primary)}
+.pricing-amount{display:flex;align-items:baseline;gap:.25rem;margin-bottom:.5rem}
+.pricing-currency{font-family:var(--font-heading);font-size:1.75rem;font-weight:700}
+.pricing-value{font-family:var(--font-heading);font-size:3rem;font-weight:800;line-height:1}
+.pricing-period{font-size:.82rem}
+.pricing-desc{font-size:.88rem;margin:.75rem 0 1.5rem;line-height:1.6}
+.pricing-divider{height:1px;margin-bottom:1.5rem}
+.pricing-features{display:flex;flex-direction:column;gap:.75rem;margin-bottom:2rem;list-style:none}
+.pricing-feature{display:flex;align-items:center;gap:.75rem;font-size:.88rem}
+.feature-check{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pricing-cta{width:100%;display:flex;align-items:center;justify-content:center;padding:.875rem 1.25rem;border-radius:16px;font-weight:600;font-size:.9rem;transition:var(--trans);cursor:pointer;border:none;font-family:var(--font-body)}
+.pricing-cta-dark{background:#fff;color:var(--authority)}
+.pricing-cta-dark:hover{background:var(--secondary);color:#fff}
+.pricing-cta-light{background:var(--primary);color:#fff}
+.pricing-cta-light:hover{background:var(--primary-dark)}
+
+/* ── TESTIMONIALS ─────────────────────────────────────────────── */
+.testimonials{background:var(--gray-50)}
+.testimonials-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
+.testi-card{background:#fff;border-radius:var(--radius);padding:1.75rem;box-shadow:var(--shadow-card);display:flex;flex-direction:column;gap:1rem;height:100%;transition:var(--trans)}
+.testi-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-3px)}
+.testi-stars{display:flex;gap:3px}
+.testi-quote{font-size:.88rem;color:var(--gray-600);line-height:1.75;font-style:italic;flex:1}
+.testi-author{display:flex;align-items:center;gap:.75rem;border-top:1px solid var(--gray-100);padding-top:1rem}
+.testi-avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:700;font-size:.9rem;color:#fff;flex-shrink:0}
+.testi-name{font-weight:600;font-size:.88rem;color:var(--gray-900)}
+.testi-meta{font-size:.75rem;color:var(--gray-400)}
+.trust-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem;padding-top:3rem;border-top:1px solid var(--gray-200)}
+.trust-bar-item{text-align:center}
+.trust-val{font-family:var(--font-heading);font-size:2.5rem;font-weight:800;color:var(--primary);margin-bottom:.25rem}
+.trust-lbl{font-size:.88rem;color:var(--gray-500)}
+
+/* ── PARTNERS ─────────────────────────────────────────────────── */
+.partners{background:#fff;border-top:1px solid var(--gray-100);border-bottom:1px solid var(--gray-100);padding:3.5rem 0}
+.partners-label{text-align:center;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-400);margin-bottom:2.5rem}
+.partners-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:2rem;align-items:center}
+.partner-item{display:flex;align-items:center;justify-content:center;opacity:.45;transition:opacity .3s;text-align:center}
+.partner-item:hover{opacity:1}
+.partner-name{font-size:.78rem;font-weight:600;color:var(--gray-600)}
+
+/* ── BLOG ─────────────────────────────────────────────────────── */
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.75rem}
+.blog-card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-card);display:flex;flex-direction:column;height:100%;transition:var(--trans);text-decoration:none}
+.blog-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-hover)}
+.blog-img{height:180px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.blog-cat-badge{position:absolute;top:12px;left:12px;background:var(--primary);color:#fff;font-size:.7rem;font-weight:700;padding:.3rem .75rem;border-radius:999px}
+.blog-info{padding:1.5rem;display:flex;flex-direction:column;gap:.75rem;flex:1}
+.blog-meta{display:flex;align-items:center;gap:.65rem;font-size:.75rem;color:var(--gray-400)}
+.blog-meta span:not(:last-child)::after{content:'·';margin-left:.65rem}
+.blog-title{font-family:var(--font-heading);font-weight:700;font-size:1.05rem;color:var(--gray-900);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;transition:color .3s}
+.blog-card:hover .blog-title{color:var(--primary)}
+.blog-excerpt{font-size:.85rem;color:var(--gray-500);line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1}
+.blog-read-more{display:flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:600;color:var(--primary);margin-top:.5rem;transition:gap .3s}
+.blog-card:hover .blog-read-more{gap:.65rem}
+
+/* ── EMERGENCY BANNER ─────────────────────────────────────────── */
+.emergency{background:linear-gradient(to right,#dc2626,#b91c1c);padding:1.25rem 0}
+.emergency .container{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
+.emergency-left{display:flex;align-items:center;gap:1rem;color:#fff}
+.emergency-icon{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.emergency-title{font-family:var(--font-heading);font-weight:700;font-size:1.1rem;color:#fff;margin-bottom:.15rem}
+.emergency-sub{font-size:.82rem;color:rgba(255,255,255,.8)}
+.emergency-btns{display:flex;gap:.75rem;flex-wrap:wrap}
+.emergency-btn-white{display:flex;align-items:center;gap:.4rem;background:#fff;color:#dc2626;font-weight:700;padding:.625rem 1.25rem;border-radius:999px;font-size:.85rem;transition:var(--trans)}
+.emergency-btn-white:hover{background:#fee2e2}
+.emergency-btn-outline{display:flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.18);color:#fff;font-weight:600;padding:.625rem 1.25rem;border-radius:999px;font-size:.85rem;border:1.5px solid rgba(255,255,255,.3);transition:var(--trans)}
+.emergency-btn-outline:hover{background:rgba(255,255,255,.28)}
+
+/* ── FOOTER ───────────────────────────────────────────────────── */
+.footer{background:#0f172a}
+.footer-main{padding:4.5rem 0}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem}
+.footer-brand{display:flex;flex-direction:column;gap:1.25rem}
+.footer-logo{display:flex;align-items:center;gap:.75rem}
+.footer-logo-mark{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.footer-logo-name{font-family:var(--font-heading);font-weight:700;font-size:1.05rem;color:#fff}
+.footer-logo-slogan{font-size:.7rem;color:var(--primary);font-weight:600}
+.footer-desc{font-size:.85rem;color:#94a3b8;line-height:1.75;max-width:280px}
+.footer-contact{display:flex;flex-direction:column;gap:.75rem}
+.footer-contact-item{display:flex;align-items:flex-start;gap:.65rem;font-size:.82rem;color:#94a3b8;transition:color .3s}
+.footer-contact-item:hover{color:var(--primary)}
+.footer-socials{display:flex;gap:.65rem}
+.social-btn{width:36px;height:36px;border-radius:50%;background:#1e293b;display:flex;align-items:center;justify-content:center;color:#94a3b8;transition:var(--trans)}
+.social-btn:hover{background:var(--primary);color:#fff}
+.footer-col h4{font-family:var(--font-heading);font-weight:700;font-size:1rem;color:#fff;margin-bottom:1.25rem}
+.footer-links{display:flex;flex-direction:column;gap:.65rem;list-style:none}
+.footer-links a{font-size:.83rem;color:#94a3b8;transition:var(--trans);display:flex;align-items:center;gap:.35rem}
+.footer-links a::before{content:'';display:block;width:0;height:2px;background:var(--primary);border-radius:2px;transition:width .3s;flex-shrink:0}
+.footer-links a:hover{color:var(--primary);padding-left:.35rem}
+.footer-links a:hover::before{width:8px}
+.footer-bottom{border-top:1px solid #1e293b;padding:1.5rem 0}
+.footer-bottom .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.875rem}
+.footer-copy{font-size:.82rem;color:#64748b}
+.footer-legal{display:flex;gap:1.5rem}
+.footer-legal a{font-size:.82rem;color:#64748b;transition:color .3s}
+.footer-legal a:hover{color:var(--primary)}
+
+/* ── ANIMATIONS ───────────────────────────────────────────────── */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.anim-fade-up{animation:fadeInUp .7s ease both}
+.anim-fade{animation:fadeIn .6s ease both}
+.anim-float{animation:floatY 5s ease-in-out infinite}
+.delay-1{animation-delay:.1s}.delay-2{animation-delay:.2s}.delay-3{animation-delay:.3s}.delay-4{animation-delay:.4s}.delay-5{animation-delay:.5s}
+
+/* Scroll reveal (JS adds .visible class) */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* ── RESPONSIVE ───────────────────────────────────────────────── */
+@media(max-width:1100px){
+  .hero .container{grid-template-columns:1fr;gap:3rem}
+  .hero-visual{display:none}
+  .hero-content{max-width:100%}
+  .about-grid{grid-template-columns:1fr;gap:3rem}
+  .about-visual{order:2}
+  .services-grid{grid-template-columns:repeat(2,1fr)}
+  .doctors-grid{grid-template-columns:repeat(2,1fr)}
+  .testimonials-grid{grid-template-columns:repeat(2,1fr)}
+  .shop-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-strip .container{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem}
+  .appt-grid{grid-template-columns:1fr;gap:2.5rem}
+}
+@media(max-width:768px){
+  .section{padding:3.5rem 0}
+  .topbar{display:none}
+  .nav-links,.nav-actions{display:none}
+  .hamburger{display:flex}
+  .services-grid{grid-template-columns:1fr}
+  .doctors-grid{grid-template-columns:1fr}
+  .testimonials-grid{grid-template-columns:1fr}
+  .shop-grid{grid-template-columns:1fr}
+  .blog-grid{grid-template-columns:1fr}
+  .partners-grid{grid-template-columns:repeat(3,1fr)}
+  .pricing-grid{grid-template-columns:1fr;gap:1.25rem}
+  .pricing-popular{transform:none}
+  .feature-grid{grid-template-columns:1fr}
+  .portfolio-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto}
+  .portfolio-item.large{grid-column:1/3;grid-row:auto}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-legal{flex-wrap:wrap;gap:.875rem}
+  .trust-bar{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .about-stats-overlay{right:0;bottom:-20px}
+}
+@media(max-width:480px){
+  .hero-cta{flex-direction:column}
+  .hero-cta .btn,.hero-cta .btn-call{width:100%;justify-content:center}
+  .appt-btns{flex-direction:column}
+  .emergency .container{flex-direction:column;align-items:flex-start}
+  .emergency-btns{width:100%}
+  .emergency-btn-white,.emergency-btn-outline{flex:1;justify-content:center}
+  .partners-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     TOP ANNOUNCEMENT BAR
+══════════════════════════════════════════════════════════════ -->
+<div class="topbar" role="complementary" aria-label="Contact information">
+  <div class="container">
+    <div class="topbar-left">
+      <span class="topbar-item">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.5 10a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.44 0h3a2 2 0 0 1 2 1.72A12.84 12.84 0 0 0 9.1 5.07a2 2 0 0 1-.45 2.11L7.5 8.28a16 16 0 0 0 6.29 6.29l1.1-1.1a2 2 0 0 1 2.11-.45A12.84 12.84 0 0 0 20.28 14a2 2 0 0 1 1.72 2z"/></svg>
+        Emergency: +880 1700-000000
+      </span>
+      <span class="topbar-item">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        info@renovalifecare.com
+      </span>
+    </div>
+    <div class="topbar-right">
+      <span class="topbar-item">Sat–Thu: 8:00 AM – 10:00 PM</span>
+      <span class="topbar-item topbar-emergency">⚡ Emergency: 24/7</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════════════════════════ -->
+<header class="navbar" id="navbar" role="banner">
+  <div class="container">
+    <!-- Logo -->
+    <a href="/" class="logo" aria-label="Renova Life Care Ltd. — Home">
+      <div class="logo-mark" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <rect x="10" y="3" width="4" height="18" rx="2" fill="white"/>
+          <rect x="3" y="10" width="18" height="4" rx="2" fill="white" opacity=".75"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-name">Renova Life Care</span>
+        <span class="logo-slogan">Caring Today, Healthy Tomorrow.</span>
+      </div>
+    </a>
+
+    <!-- Nav Links -->
+    <ul class="nav-links" role="list" aria-label="Main navigation">
+      <li><a href="#">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#doctors">Doctors</a></li>
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#blog">Blog</a></li>
+      <li><a href="#footer">Contact</a></li>
+    </ul>
+
+    <!-- Desktop Actions -->
+    <div class="nav-actions">
+      <a href="tel:+8801700000000" class="nav-call" aria-label="Call us">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.5 10a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.44 0h3a2 2 0 0 1 2 1.72A12.84 12.84 0 0 0 9.1 5.07a2 2 0 0 1-.45 2.11L7.5 8.28a16 16 0 0 0 6.29 6.29l1.1-1.1a2 2 0 0 1 2.11-.45A12.84 12.84 0 0 0 20.28 14a2 2 0 0 1 1.72 2z"/></svg>
+        Call Now
+      </a>
+      <a href="#appointment" class="btn btn-primary btn-sm" aria-label="Book an appointment">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book Appointment
+      </a>
+    </div>
+
+    <!-- Hamburger -->
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+    <a href="#">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#doctors">Doctors</a>
+    <a href="#shop">Shop</a>
+    <a href="#blog">Blog</a>
+    <a href="#footer">Contact</a>
+    <div class="mobile-menu-actions">
+      <a href="tel:+8801700000000" class="btn btn-secondary" style="justify-content:center">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.5 10a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.44 0h3a2 2 0 0 1 2 1.72A12.84 12.84 0 0 0 9.1 5.07a2 2 0 0 1-.45 2.11L7.5 8.28a16 16 0 0 0 6.29 6.29l1.1-1.1a2 2 0 0 1 2.11-.45A12.84 12.84 0 0 0 20.28 14a2 2 0 0 1 1.72 2z"/></svg>
+        Call Now
+      </a>
+      <a href="#appointment" class="btn btn-primary" style="justify-content:center">Book Appointment</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content">
+
+<!-- ══════════════════════════════════════════════════════════
+     1 — HERO SECTION
+══════════════════════════════════════════════════════════════ -->
+<section class="hero" aria-label="Welcome to Renova Life Care">
+  <div class="hero-bg">
+    <div class="hero-blob-1" aria-hidden="true"></div>
+    <div class="hero-blob-2" aria-hidden="true"></div>
+    <div class="hero-dots" aria-hidden="true"></div>
+    <svg class="hero-shape" viewBox="0 0 600 900" fill="none" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M150 0 Q60 450 200 900 L600 900 L600 0 Z" fill="url(#heroGrad)"/>
+      <defs>
+        <linearGradient id="heroGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#05417d" stop-opacity=".07"/>
+          <stop offset="50%" stop-color="#428a26" stop-opacity=".05"/>
+          <stop offset="100%" stop-color="#86b437" stop-opacity=".03"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="container">
+    <!-- Left Content -->
+    <div class="hero-content">
+      <div class="trust-badge anim-fade-up">
+        <div class="trust-badge-dot" aria-hidden="true">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <span class="trust-badge-text">Bangladesh's Most Trusted Healthcare Provider</span>
+      </div>
+
+      <div class="hero-headline anim-fade-up delay-1">
+        <h1>
+          Your Health,<br>
+          Our <span class="highlight grad-green">Priority</span> —
+          <br><span style="color:var(--authority)">Expert Care,</span> Every Step
+        </h1>
+        <svg class="hero-underline" viewBox="0 0 220 12" fill="none" style="margin-top:-4px" aria-hidden="true">
+          <path d="M2 8C50 3 100 1.5 110 4C120 6.5 165 9 218 7" stroke="#86b437" stroke-width="3.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <p class="hero-desc anim-fade-up delay-2">
+        Renova Life Care Ltd. delivers world-class healthcare services across Bangladesh. From general checkups to specialized treatments — our BMDC-certified experts are here for you and your family.
+      </p>
+
+      <div class="hero-cta anim-fade-up delay-3">
+        <a href="#appointment" class="btn btn-primary btn-lg" aria-label="Book an appointment with our specialists">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Book Appointment
+        </a>
+        <a href="tel:+8801700000000" class="btn-call" aria-label="Call us at +880 1700-000000">
+          <span class="btn-call-icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#05417d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.5 10a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.44 0h3a2 2 0 0 1 2 1.72A12.84 12.84 0 0 0 9.1 5.07a2 2 0 0 1-.45 2.11L7.5 8.28a16 16 0 0 0 6.29 6.29l1.1-1.1a2 2 0 0 1 2.11-.45A12.84 12.84 0 0 0 20.28 14a2 2 0 0 1 1.72 2z"/></svg>
+          </span>
+          +880 1700-000000
+        </a>
+      </div>
+
+      <div class="hero-trust anim-fade-up delay-4">
+        <div class="doctor-avatars" role="img" aria-label="Our specialist doctors">
+          <div class="doctor-avatar" style="background:linear-gradient(135deg,#428a26,#86b437)">FR</div>
+          <div class="doctor-avatar" style="background:linear-gradient(135deg,#05417d,#007ab9)">TH</div>
+          <div class="doctor-avatar" style="background:linear-gradient(135deg,#86b437,#428a26)">NA</div>
+          <div class="doctor-avatar" style="background:linear-gradient(135deg,#007ab9,#05417d)">MI</div>
+        </div>
+        <div>
+          <div class="hero-rating-stars" aria-label="5 out of 5 stars">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p class="hero-rating-text"><strong>15,000+ patients</strong> trust us</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Visual -->
+    <div class="hero-visual anim-float">
+      <div class="hero-card">
+        <div class="hero-card-bg" aria-hidden="true"></div>
+        <div class="hero-card-content">
+          <div class="hero-cross" aria-hidden="true">
+            <svg width="44" height="44" viewBox="0 0 48 48" fill="none"><rect x="18" y="6" width="12" height="36" rx="3" fill="white" opacity=".95"/><rect x="6" y="18" width="36" height="12" rx="3" fill="white" opacity=".75"/></svg>
+          </div>
+          <div>
+            <div class="hero-card-name">Renova Life Care Ltd.</div>
+            <div class="hero-card-slogan">Caring Today, Healthy Tomorrow.</div>
+          </div>
+          <div class="hero-stats-grid" aria-label="Key statistics">
+            <div class="hero-stat-pill"><span class="hero-stat-val">15,000+</span><span class="hero-stat-lbl">Happy Patients</span></div>
+            <div class="hero-stat-pill"><span class="hero-stat-val">120+</span><span class="hero-stat-lbl">Expert Doctors</span></div>
+            <div class="hero-stat-pill"><span class="hero-stat-val">35+</span><span class="hero-stat-lbl">Departments</span></div>
+            <div class="hero-stat-pill"><span class="hero-stat-val">14 Yrs</span><span class="hero-stat-lbl">Experience</span></div>
+          </div>
+          <div class="hero-available">
+            <div class="available-dot" aria-hidden="true"></div>
+            <span class="available-text">Open Now — Emergency 24/7</span>
+          </div>
+        </div>
+        <!-- Floating badges -->
+        <div class="badge-float badge-top-left" aria-hidden="true">
+          <div class="badge-icon" style="background:rgba(255,255,255,.15)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div><div class="badge-title">BMDC Certified</div><div class="badge-sub">All Doctors Verified</div></div>
+        </div>
+        <div class="badge-float badge-bottom-right" aria-hidden="true">
+          <div class="badge-icon" style="background:rgba(134,180,55,.12)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#86b437" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div><div class="badge-title" style="color:#0f172a;font-size:.8rem">ISO 9001:2015</div><div class="badge-sub" style="color:#64748b">Quality Certified</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     STATS STRIP
+══════════════════════════════════════════════════════════════ -->
+<div class="stats-strip" aria-label="Our achievements">
+  <div class="container">
+    <div class="stat-item reveal">
+      <span class="stat-val">15,000+</span>
+      <span class="stat-lbl">Happy Patients</span>
+    </div>
+    <div class="stat-item reveal delay-1">
+      <span class="stat-val">120+</span>
+      <span class="stat-lbl">Expert Doctors</span>
+    </div>
+    <div class="stat-item reveal delay-2">
+      <span class="stat-val">35+</span>
+      <span class="stat-lbl">Departments</span>
+    </div>
+    <div class="stat-item reveal delay-3">
+      <span class="stat-val">14 Years</span>
+      <span class="stat-lbl">Of Excellence</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     2 — SERVICES SECTION
+══════════════════════════════════════════════════════════════ -->
+<section class="section services" id="services" aria-labelledby="services-heading">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Our Services</span>
+      <h2 id="services-heading">Comprehensive Medical Care<br>Under One Roof</h2>
+      <p>From preventive checkups to complex surgical procedures, our specialists deliver the highest standard of care for every patient.</p>
+    </div>
+
+    <div class="services-grid">
+      <!-- Service Cards -->
+      <a href="#" class="service-card reveal" aria-label="General Checkup service">
+        <div class="service-icon" style="background:rgba(66,138,38,.12)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#428a26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>
+        </div>
+        <div>
+          <div class="service-title">General Checkup</div>
+          <p class="service-desc">Comprehensive health assessment for early detection and prevention of diseases before they become serious.</p>
+        </div>
+        <div class="service-link" style="color:#428a26">Learn More <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </a>
+
+      <a href="#" class="service-card reveal delay-1" aria-label="Cardiology service">
+        <div class="service-icon" style="background:rgba(229,62,62,.1)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div>
+          <div class="service-title">Cardiology</div>
+          <p class="service-desc">Advanced heart care with modern diagnostic tools and experienced cardiologists for all cardiac conditions.</p>
+        </div>
+        <div class="service-link" style="color:#e53e3e">Learn More <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </a>
+
+      <a href="#" class="service-card reveal delay-2" aria-label="Orthopedics service">
+        <div class="service-icon" style="background:rgba(0,122,185,.1)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007ab9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 10c.7-.7 1.69 0 2.5 0a2.5 2.5 0 1 0 0-5 .5.5 0 0 1-.5-.5 2.5 2.5 0 1 0-5 0c0 .81.7 1.8 0 2.5l-7 7c-.7.7-1.69 0-2.5 0a2.5 2.5 0 0 0 0 5c.28 0 .5.22.5.5a2.5 2.5 0 1 0 5 0c0-.81-.7-1.8 0-2.5z"/></svg>
+        </div>
+        <div>
+          <div class="service-title">Orthopedics</div>
+          <p class="service-desc">Bone, joint, and muscle care from fracture treatment to complex joint replacement surgeries.</p>
+        </div>
+        <div class="service-link" style="color:#007ab9">Learn More <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </a>
+
+      <a href="#" class="service-card reveal delay-3" aria-label="Neurology service">
+        <div class="service-icon" style="background:rgba(124,58,237,.1)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.44-3.16z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.44-3.16z"/></svg>
+        </div>
+        <div>
+          <div class="service-title">Neurology</div>
+          <p class="service-desc">Expert care for brain, spine, and nervous system disorders with cutting-edge diagnostic technology.</p>
+        </div>
+        <div class="service-link" style="color:#7c3aed">Learn More <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </a>
+
+      <a href="#" class="service-card reveal" aria-label="Pediatrics service">
+        <div class="service-icon" style="background:rgba(245,158,11,.1)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12h.01M15 12h.01M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"/><path d="M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 3"/></svg>
+        </div>
+        <div>
+          <div class="service-title">Pediatrics</div>
+          <p class="service-desc">Specialized child healthcare from newborns through adolescence with a child-friendly environment.</p>
+        </div>
+        <div class="service-link" style="color:#f59e0b">Learn More <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </a>
+
+      <a href="#" class="service-card reveal delay-1" aria-label="Dental Care service">
+        <div class="service-icon" style="background:rgba(5,65,125,.1)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#05417d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 13s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <div>
+          <div class="service-title">Dental Care</div>
+          <p class="service-desc">Complete oral health services including cosmetic, restorative, and preventive dentistry for all ages.</p>
+        </div>
+        <div class="service-link" style="color:#05417d">Learn More <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </a>
+
+      <a href="#" class="service-card reveal delay-2" aria-label="Dermatology service">
+        <div class="service-icon" style="background:rgba(134,180,55,.12)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#86b437" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c-1 3-4 5.5-9 6 4.5.5 7.5 2.7 9 6 1.5-3.3 4.5-5.5 9-6-4.7-.5-7.7-3-9-6z"/></svg>
+        </div>
+        <div>
+          <div class="service-title">Dermatology</div>
+          <p class="service-desc">Skin, hair, and nail treatments with advanced dermatological and cosmetic procedures.</p>
+        </div>
+        <div class="service-link" style="color:#86b437">Learn More <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </a>
+
+      <a href="#" class="service-card reveal delay-3" aria-label="Ophthalmology service">
+        <div class="service-icon" style="background:rgba(8,145,178,.1)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <div>
+          <div class="service-title">Ophthalmology</div>
+          <p class="service-desc">Complete eye care including vision testing, cataract surgery, LASIK, and retinal treatments.</p>
+        </div>
+        <div class="service-link" style="color:#0891b2">Learn More <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </a>
+    </div>
+
+    <div class="center-cta reveal">
+      <a href="#" class="btn btn-secondary" aria-label="View all medical services">View All Services <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     3 — ABOUT SECTION
+══════════════════════════════════════════════════════════════ -->
+<section class="section" id="about" aria-labelledby="about-heading">
+  <div class="container">
+    <div class="about-grid">
+      <!-- Visual -->
+      <div class="about-visual reveal">
+        <div class="about-main-card">
+          <div class="about-pattern" aria-hidden="true"></div>
+          <div class="about-main-inner">
+            <div style="width:70px;height:70px;border-radius:18px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;backdrop-filter:blur(8px)" aria-hidden="true">
+              <svg width="36" height="36" viewBox="0 0 48 48" fill="none"><rect x="18" y="6" width="12" height="36" rx="3" fill="white"/><rect x="6" y="18" width="36" height="12" rx="3" fill="white" opacity=".7"/></svg>
+            </div>
+            <div class="about-year">2010</div>
+            <div class="about-year-lbl">Established</div>
+            <p class="about-year-desc">Serving Bangladesh with compassion and excellence for over a decade.</p>
+          </div>
+        </div>
+
+        <div class="about-stats-overlay" aria-label="Statistics">
+          <div class="overlay-stat"><div class="overlay-stat-val">15,000+</div><div class="overlay-stat-lbl">Patients Treated</div></div>
+          <div class="overlay-stat"><div class="overlay-stat-val">120+</div><div class="overlay-stat-lbl">Expert Doctors</div></div>
+          <div class="overlay-stat"><div class="overlay-stat-val">98%</div><div class="overlay-stat-lbl">Satisfaction Rate</div></div>
+          <div class="overlay-stat"><div class="overlay-stat-val">35+</div><div class="overlay-stat-lbl">Departments</div></div>
+        </div>
+
+        <div class="cert-badge" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+          <div><div class="cert-badge-title">ISO 9001:2015</div><div class="cert-badge-sub">Quality Certified</div></div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="about-content reveal delay-2">
+        <div>
+          <span class="section-label">About Us</span>
+          <h2 id="about-heading">Why Choose <span class="grad-green">Renova Life Care?</span></h2>
+          <p style="margin:.875rem 0;font-size:1.05rem;line-height:1.8">For over 14 years, we have been the trusted healthcare partner for families across Bangladesh. Our commitment is simple: deliver world-class medicine with the warmth of genuine care.</p>
+          <p>From routine wellness checkups to complex surgical procedures, our multidisciplinary team of BMDC-certified physicians works collaboratively to deliver the best possible outcomes.</p>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-icon-wrap" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            </div>
+            <div>
+              <div class="feature-title">Certified Expert Doctors</div>
+              <p class="feature-desc">All physicians are BMDC-registered with international training and decades of proven experience.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon-wrap" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+            </div>
+            <div>
+              <div class="feature-title">Modern Technology</div>
+              <p class="feature-desc">Latest diagnostic equipment including MRI, CT Scan, and digital pathology for accurate results.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon-wrap" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <div>
+              <div class="feature-title">Patient-First Care</div>
+              <p class="feature-desc">Every treatment plan is personalized. We listen, understand, and treat the whole person.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon-wrap" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3 2 6M22 6l-3-3"/></svg>
+            </div>
+            <div>
+              <div class="feature-title">24/7 Emergency</div>
+              <p class="feature-desc">Round-the-clock emergency services with dedicated critical care units always ready.</p>
+            </div>
+          </div>
+        </div>
+
+        <a href="#" class="btn btn-primary" style="width:fit-content" aria-label="Learn more about us">
+          Learn More About Us
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     4 — DOCTORS SECTION
+══════════════════════════════════════════════════════════════ -->
+<section class="section doctors" id="doctors" aria-labelledby="doctors-heading">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Meet Our Team</span>
+      <h2 id="doctors-heading">Expert Specialists,<br>Compassionate Care</h2>
+      <p>Our doctors bring decades of experience and international training to deliver the best healthcare in Bangladesh.</p>
+    </div>
+
+    <div class="doctors-grid">
+      <!-- Doctor 1 -->
+      <div class="doctor-card reveal">
+        <div class="doctor-img">
+          <div class="doctor-avatar-big" style="background:linear-gradient(135deg,#428a26,#86b437)">FR</div>
+          <div class="doctor-avail-badge"><span class="avail-dot" aria-hidden="true"></span>Available</div>
+        </div>
+        <div class="doctor-info">
+          <div class="doctor-name">Dr. Fariha Rahman</div>
+          <div class="doctor-specialty">Cardiologist</div>
+          <div class="doctor-qual">MBBS, MD (Cardiology), FCPS</div>
+          <div class="doctor-meta">
+            <span>18 Years Exp.</span>
+            <div class="doctor-rating" aria-label="4.9 star rating">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              4.9
+            </div>
+            <span>3,200+ Patients</span>
+          </div>
+          <button class="doctor-book-btn" type="button" aria-label="Book appointment with Dr. Fariha Rahman">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Book Appointment
+          </button>
+        </div>
+      </div>
+
+      <!-- Doctor 2 -->
+      <div class="doctor-card reveal delay-1">
+        <div class="doctor-img">
+          <div class="doctor-avatar-big" style="background:linear-gradient(135deg,#05417d,#007ab9)">TH</div>
+          <div class="doctor-avail-badge"><span class="avail-dot" aria-hidden="true"></span>Available</div>
+        </div>
+        <div class="doctor-info">
+          <div class="doctor-name">Dr. Tariq Hossain</div>
+          <div class="doctor-specialty">Neurologist</div>
+          <div class="doctor-qual">MBBS, MD (Neurology), PhD</div>
+          <div class="doctor-meta">
+            <span>22 Years Exp.</span>
+            <div class="doctor-rating" aria-label="4.8 star rating">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              4.8
+            </div>
+            <span>2,800+ Patients</span>
+          </div>
+          <button class="doctor-book-btn" type="button" aria-label="Book appointment with Dr. Tariq Hossain">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Book Appointment
+          </button>
+        </div>
+      </div>
+
+      <!-- Doctor 3 -->
+      <div class="doctor-card reveal delay-2">
+        <div class="doctor-img">
+          <div class="doctor-avatar-big" style="background:linear-gradient(135deg,#86b437,#428a26)">NA</div>
+          <div class="doctor-avail-badge"><span class="avail-dot" aria-hidden="true"></span>Available</div>
+        </div>
+        <div class="doctor-info">
+          <div class="doctor-name">Dr. Nasreen Akter</div>
+          <div class="doctor-specialty">Pediatrician</div>
+          <div class="doctor-qual">MBBS, DCH, FCPS (Pediatrics)</div>
+          <div class="doctor-meta">
+            <span>15 Years Exp.</span>
+            <div class="doctor-rating" aria-label="4.9 star rating">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              4.9
+            </div>
+            <span>4,100+ Patients</span>
+          </div>
+          <button class="doctor-book-btn" type="button" aria-label="Book appointment with Dr. Nasreen Akter">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Book Appointment
+          </button>
+        </div>
+      </div>
+
+      <!-- Doctor 4 -->
+      <div class="doctor-card reveal delay-3">
+        <div class="doctor-img">
+          <div class="doctor-avatar-big" style="background:linear-gradient(135deg,#007ab9,#05417d)">MI</div>
+          <div class="doctor-avail-badge"><span class="avail-dot" aria-hidden="true"></span>Available</div>
+        </div>
+        <div class="doctor-info">
+          <div class="doctor-name">Dr. Mahmudul Islam</div>
+          <div class="doctor-specialty">Orthopedic Surgeon</div>
+          <div class="doctor-qual">MBBS, MS (Orthopedics), FRCS</div>
+          <div class="doctor-meta">
+            <span>20 Years Exp.</span>
+            <div class="doctor-rating" aria-label="4.7 star rating">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              4.7
+            </div>
+            <span>2,500+ Patients</span>
+          </div>
+          <button class="doctor-book-btn" type="button" aria-label="Book appointment with Dr. Mahmudul Islam">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Book Appointment
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="center-cta reveal">
+      <a href="#" class="btn btn-secondary">View All Doctors <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     5 — APPOINTMENT CTA SECTION
+══════════════════════════════════════════════════════════════ -->
+<section class="appt-section" id="appointment" aria-labelledby="appt-heading">
+  <div class="appt-bg" aria-hidden="true"></div>
+  <div class="appt-dots" aria-hidden="true"></div>
+  <div class="appt-blob1" aria-hidden="true"></div>
+  <div class="appt-blob2" aria-hidden="true"></div>
+  <div class="container">
+    <div class="appt-grid">
+      <div class="appt-content reveal">
+        <span class="section-label" style="color:var(--secondary);--before-bg:var(--secondary)">Book Now</span>
+        <h2 id="appt-heading">Ready to Take the Next Step <span>for Your Health?</span></h2>
+        <p>Schedule an appointment with our specialists today. Online booking is fast, easy, and available 24/7 — no long queues.</p>
+        <div class="appt-btns">
+          <a href="#" class="btn btn-primary btn-lg">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Book Appointment Online
+          </a>
+          <a href="tel:+8801700000000" class="btn btn-white-outline btn-lg">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.5 10a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.44 0h3a2 2 0 0 1 2 1.72A12.84 12.84 0 0 0 9.1 5.07a2 2 0 0 1-.45 2.11L7.5 8.28a16 16 0 0 0 6.29 6.29l1.1-1.1a2 2 0 0 1 2.11-.45A12.84 12.84 0 0 0 20.28 14a2 2 0 0 1 1.72 2z"/></svg>
+            Call +880 1700-000000
+          </a>
+        </div>
+      </div>
+      <div class="appt-form-card reveal delay-3">
+        <div class="appt-form-title">Quick Appointment Request</div>
+        <div class="form-row">
+          <div>
+            <label class="form-label" for="fname">Full Name</label>
+            <input class="form-input" id="fname" type="text" placeholder="Your full name" aria-required="true"/>
+          </div>
+          <div>
+            <label class="form-label" for="fphone">Phone Number</label>
+            <input class="form-input" id="fphone" type="tel" placeholder="+880 XXXX-XXXXXX" aria-required="true"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fdept">Department</label>
+          <select class="form-select" id="fdept" aria-required="true">
+            <option value="">Select Department</option>
+            <option>General Checkup</option>
+            <option>Cardiology</option>
+            <option>Orthopedics</option>
+            <option>Neurology</option>
+            <option>Pediatrics</option>
+            <option>Dental Care</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fdate">Preferred Date</label>
+          <input class="form-input" id="fdate" type="date" aria-required="true"/>
+        </div>
+        <button type="button" class="btn btn-primary form-submit" aria-label="Submit appointment request">Request Appointment</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     6 — SHOP SECTION
+══════════════════════════════════════════════════════════════ -->
+<section class="section" id="shop" aria-labelledby="shop-heading">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Our Shop</span>
+      <h2 id="shop-heading">Health Products,<br>Delivered to Your Door</h2>
+      <p>Trusted medical devices, supplements, and health kits from certified brands — all available online.</p>
+    </div>
+    <div class="shop-grid">
+      <div class="product-card reveal">
+        <div class="product-img">
+          <div style="width:72px;height:72px;border-radius:16px;background:linear-gradient(135deg,rgba(66,138,38,.15),rgba(134,180,55,.1));display:flex;align-items:center;justify-content:center" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#428a26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <span class="product-badge badge-bestseller">Best Seller</span>
+        </div>
+        <div class="product-info">
+          <div class="product-cat">Devices</div>
+          <div class="product-name">Digital Blood Pressure Monitor</div>
+          <div class="product-stars" aria-label="4.8 stars">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span style="font-size:.72rem;color:#64748b">(142)</span>
+          </div>
+          <div class="product-footer">
+            <div><span class="product-price">৳2,800</span><span class="product-old-price">৳3,500</span></div>
+            <button class="add-cart-btn" type="button" onclick="this.classList.toggle('added');this.textContent=this.classList.contains('added')?'✓ Added':'+ Add'" aria-label="Add Digital Blood Pressure Monitor to cart">+ Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal delay-1">
+        <div class="product-img">
+          <div style="width:72px;height:72px;border-radius:16px;background:linear-gradient(135deg,rgba(5,65,125,.12),rgba(0,122,185,.08));display:flex;align-items:center;justify-content:center" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#05417d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          </div>
+          <span class="product-badge badge-new">New</span>
+        </div>
+        <div class="product-info">
+          <div class="product-cat">Health Kits</div>
+          <div class="product-name">Diabetic Care Kit</div>
+          <div class="product-stars" aria-label="4.7 stars">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span style="font-size:.72rem;color:#64748b">(89)</span>
+          </div>
+          <div class="product-footer">
+            <div><span class="product-price">৳1,200</span></div>
+            <button class="add-cart-btn" type="button" onclick="this.classList.toggle('added');this.textContent=this.classList.contains('added')?'✓ Added':'+ Add'" aria-label="Add Diabetic Care Kit to cart">+ Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal delay-2">
+        <div class="product-img">
+          <div style="width:72px;height:72px;border-radius:16px;background:linear-gradient(135deg,rgba(134,180,55,.15),rgba(66,138,38,.1));display:flex;align-items:center;justify-content:center" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#86b437" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          </div>
+          <span class="product-badge badge-discount">20% Off</span>
+        </div>
+        <div class="product-info">
+          <div class="product-cat">Supplements</div>
+          <div class="product-name">Omega-3 Fish Oil (90 Capsules)</div>
+          <div class="product-stars" aria-label="4.9 stars">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span style="font-size:.72rem;color:#64748b">(234)</span>
+          </div>
+          <div class="product-footer">
+            <div><span class="product-price">৳850</span><span class="product-old-price">৳1,100</span></div>
+            <button class="add-cart-btn" type="button" onclick="this.classList.toggle('added');this.textContent=this.classList.contains('added')?'✓ Added':'+ Add'" aria-label="Add Omega-3 to cart">+ Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal delay-3">
+        <div class="product-img">
+          <div style="width:72px;height:72px;border-radius:16px;background:linear-gradient(135deg,rgba(0,122,185,.1),rgba(5,65,125,.08));display:flex;align-items:center;justify-content:center" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#007ab9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="product-cat">Devices</div>
+          <div class="product-name">Pulse Oximeter</div>
+          <div class="product-stars" aria-label="4.6 stars">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span style="font-size:.72rem;color:#64748b">(67)</span>
+          </div>
+          <div class="product-footer">
+            <div><span class="product-price">৳1,500</span></div>
+            <button class="add-cart-btn" type="button" onclick="this.classList.toggle('added');this.textContent=this.classList.contains('added')?'✓ Added':'+ Add'" aria-label="Add Pulse Oximeter to cart">+ Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="center-cta reveal"><a href="#" class="btn btn-secondary">Browse All Products <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     7 — PORTFOLIO / FACILITIES
+══════════════════════════════════════════════════════════════ -->
+<section class="section portfolio" id="portfolio" aria-labelledby="portfolio-heading">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Our Facilities</span>
+      <h2 id="portfolio-heading">World-Class Infrastructure</h2>
+      <p>State-of-the-art facilities designed for your comfort, safety, and the best possible medical outcomes.</p>
+    </div>
+    <div class="portfolio-grid reveal">
+      <div class="portfolio-item large" style="background:linear-gradient(145deg,#05417d,#007ab9)">
+        <div class="portfolio-overlay" aria-hidden="true"></div>
+        <div class="portfolio-content">
+          <span class="portfolio-cat">Critical Care</span>
+          <div class="portfolio-title">State-of-the-Art ICU & Critical Care Unit</div>
+        </div>
+      </div>
+      <div class="portfolio-item" style="background:linear-gradient(145deg,#428a26,#86b437)">
+        <div class="portfolio-overlay" aria-hidden="true"></div>
+        <div class="portfolio-content">
+          <span class="portfolio-cat">Surgery</span>
+          <div class="portfolio-title">Modern Operating Theater</div>
+        </div>
+      </div>
+      <div class="portfolio-item" style="background:linear-gradient(145deg,#86b437,#428a26)">
+        <div class="portfolio-overlay" aria-hidden="true"></div>
+        <div class="portfolio-content">
+          <span class="portfolio-cat">Diagnostics</span>
+          <div class="portfolio-title">Advanced Diagnostic Laboratory</div>
+        </div>
+      </div>
+      <div class="portfolio-item" style="background:linear-gradient(145deg,#007ab9,#05417d)">
+        <div class="portfolio-overlay" aria-hidden="true"></div>
+        <div class="portfolio-content">
+          <span class="portfolio-cat">Pediatrics</span>
+          <div class="portfolio-title">Child-Friendly Pediatric Ward</div>
+        </div>
+      </div>
+      <div class="portfolio-item" style="background:linear-gradient(145deg,#2e6a1a,#428a26)">
+        <div class="portfolio-overlay" aria-hidden="true"></div>
+        <div class="portfolio-content">
+          <span class="portfolio-cat">Rehabilitation</span>
+          <div class="portfolio-title">Rehabilitation Center</div>
+        </div>
+      </div>
+    </div>
+    <div class="center-cta reveal"><a href="#" class="btn btn-secondary">View All Facilities</a></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     8 — PRICING SECTION
+══════════════════════════════════════════════════════════════ -->
+<section class="section" id="pricing" aria-labelledby="pricing-heading">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Pricing Plans</span>
+      <h2 id="pricing-heading">Transparent, Affordable Healthcare</h2>
+      <p>No hidden fees. Choose the plan that fits your family's needs. All prices in BDT (Bangladeshi Taka).</p>
+    </div>
+    <div class="pricing-grid">
+      <!-- Basic -->
+      <div class="pricing-card pricing-default reveal">
+        <div class="pricing-plan-name light">Basic Care</div>
+        <div class="pricing-amount"><span class="pricing-currency" style="color:var(--gray-900)">৳</span><span class="pricing-value" style="color:var(--gray-900)">500</span><span class="pricing-period" style="color:var(--gray-400)">/per visit</span></div>
+        <p class="pricing-desc" style="color:var(--gray-500)">Perfect for routine checkups and preventive care visits.</p>
+        <div class="pricing-divider" style="background:var(--gray-100)" aria-hidden="true"></div>
+        <ul class="pricing-features" role="list" aria-label="Basic Care features">
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(66,138,38,.12)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#428a26" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:var(--gray-600)">General Consultation</span></li>
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(66,138,38,.12)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#428a26" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:var(--gray-600)">Basic Health Screening</span></li>
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(66,138,38,.12)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#428a26" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:var(--gray-600)">Blood Pressure Check</span></li>
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(66,138,38,.12)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#428a26" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:var(--gray-600)">BMI Assessment</span></li>
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(66,138,38,.12)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#428a26" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:var(--gray-600)">Health Advice</span></li>
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(66,138,38,.12)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#428a26" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:var(--gray-600)">1 Follow-up Session</span></li>
+        </ul>
+        <button class="pricing-cta pricing-cta-light" type="button" aria-label="Select Basic Care plan">Get Started</button>
+      </div>
+
+      <!-- Popular -->
+      <div class="pricing-card pricing-popular reveal delay-2">
+        <div class="popular-badge" aria-label="Most Popular plan">Most Popular</div>
+        <div class="pricing-plan-name dark">Family Care</div>
+        <div class="pricing-amount"><span class="pricing-currency" style="color:#fff">৳</span><span class="pricing-value" style="color:#fff">2,500</span><span class="pricing-period" style="color:rgba(255,255,255,.6)">/per month</span></div>
+        <p class="pricing-desc" style="color:rgba(255,255,255,.7)">Comprehensive coverage for your entire family's health needs.</p>
+        <div class="pricing-divider" style="background:rgba(255,255,255,.18)" aria-hidden="true"></div>
+        <ul class="pricing-features" role="list" aria-label="Family Care features">
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(255,255,255,.18)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:rgba(255,255,255,.85)">4 Specialist Consultations</span></li>
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(255,255,255,.18)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:rgba(255,255,255,.85)">Full Body Checkup</span></li>
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(255,255,255,.18)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:rgba(255,255,255,.85)">Lab Tests (Basic Panel)</span></li>
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(255,255,255,.18)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:rgba(255,255,255,.85)">Dental Checkup</span></li>
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(255,255,255,.18)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:rgba(255,255,255,.85)">Eye Screening</span></li>
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(255,255,255,.18)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:rgba(255,255,255,.85)">Priority Appointments</span></li>
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(255,255,255,.18)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:rgba(255,255,255,.85)">Emergency Hotline</span></li>
+        </ul>
+        <button class="pricing-cta pricing-cta-dark" type="button" aria-label="Select Family Care plan">Choose Plan</button>
+      </div>
+
+      <!-- Premium -->
+      <div class="pricing-card pricing-authority reveal delay-3">
+        <div class="pricing-plan-name" style="color:var(--authority)">Premium Health</div>
+        <div class="pricing-amount"><span class="pricing-currency" style="color:var(--gray-900)">৳</span><span class="pricing-value" style="color:var(--gray-900)">6,000</span><span class="pricing-period" style="color:var(--gray-400)">/per month</span></div>
+        <p class="pricing-desc" style="color:var(--gray-500)">All-inclusive premium healthcare with dedicated VIP service.</p>
+        <div class="pricing-divider" style="background:var(--gray-100)" aria-hidden="true"></div>
+        <ul class="pricing-features" role="list" aria-label="Premium Health features">
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(5,65,125,.1)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#05417d" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:var(--gray-600)">Unlimited Consultations</span></li>
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(5,65,125,.1)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#05417d" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:var(--gray-600)">Advanced Lab Tests</span></li>
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(5,65,125,.1)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#05417d" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:var(--gray-600)">Imaging & Radiology</span></li>
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(5,65,125,.1)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#05417d" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:var(--gray-600)">Annual Comprehensive Screening</span></li>
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(5,65,125,.1)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#05417d" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:var(--gray-600)">Home Visit Service</span></li>
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(5,65,125,.1)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#05417d" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:var(--gray-600)">Dedicated Health Manager</span></li>
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(5,65,125,.1)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#05417d" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:var(--gray-600)">24/7 Emergency Support</span></li>
+          <li class="pricing-feature"><div class="feature-check" style="background:rgba(5,65,125,.1)" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#05417d" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span style="color:var(--gray-600)">International Referrals</span></li>
+        </ul>
+        <button class="pricing-cta" style="background:var(--authority);color:#fff" type="button" onmouseover="this.style.background='#032e5a'" onmouseout="this.style.background='var(--authority)'" aria-label="Select Premium Health plan">Go Premium</button>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:.85rem;color:var(--gray-400);margin-top:2rem">Custom plans available for corporates. <a href="#" style="color:var(--primary);font-weight:600">Contact us →</a></p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     9 — TESTIMONIALS
+══════════════════════════════════════════════════════════════ -->
+<section class="section testimonials" id="testimonials" aria-labelledby="testimonials-heading">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Patient Stories</span>
+      <h2 id="testimonials-heading">Real Patients, Real Transformations</h2>
+      <p>Thousands of families across Bangladesh trust Renova Life Care with their most precious asset — their health.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars" aria-label="5 out of 5 stars">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <blockquote class="testi-quote">"Renova Life Care has completely changed my view of healthcare in Bangladesh. The doctors are incredibly knowledgeable and the staff is warm and caring. My mother received excellent cardiac care here."</blockquote>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#428a26,#86b437)" aria-hidden="true">R</div>
+          <div>
+            <div class="testi-name">Rina Begum</div>
+            <div class="testi-meta">Mirpur, Dhaka · Cardiology</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal delay-1">
+        <div class="testi-stars" aria-label="5 out of 5 stars">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <blockquote class="testi-quote">"I traveled from Chittagong specifically for my son's treatment at Renova. Dr. Nasreen is phenomenal with children. The online appointment system is very convenient. Highly recommended!"</blockquote>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#05417d,#007ab9)" aria-hidden="true">R</div>
+          <div>
+            <div class="testi-name">Rafiqul Karim</div>
+            <div class="testi-meta">Chittagong · Pediatrics</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal delay-2">
+        <div class="testi-stars" aria-label="5 out of 5 stars">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <blockquote class="testi-quote">"The orthopedic department is world-class. After years of knee pain, Dr. Mahmudul's surgery has given me my life back. Professional, caring, and truly life-changing results."</blockquote>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#86b437,#428a26)" aria-hidden="true">S</div>
+          <div>
+            <div class="testi-name">Sumaiya Jahan</div>
+            <div class="testi-meta">Uttara, Dhaka · Orthopedics</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal delay-3">
+        <div class="testi-stars" aria-label="4 out of 5 stars">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <blockquote class="testi-quote">"Excellent neurological care from Dr. Tariq. He explained everything clearly, listened patiently, and the treatment plan has been very effective. Clean environment and punctual appointments."</blockquote>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#007ab9,#05417d)" aria-hidden="true">A</div>
+          <div>
+            <div class="testi-name">Abdullah Al-Mamun</div>
+            <div class="testi-meta">Sylhet · Neurology</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="trust-bar reveal">
+      <div class="trust-bar-item"><div class="trust-val">98%</div><div class="trust-lbl">Patient Satisfaction</div></div>
+      <div class="trust-bar-item"><div class="trust-val">4.9/5</div><div class="trust-lbl">Average Rating</div></div>
+      <div class="trust-bar-item"><div class="trust-val">15,000+</div><div class="trust-lbl">Reviews Collected</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     10 — PARTNERS
+══════════════════════════════════════════════════════════════ -->
+<div class="partners" aria-label="Our trusted partners and affiliations">
+  <div class="container">
+    <p class="partners-label">Trusted Partners & Affiliations</p>
+    <div class="partners-grid">
+      <div class="partner-item"><div class="partner-name">Square Hospitals</div></div>
+      <div class="partner-item"><div class="partner-name">Beximco Pharma</div></div>
+      <div class="partner-item"><div class="partner-name">DGDA Bangladesh</div></div>
+      <div class="partner-item"><div class="partner-name">WHO Bangladesh</div></div>
+      <div class="partner-item"><div class="partner-name">BSMMU</div></div>
+      <div class="partner-item"><div class="partner-name">Bangladesh Medical Association</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     11 — BLOG
+══════════════════════════════════════════════════════════════ -->
+<section class="section" id="blog" aria-labelledby="blog-heading">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Health Insights</span>
+      <h2 id="blog-heading">Stay Informed, Stay Healthy</h2>
+      <p>Expert articles and health tips from our specialist team — written in easy-to-understand language for everyone.</p>
+    </div>
+    <div class="blog-grid">
+      <a href="#" class="blog-card reveal" aria-label="Read: 10 Early Warning Signs of Heart Disease">
+        <div class="blog-img" style="background:linear-gradient(135deg,rgba(229,62,62,.1),rgba(229,62,62,.05))">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span class="blog-cat-badge">Cardiology</span>
+        </div>
+        <div class="blog-info">
+          <div class="blog-meta"><span>April 15, 2025</span><span>5 min read</span><span>Dr. Fariha Rahman</span></div>
+          <div class="blog-title">10 Early Warning Signs of Heart Disease You Shouldn't Ignore</div>
+          <p class="blog-excerpt">Cardiovascular disease remains the leading cause of death worldwide. Learn the warning signs that require immediate medical attention and could save your life.</p>
+          <div class="blog-read-more">Read More <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </a>
+      <a href="#" class="blog-card reveal delay-1" aria-label="Read: Managing Diabetes in Bangladesh">
+        <div class="blog-img" style="background:linear-gradient(135deg,rgba(66,138,38,.1),rgba(134,180,55,.05))">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#428a26" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <span class="blog-cat-badge">Diabetes</span>
+        </div>
+        <div class="blog-info">
+          <div class="blog-meta"><span>April 8, 2025</span><span>7 min read</span><span>Dr. Tariq Hossain</span></div>
+          <div class="blog-title">Managing Diabetes in Bangladesh: A Practical Guide for Patients</div>
+          <p class="blog-excerpt">With rising diabetes rates in Bangladesh, here is how to manage your blood sugar through balanced diet, regular exercise, and effective medication strategies.</p>
+          <div class="blog-read-more">Read More <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </a>
+      <a href="#" class="blog-card reveal delay-2" aria-label="Read: Child Vaccination Schedule Guide">
+        <div class="blog-img" style="background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(245,158,11,.05))">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12h.01M15 12h.01M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"/><path d="M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 3"/></svg>
+          <span class="blog-cat-badge">Pediatrics</span>
+        </div>
+        <div class="blog-info">
+          <div class="blog-meta"><span>March 30, 2025</span><span>6 min read</span><span>Dr. Nasreen Akter</span></div>
+          <div class="blog-title">Your Child's Vaccination Schedule: A Complete Parent's Guide</div>
+          <p class="blog-excerpt">Keeping up with childhood vaccinations is crucial for your child's health. Here is everything Bangladeshi parents need to know about the full EPI schedule.</p>
+          <div class="blog-read-more">Read More <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </a>
+    </div>
+    <div class="center-cta reveal">
+      <a href="#" class="btn btn-secondary">Read All Articles <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     12 — EMERGENCY CONTACT BANNER
+══════════════════════════════════════════════════════════════ -->
+<div class="emergency" role="complementary" aria-label="Emergency contact">
+  <div class="container">
+    <div class="emergency-left">
+      <div class="emergency-icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <div>
+        <div class="emergency-title">Emergency? We're Available 24/7</div>
+        <div class="emergency-sub">Our emergency team is always ready to help you and your family.</div>
+      </div>
+    </div>
+    <div class="emergency-btns">
+      <a href="tel:+8801700000000" class="emergency-btn-white" aria-label="Call primary emergency line">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.5 10a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.44 0h3a2 2 0 0 1 2 1.72A12.84 12.84 0 0 0 9.1 5.07a2 2 0 0 1-.45 2.11L7.5 8.28a16 16 0 0 0 6.29 6.29l1.1-1.1a2 2 0 0 1 2.11-.45A12.84 12.84 0 0 0 20.28 14a2 2 0 0 1 1.72 2z"/></svg>
+        +880 1700-000000
+      </a>
+      <a href="tel:+8801711000000" class="emergency-btn-outline" aria-label="Call alternate emergency line">+880 1711-000000</a>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- ══════════════════════════════════════════════════════════
+     13 — FOOTER
+══════════════════════════════════════════════════════════════ -->
+<footer class="footer" id="footer" role="contentinfo">
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand -->
+        <div class="footer-brand">
+          <div class="footer-logo" aria-label="Renova Life Care Ltd.">
+            <div class="footer-logo-mark" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="10" y="3" width="4" height="18" rx="2" fill="white"/><rect x="3" y="10" width="18" height="4" rx="2" fill="white" opacity=".7"/></svg>
+            </div>
+            <div>
+              <div class="footer-logo-name">Renova Life Care</div>
+              <div class="footer-logo-slogan">Caring Today, Healthy Tomorrow.</div>
+            </div>
+          </div>
+          <p class="footer-desc">Bangladesh's most trusted healthcare provider, delivering compassionate, world-class medicine since 2010.</p>
+          <div class="footer-contact" aria-label="Contact information">
+            <div class="footer-contact-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#428a26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>House #12, Road #4, Block-C, Gulshan 2,<br>Dhaka-1212, Bangladesh</span>
+            </div>
+            <a href="tel:+8801700000000" class="footer-contact-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#428a26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.5 10a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.44 0h3a2 2 0 0 1 2 1.72A12.84 12.84 0 0 0 9.1 5.07a2 2 0 0 1-.45 2.11L7.5 8.28a16 16 0 0 0 6.29 6.29l1.1-1.1a2 2 0 0 1 2.11-.45A12.84 12.84 0 0 0 20.28 14a2 2 0 0 1 1.72 2z"/></svg>
+              +880 1700-000000
+            </a>
+            <a href="mailto:info@renovalifecare.com" class="footer-contact-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#428a26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              info@renovalifecare.com
+            </a>
+          </div>
+          <div class="footer-socials" aria-label="Follow us on social media">
+            <a href="#" class="social-btn" aria-label="Facebook"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="#" class="social-btn" aria-label="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="#" class="social-btn" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="#" class="social-btn" aria-label="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1C5.12 19.56 12 19.56 12 19.56s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg></a>
+          </div>
+        </div>
+
+        <!-- Company -->
+        <nav aria-label="Company links">
+          <h4 class="footer-col h4">Company</h4>
+          <ul class="footer-links" role="list">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Our Team</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">News & Blog</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </nav>
+
+        <!-- Services -->
+        <nav aria-label="Services links">
+          <h4 class="footer-col h4">Services</h4>
+          <ul class="footer-links" role="list">
+            <li><a href="#">General Checkup</a></li>
+            <li><a href="#">Cardiology</a></li>
+            <li><a href="#">Orthopedics</a></li>
+            <li><a href="#">Neurology</a></li>
+            <li><a href="#">Pediatrics</a></li>
+            <li><a href="#">Dental Care</a></li>
+          </ul>
+        </nav>
+
+        <!-- Support -->
+        <nav aria-label="Support links">
+          <h4 class="footer-col h4">Support</h4>
+          <ul class="footer-links" role="list">
+            <li><a href="#">Book Appointment</a></li>
+            <li><a href="#">Patient Portal</a></li>
+            <li><a href="#">Insurance</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p class="footer-copy">© 2025 Renova Life Care Ltd. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Navbar scroll effect ─────────────────────────────────────────────
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+// ── Mobile menu toggle ───────────────────────────────────────────────
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+let menuOpen = false;
+hamburger.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  mobileMenu.classList.toggle('open', menuOpen);
+  hamburger.setAttribute('aria-expanded', menuOpen);
+  const spans = hamburger.querySelectorAll('span');
+  if (menuOpen) {
+    spans[0].style.cssText = 'transform:rotate(45deg) translate(5px,5px)';
+    spans[1].style.cssText = 'opacity:0;transform:scaleX(0)';
+    spans[2].style.cssText = 'transform:rotate(-45deg) translate(5px,-5px)';
+  } else {
+    spans.forEach(s => s.style.cssText = '');
+  }
+});
+
+// Close mobile menu on link click
+mobileMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    menuOpen = false;
+    mobileMenu.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', false);
+    hamburger.querySelectorAll('span').forEach(s => s.style.cssText = '');
+  });
+});
+
+// ── Scroll reveal ────────────────────────────────────────────────────
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(el => observer.observe(el));
+
+// ── Doctor book button ───────────────────────────────────────────────
+document.querySelectorAll('.doctor-book-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.getElementById('appointment').scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+/* Emergency Banner Styles */
+.emergency-banner {
+  background: linear-gradient(135deg, #428a26, #2e6a1a);
+  padding: 1.25rem 0;
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Container */
+.emergency-banner-container {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .emergency-banner-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .emergency-banner-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Content Wrapper */
+.emergency-banner-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .emergency-banner-content {
+    flex-direction: row;
+  }
+}
+
+/* Info Section */
+.emergency-banner-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: white;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .emergency-banner-info {
+    width: auto;
+  }
+}
+
+/* Icon */
+.emergency-banner-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Titles - Font Family Applied */
+.emergency-banner-title {
+  font-family: 'Sen', sans-serif;
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.25;
+  color: white;
+  margin: 0;
+}
+
+.emergency-banner-subtitle {
+  font-family: 'Sen', sans-serif;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Buttons Container */
+.emergency-banner-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  width: 100%;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .emergency-banner-buttons {
+    width: auto;
+    justify-content: flex-end;
+  }
+}
+
+/* Primary Button */
+.emergency-banner-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: white;
+  color: #05417d;
+  font-weight: 700;
+  padding: 0.625rem 1.5rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .emergency-banner-btn-primary {
+    white-space: normal;
+    word-wrap: break-word;
+  }
+}
+
+.emergency-banner-btn-primary:hover {
+  background-color: #fef2f2;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Secondary Button */
+.emergency-banner-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-weight: 600;
+  padding: 0.625rem 1.5rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease-in-out;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .emergency-banner-btn-secondary {
+    white-space: normal;
+    word-wrap: break-word;
+  }
+}
+
+.emergency-banner-btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .emergency-banner {
+    padding: 1rem 0;
+  }
+  
+  .emergency-banner-title {
+    font-size: 1rem;
+  }
+  
+  .emergency-banner-subtitle {
+    font-size: 0.75rem;
+  }
+  
+  .emergency-banner-icon {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  .emergency-banner-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .emergency-banner-btn-primary,
+  .emergency-banner-btn-secondary {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* Tablet Adjustments */
+@media (min-width: 641px) and (max-width: 768px) {
+  .emergency-banner-title {
+    font-size: 1rem;
+  }
+  
+  .emergency-banner-subtitle {
+    font-size: 0.75rem;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .emergency-banner {
+    display: none;
+  }
+}

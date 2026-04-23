@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Design Tokens ─────────────────────────────────────────────── */
+:root {
+  --color-primary: #428a26;
+  --color-primary-dark: #2e6a1a;
+  --color-secondary: #86b437;
+  --color-accent: #007ab9;
+  --color-authority: #05417d;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-bg-light: #f8fafc;
+  --color-bg-section: #f0f7ed;
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748b;
+
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  --shadow-card: 0 4px 24px rgba(4, 65, 125, 0.08);
+  --shadow-card-hover: 0 8px 40px rgba(4, 65, 125, 0.16);
+  --shadow-button: 0 4px 16px rgba(66, 138, 38, 0.35);
+  --radius-card: 16px;
+
+  --transition: all 0.3s ease-in-out;
+}
+
+/* ─── Base Resets ────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  background-color: var(--color-white);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ─── Typography Hierarchy ───────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); }
+h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
+h3 { font-size: clamp(1.3rem, 2.5vw, 1.75rem); }
+h4 { font-size: clamp(1.1rem, 2vw, 1.35rem); }
+h5 { font-size: 1.1rem; }
+h6 { font-size: 0.95rem; }
+
+p {
+  font-family: var(--font-body);
+  color: var(--color-text-secondary);
+  line-height: 1.75;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ─── Utility Classes ───────────────────────────────────────────────── */
+@layer components {
+  .section-padding {
+    @apply py-20 md:py-28;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .text-gradient-green {
+    background: linear-gradient(135deg, #428a26, #86b437);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-blue {
+    background: linear-gradient(135deg, #05417d, #007ab9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 ease-in-out;
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-hover:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-4px);
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-semibold text-white text-base transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    background: linear-gradient(135deg, #428a26, #86b437);
+    box-shadow: var(--shadow-button);
+    font-family: var(--font-body);
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #2e6a1a, #428a26);
+    box-shadow: 0 6px 24px rgba(66, 138, 38, 0.45);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-semibold text-base transition-all duration-300 border-2 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    color: var(--color-authority);
+    border-color: var(--color-authority);
+    font-family: var(--font-body);
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-authority);
+    color: white;
+  }
+
+  .btn-outline-white {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-semibold text-base transition-all duration-300 border-2 border-white text-white focus:outline-none;
+    font-family: var(--font-body);
+  }
+
+  .btn-outline-white:hover {
+    @apply bg-white;
+    color: var(--color-primary);
+  }
+
+  .section-label {
+    @apply inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest mb-3;
+    color: var(--color-primary);
+    font-family: var(--font-body);
+  }
+
+  .section-label::before {
+    content: '';
+    @apply block w-8 h-0.5 rounded-full;
+    background: var(--color-primary);
+  }
+}
+
+/* ─── Custom Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 3px;
+}
+
+/* ─── Selection ─────────────────────────────────────────────────────── */
+::selection {
+  background: var(--color-primary);
+  color: white;
+}
+
+/* ─── Focus Visible ─────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}

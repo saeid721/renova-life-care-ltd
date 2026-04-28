@@ -383,12 +383,12 @@ export const blogs = [
 ];
 
 export const partners = [
-  { id: 1, name: "Square Hospitals", logo: "/images/partners/square.svg" },
-  { id: 2, name: "Beximco Pharma", logo: "/images/partners/beximco.svg" },
-  { id: 3, name: "DGDA Bangladesh", logo: "/images/partners/dgda.svg" },
-  { id: 4, name: "WHO Bangladesh", logo: "/images/partners/who.svg" },
-  { id: 5, name: "BSMMU", logo: "/images/partners/bsmmu.svg" },
-  { id: 6, name: "Bangladesh Medical Association", logo: "/images/partners/bma.svg" },
+  { id: 1, name: "Square Hospitals", logo: "/images/partners/01.png" },
+  { id: 2, name: "Beximco Pharma", logo: "/images/partners/02.png" },
+  { id: 3, name: "DGDA Bangladesh", logo: "/images/partners/03.png" },
+  { id: 4, name: "WHO Bangladesh", logo: "/images/partners/03.png" },
+  { id: 5, name: "BSMMU", logo: "/images/partners/05.png" },
+  { id: 6, name: "Bangladesh Medical Association", logo: "/images/partners/06.png" },
 ];
 
 export const whyChooseUs = [

@@ -1,50 +1,71 @@
-// components/common/Section.jsx
 import { cn } from "@/lib/utils/cn";
+import "./Section.css";
 
-export function Section({ id, children, className, bg = "bg-white", variant }) {
+/**
+ * Section — Wrapper component for page sections with consistent padding and layout.
+ */
+export function Section({ 
+  id, 
+  children, 
+  className, 
+  bg = "white", 
+  variant 
+}) {
   return (
     <section
       id={id}
       className={cn(
-        "py-16 md:py-24",
-        bg === "bg-slate-50" && "bg-slate-50",
-        bg === "bg-white" && "bg-white",
-        variant === "alternate" && "bg-slate-50",
+        "section",
+        bg === "slate" && "section--slate",
+        bg === "white" && "section--white",
+        bg === "green" && "section--green",
+        variant === "alternate" && "section--alternate",
         className
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="section__container">
         {children}
       </div>
     </section>
   );
 }
 
-export function SectionHeader({ label, title, subtitle, align = "center", titleClassName }) {
+/**
+ * SectionHeader — Header component for sections with label, title, and subtitle.
+ */
+export function SectionHeader({ 
+  label, 
+  title, 
+  subtitle, 
+  align = "center", 
+  titleClassName 
+}) {
   return (
     <div className={cn(
-      "mb-12 md:mb-16",
-      align === "center" && "text-center",
-      align === "left" && "text-left"
+      "section-header",
+      align === "center" && "section-header--center",
+      align === "left" && "section-header--left"
     )}>
       {label && (
-        <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest mb-3 text-primary">
-          <span className="w-8 h-0.5 rounded-full bg-primary" />
+        <span className="section-header__label">
+          <span className="section-header__label-bar" />
           {label}
         </span>
       )}
       <h2 
         className={cn(
-          "font-heading font-bold text-3xl md:text-4xl lg:text-5xl text-slate-900 mb-4",
+          "section-header__title",
           titleClassName
         )}
         dangerouslySetInnerHTML={{ __html: title }}
       />
       {subtitle && (
-        <p className="text-slate-500 text-lg max-w-3xl mx-auto">
+        <p className="section-header__subtitle">
           {subtitle}
         </p>
       )}
     </div>
   );
 }
+
+export default Section;

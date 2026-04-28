@@ -1,27 +1,104 @@
+'use client';
+
 import { partners } from "@/constants/siteData";
+import "./PartnersSection.css";
 
 export default function PartnersSection() {
+  const duplicatedPartners = [...partners, ...partners];
+
   return (
     <section
-      className="py-14 bg-white border-y border-slate-100"
+      className="partners-section"
       aria-label="Our trusted partners"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p className="text-center text-sm font-semibold text-slate-400 uppercase tracking-widest mb-10">
+      {/* Animated Background - Matching AppointmentCTASection */}
+      <div className="partners-bg-wrapper" aria-hidden="true">
+        <div className="partners-bg-gradient" />
+        <div className="partners-bg-dots" />
+        <div className="partners-bg-blob blob-1" />
+        <div className="partners-bg-blob blob-2" />
+        <div className="partners-bg-blob blob-3" />
+        
+        {/* Floating particles */}
+        <div className="partners-particles">
+          {[...Array(6)].map((_, i) => (
+            <div
+              key={i}
+              className="partners-particle"
+              style={{
+                left: `${15 + i * 14}%`,
+                animationDelay: `${i * 0.5}s`,
+                animationDuration: `${15 + i * 2}s`,
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="partners-container">
+        <p className="partners-label">
           Trusted Partners & Affiliations
         </p>
-        <div className="grid grid-cols-3 md:grid-cols-6 gap-8 items-center">
-          {partners.map((partner) => (
-            <div
-              key={partner.id}
-              className="flex items-center justify-center opacity-50 hover:opacity-100 transition-opacity duration-300"
-              title={partner.name}
-            >
-              <div className="h-10 flex items-center justify-center text-slate-400 font-semibold text-xs text-center">
-                {partner.name}
+        
+        <div className="partners-slider-wrapper">
+          <div className="partners-slider-track">
+            {/* First set of partners */}
+            {partners.map((partner) => (
+              <div
+                key={partner.id}
+                className="partner-slide-item"
+                title={partner.name}
+                role="listitem"
+              >
+                <div className="partner-content">
+                  <img
+                    src={partner.logo}
+                    alt={`${partner.name} logo`}
+                    className="partner-logo-img"
+                    loading="lazy"
+                    width={140}
+                    height={50}
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                    }}
+                  />
+                  <span className="partner-fallback-text hidden">
+                    {partner.name}
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+            
+            {/* Duplicate set for seamless loop */}
+            {partners.map((partner) => (
+              <div
+                key={`${partner.id}-duplicate`}
+                className="partner-slide-item"
+                title={partner.name}
+                role="listitem"
+                aria-hidden="true"
+              >
+                <div className="partner-content">
+                  <img
+                    src={partner.logo}
+                    alt=""
+                    className="partner-logo-img"
+                    loading="lazy"
+                    width={140}
+                    height={50}
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                    }}
+                  />
+                  <span className="partner-fallback-text hidden">
+                    {partner.name}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

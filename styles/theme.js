@@ -46,9 +46,9 @@ export const colors = {
 
 export const typography = {
   fontFamily: {
-    heading: "'Playfair Display', serif",   // Distinctive, trustworthy
-    body: "'DM Sans', sans-serif",           // Clean, readable
-    mono: "'JetBrains Mono', monospace",
+    heading: "'Sen', sans-serif",
+    body: "Sen', sans-serif",
+    mono: "'Sen', sans-serif",
   },
   fontWeight: {
     regular: 400,

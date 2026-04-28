@@ -309,37 +309,37 @@ export const portfolioItems = [
     id: 1,
     title: "State-of-the-Art ICU",
     category: "Facilities",
-    image: "/images/portfolio/icu.jpg",
+    image: "/images/portfolio/image1.jpg", // ✅ Updated
   },
   {
     id: 2,
     title: "Modern Operating Theater",
     category: "Surgery",
-    image: "/images/portfolio/ot.jpg",
+    image: "/images/portfolio/image2.jpg", // ✅ Updated
   },
   {
     id: 3,
     title: "Advanced Diagnostic Lab",
     category: "Diagnostics",
-    image: "/images/portfolio/lab.jpg",
+    image: "/images/portfolio/image3.jpg",
   },
   {
     id: 4,
     title: "Pediatric Care Ward",
     category: "Pediatrics",
-    image: "/images/portfolio/pediatric.jpg",
+    image: "/images/portfolio/image4.jpg",
   },
   {
     id: 5,
     title: "Rehabilitation Center",
     category: "Rehabilitation",
-    image: "/images/portfolio/rehab.jpg",
+    image: "/images/portfolio/image5.jpg",
   },
   {
     id: 6,
     title: "Digital Pharmacy",
     category: "Pharmacy",
-    image: "/images/portfolio/pharmacy.jpg",
+    image: "/images/portfolio/image6.jpg",
   },
 ];
 

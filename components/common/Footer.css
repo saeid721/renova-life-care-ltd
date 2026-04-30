@@ -330,3 +330,31 @@ body {
   overflow-x: hidden;
   width: 100%;
 }
+
+
+/* Payment Logo Section */
+.footer-payment {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+}
+
+.payment-logo-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.payment-logo-container img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Optional: Hover effect for payment section */
+.footer-payment:hover .payment-logo-container img {
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}

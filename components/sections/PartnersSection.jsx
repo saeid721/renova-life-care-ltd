@@ -37,7 +37,7 @@ export default function PartnersSection() {
 
       <div className="partners-container">
         <p className="partners-label">
-          Trusted Partners & Affiliations
+          Trusted Corporate Partners
         </p>
         
         <div className="partners-slider-wrapper">

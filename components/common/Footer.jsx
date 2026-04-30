@@ -176,19 +176,19 @@ export default function Footer() {
             </ul>
           </nav>
 
-          {/* Our Services Column */}
-          <nav className="footer-nav" aria-label="Our Services links">
-            <h3 className="footer-nav-title">Our Services</h3>
-            <ul className="footer-nav-list" role="list">
-              {footerLinks.services.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="footer-nav-link">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          {/* Payment Methods Column */}
+          <div className="footer-payment">
+            <h3 className="footer-nav-title">Secure Payment</h3>
+            <div className="payment-logo-container">
+              <Image
+                src="/images/online-payment.png"
+                alt="Supported Payment Methods"
+                width={200}
+                height={80}
+                style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+              />
+            </div>
+          </div>
         </div>
       </div>
 

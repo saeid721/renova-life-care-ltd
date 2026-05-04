@@ -1,6 +1,3 @@
-import Navbar from "@/components/common/Navbar";
-import Footer from "@/components/common/Footer";
-import "../styles/globals.css";
 import {
   HeroSection,
   AboutSection,
@@ -38,22 +35,18 @@ export default function HomePage() {
       >
         Skip to main content
       </a>
-      <Navbar />
-      <main id="main-content">
-        <HeroSection />
-        <AboutSection />
-        <ServicesSection />
-        <DoctorsSection />
-        <AppointmentCTASection />
-        <ShopSection />
-        <PortfolioSection />
-        <PricingSection />
-        <TestimonialsSection />
-        <PartnersSection />
-        <BlogSection />
-        <EmergencyBanner />
-      </main>
-      <Footer />
+      <HeroSection />
+      <AboutSection />
+      <ServicesSection />
+      <DoctorsSection />
+      <AppointmentCTASection />
+      <ShopSection />
+      <PortfolioSection />
+      <PricingSection />
+      <TestimonialsSection />
+      <PartnersSection />
+      <BlogSection />
+      <EmergencyBanner />
     </>
   );
 }

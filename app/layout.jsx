@@ -1,5 +1,8 @@
 import "@/styles/globals.css";
+import "@/styles/pages.css";
 import { siteConfig } from "@/constants/siteData";
+import Navbar from "@/components/common/Navbar";
+import Footer from "@/components/common/Footer";
 
 export const metadata = {
   metadataBase: new URL("https://www.renovalifecare.com"),
@@ -73,7 +76,11 @@ export default function RootLayout({ children }) {
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       <body className="font-body antialiased" suppressHydrationWarning>
-        {children}
+        <Navbar />
+        <main id="main-content">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );

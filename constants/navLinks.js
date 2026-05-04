@@ -9,6 +9,7 @@ export const navLinks = [
   { label: "Services", href: "/services" },
   { label: "Doctors", href: "/doctors" },
   { label: "Shop", href: "/shop" },
+  { label: "Media", href: "/media" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];

@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils/cn";
-import "./Section.css";
+import "../../styles/components/Section.css";
 
 /**
  * Section — Wrapper component for page sections with consistent padding and layout.

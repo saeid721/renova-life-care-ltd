@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { navLinks, socialLinks } from "@/constants/navLinks";
 import { siteConfig } from "@/constants/siteData";
-import "./Navbar.css";
+import "../../styles/components/Navbar.css";
 
 const SocialIcon = ({ type }) => {
   const paths = {

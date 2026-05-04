@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { siteConfig } from "@/constants/siteData";
 import { footerLinks, socialLinks } from "@/constants/navLinks";
-import "./Footer.css";
+import "../../styles/components/Footer.css";
 
 const SocialIcon = ({ type }) => {
   const paths = {

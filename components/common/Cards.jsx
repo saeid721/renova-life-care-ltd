@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils/utils";
-import "./Card.css";
+import "../../styles/components/Card.css";
 
 /**
  * Card — Base card component with hover elevation.

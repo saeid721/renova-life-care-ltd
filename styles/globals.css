@@ -1,39 +1,109 @@
+/* ═══════════════════════════════════════════════════════════════
+   GLOBAL STYLES — Design Tokens & Base
+   ═══════════════════════════════════════════════════════════════ */
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ─── CSS Design Tokens ─────────────────────────────────────────────── */
+/* ─── CSS Design Tokens (Single Source of Truth) ──────────────── */
 :root {
+  /* 🎨 Colors */
   --color-primary: #428a26;
   --color-primary-dark: #2e6a1a;
   --color-secondary: #86b437;
   --color-accent: #007ab9;
   --color-authority: #05417d;
+  --color-authority-dark: #07346a;
+  --color-authority-darker: #0a2850;
+  
   --color-white: #ffffff;
   --color-black: #000000;
   --color-bg-light: #f8fafc;
   --color-bg-section: #f0f7ed;
+  
   --color-text-primary: #1e293b;
   --color-text-secondary: #475569;
   --color-text-muted: #64748b;
+  --color-text-light: rgba(255, 255, 255, 0.75);
+  --color-text-light-muted: rgba(255, 255, 255, 0.5);
+  --color-text-light-strong: rgba(255, 255, 255, 0.85);
+  
+  --color-border-default: #e2e8f0;
+  --color-border-muted: #f1f5f9;
+  --color-border-focus: rgba(66, 138, 38, 0.12);
 
+  /* 🔤 Typography */
   --font-heading: 'Playfair Display', serif;
   --font-body: 'DM Sans', sans-serif;
+  
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.85rem;
+  --font-size-base: 0.95rem;
+  --font-size-lg: 1.05rem;
+  --font-size-xl: 1.3rem;
+  --font-size-2xl: 1.7rem;
+  --font-size-3xl: 2.2rem;
+  --font-size-4xl: 2.8rem;
+  --font-size-5xl: 3.4rem;
 
+  /* 📐 Spacing Scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  
+  --space-section: 72px;
+  --space-section-lg: 80px;
+  --space-section-xl: 120px;
+
+  /* 🔲 Borders & Radius */
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 50px;
+  
+  --border-default: 1px solid var(--color-border-default);
+  --border-primary: 2px solid var(--color-primary);
+  --border-thick: 4px solid;
+
+  /* 🌑 Shadows */
+  --shadow-sm: 0 4px 16px rgba(4, 65, 125, 0.08);
+  --shadow-md: 0 8px 24px rgba(4, 65, 125, 0.1);
+  --shadow-lg: 0 12px 40px rgba(4, 65, 125, 0.15);
   --shadow-card: 0 4px 24px rgba(4, 65, 125, 0.08);
   --shadow-card-hover: 0 8px 40px rgba(4, 65, 125, 0.16);
   --shadow-button: 0 4px 16px rgba(66, 138, 38, 0.35);
-  --radius-card: 16px;
+  --shadow-button-hover: 0 6px 24px rgba(66, 138, 38, 0.45);
+  --shadow-cta: 0 4px 20px rgba(0, 0, 0, 0.15);
+  --shadow-cta-hover: 0 8px 28px rgba(0, 0, 0, 0.2);
 
-  --transition: all 0.3s ease-in-out;
+  /* ⚡ Transitions */
+  --transition-fast: all 0.2s ease;
+  --transition-default: all 0.3s ease-in-out;
+  --transition-hover: transform 0.3s ease, box-shadow 0.3s ease;
+
+  /* 🎨 Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  --gradient-authority: linear-gradient(135deg, var(--color-authority), var(--color-accent));
+  --gradient-hero: linear-gradient(135deg, var(--color-authority) 0%, var(--color-authority-dark) 40%, var(--color-authority-darker) 100%);
+  --gradient-green-section: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
 }
 
-/* ─── Base Resets ────────────────────────────────────────────────────── */
-*,
-*::before,
-*::after {
+/* ─── Base Resets ────────────────────────────────────────────── */
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -54,7 +124,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ─── Typography Hierarchy ───────────────────────────────────────────── */
+/* ─── Typography Hierarchy ───────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   line-height: 1.2;
@@ -78,7 +148,7 @@ p {
 a {
   color: inherit;
   text-decoration: none;
-  transition: var(--transition);
+  transition: var(--transition-default);
 }
 
 img {
@@ -86,7 +156,7 @@ img {
   height: auto;
 }
 
-/* ─── Utility Classes ───────────────────────────────────────────────── */
+/* ─── Utility Classes (Tailwind @layer) ──────────────────────── */
 @layer components {
   .section-padding {
     @apply py-20 md:py-28;
@@ -97,14 +167,14 @@ img {
   }
 
   .text-gradient-green {
-    background: linear-gradient(135deg, #428a26, #86b437);
+    background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .text-gradient-blue {
-    background: linear-gradient(135deg, #05417d, #007ab9);
+    background: var(--gradient-authority);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -122,14 +192,14 @@ img {
 
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-semibold text-white text-base transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2;
-    background: linear-gradient(135deg, #428a26, #86b437);
+    background: var(--gradient-primary);
     box-shadow: var(--shadow-button);
     font-family: var(--font-body);
   }
 
   .btn-primary:hover {
-    background: linear-gradient(135deg, #2e6a1a, #428a26);
-    box-shadow: 0 6px 24px rgba(66, 138, 38, 0.45);
+    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
+    box-shadow: var(--shadow-button-hover);
     transform: translateY(-1px);
   }
 
@@ -142,7 +212,7 @@ img {
 
   .btn-secondary:hover {
     background: var(--color-authority);
-    color: white;
+    color: var(--color-white);
   }
 
   .btn-outline-white {
@@ -168,27 +238,21 @@ img {
   }
 }
 
-/* ─── Custom Scrollbar ──────────────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f5f9;
-}
-
+/* ─── Custom Scrollbar ───────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-border-muted); }
 ::-webkit-scrollbar-thumb {
   background: var(--color-primary);
   border-radius: 3px;
 }
 
-/* ─── Selection ─────────────────────────────────────────────────────── */
+/* ─── Selection ──────────────────────────────────────────────── */
 ::selection {
   background: var(--color-primary);
-  color: white;
+  color: var(--color-white);
 }
 
-/* ─── Focus Visible ─────────────────────────────────────────────────── */
+/* ─── Focus Visible ──────────────────────────────────────────── */
 :focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 3px;

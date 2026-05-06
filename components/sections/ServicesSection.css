@@ -1,0 +1,45 @@
+/* ═══════════════════════════════════════════════════
+   COMPONENT: Services Section Layout
+   File: ServicesSection.css
+   Purpose: Grid layout & section-level styles only
+   Note: Card styles are in /common/Card/Card.css
+   ═══════════════════════════════════════════════════ */
+
+/* ── Services Grid Layout ───────────────────────── */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: var(--space-6);
+}
+
+@media (min-width: 640px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .services-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ── Section CTA (View All Button) ──────────────── */
+.services-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-12);
+}
+
+.services-cta-btn {
+  /* Inherits .btn and .btn-secondary from global.css */
+  padding: var(--space-3) var(--space-8);
+}
+
+/* ── Responsive Adjustments ─────────────────────── */
+@media (max-width: 768px) {
+  .services-cta-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

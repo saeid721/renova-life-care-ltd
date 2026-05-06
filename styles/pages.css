@@ -1,5 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════
    SHARED PAGE STYLES — Uses Global Variables Only
+   All colors, fonts, spacing pulled from global.css :root tokens
    ═══════════════════════════════════════════════════════════════ */
 
 /* ─── Page Hero ─────────────────────────────────────────────── */
@@ -23,7 +24,7 @@
   align-items: center;
   gap: var(--space-2);
   font-size: var(--font-size-xs);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-secondary);
@@ -35,7 +36,7 @@
 .page-hero__label::after {
   content: '';
   display: block;
-  width: 28px;
+  width: var(--space-7);
   height: 2px;
   background: var(--color-secondary);
   border-radius: 2px;
@@ -43,7 +44,7 @@
 
 .page-hero__title {
   font-size: clamp(2rem, 5vw, 3.4rem);
-  font-weight: 800;
+  font-weight: var(--font-weight-extrabold);
   color: var(--color-white);
   line-height: 1.15;
   margin-bottom: var(--space-5);
@@ -84,7 +85,7 @@
 
 .page-hero__breadcrumb [aria-current="page"] {
   color: var(--color-secondary);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 /* ─── Page Sections ─────────────────────────────────────────── */
@@ -111,7 +112,7 @@
   align-items: center;
   gap: var(--space-2);
   font-size: var(--font-size-xs);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-primary);
@@ -122,7 +123,7 @@
 .page-section__label::before {
   content: '';
   display: block;
-  width: 24px;
+  width: var(--space-6);
   height: 2px;
   background: var(--color-primary);
   border-radius: 2px;
@@ -130,7 +131,7 @@
 
 .page-section__title {
   font-size: clamp(1.7rem, 3vw, 2.5rem);
-  font-weight: 800;
+  font-weight: var(--font-weight-extrabold);
   color: var(--color-text-primary);
   margin-bottom: var(--space-4);
   text-align: center;
@@ -152,7 +153,7 @@
 
 .page-cta-title {
   font-size: clamp(1.6rem, 3vw, 2.2rem);
-  font-weight: 800;
+  font-weight: var(--font-weight-extrabold);
   color: var(--color-white);
   margin-bottom: var(--space-3);
   font-family: var(--font-heading);
@@ -169,10 +170,10 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  padding: 14px 36px;
+  padding: var(--space-4) var(--space-10);
   background: var(--color-white);
   color: var(--color-primary);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   font-size: var(--font-size-base);
   border-radius: var(--radius-full);
   border: none;
@@ -225,11 +226,11 @@
 .page-mv-card--vision  { border-top: var(--border-thick) var(--color-authority); }
 .page-mv-card--values  { border-top: var(--border-thick) var(--color-secondary); }
 
-.page-mv-icon  { font-size: 2.2rem; margin-bottom: var(--space-4); }
+.page-mv-icon  { font-size: var(--font-size-3xl); margin-bottom: var(--space-4); }
 
 .page-mv-title {
   font-size: var(--font-size-xl);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   margin-bottom: var(--space-3);
   font-family: var(--font-heading);
@@ -252,7 +253,7 @@
 
 .page-stat-value {
   font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 800;
+  font-weight: var(--font-weight-extrabold);
   color: var(--color-white);
   font-family: var(--font-heading);
 }
@@ -260,7 +261,7 @@
 .page-stat-label {
   font-size: var(--font-size-sm);
   color: var(--color-text-light);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   font-family: var(--font-body);
   margin-top: var(--space-1);
 }
@@ -285,18 +286,18 @@
   box-shadow: var(--shadow-md);
 }
 
-.page-feature-icon  { font-size: 1.8rem; margin-bottom: var(--space-3); }
+.page-feature-icon  { font-size: var(--font-size-2xl); margin-bottom: var(--space-3); }
 
 .page-feature-title {
   font-size: var(--font-size-lg);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   margin-bottom: var(--space-2);
   font-family: var(--font-heading);
 }
 
 .page-feature-desc {
-  font-size: 0.9rem;
+  font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   line-height: 1.65;
   font-family: var(--font-body);
@@ -318,8 +319,8 @@
 }
 
 .page-join-title {
-  font-size: clamp(1.5rem, 2.5vw, 2rem);
-  font-weight: 800;
+  font-size: clamp(1.5rem, 2.5vw, var(--font-size-2xl));
+  font-weight: var(--font-weight-extrabold);
   color: var(--color-text-primary);
   margin: var(--space-3) 0 var(--space-4);
   font-family: var(--font-heading);
@@ -345,13 +346,13 @@
   align-items: center;
   gap: var(--space-3);
   font-size: var(--font-size-base);
-  color: #334155;
+  color: var(--color-text-secondary);
   font-family: var(--font-body);
 }
 
 .page-join-check {
   color: var(--color-primary);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 .page-join-visual {
@@ -383,8 +384,8 @@
 
 .page-join-badge-num {
   display: block;
-  font-size: 2rem;
-  font-weight: 800;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-extrabold);
   color: var(--color-text-primary);
   font-family: var(--font-heading);
 }
@@ -392,7 +393,7 @@
 .page-join-badge-label {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   font-family: var(--font-body);
 }
 
@@ -413,20 +414,20 @@
 }
 
 .page-perk-icon {
-  font-size: 1.5rem;
+  font-size: var(--font-size-xl);
   flex-shrink: 0;
 }
 
 .page-perk-title {
   font-size: var(--font-size-base);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   margin-bottom: var(--space-1);
   font-family: var(--font-body);
 }
 
 .page-perk-desc {
-  font-size: 0.82rem;
+  font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   line-height: 1.5;
   font-family: var(--font-body);
@@ -446,7 +447,7 @@
   border: 1.5px solid var(--color-border-default);
   background: var(--color-white);
   font-size: var(--font-size-sm);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   color: var(--color-text-muted);
   cursor: pointer;
   transition: var(--transition-fast);
@@ -483,7 +484,7 @@
 }
 
 .page-newsletter-input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--color-text-light-muted);
 }
 
 .page-newsletter-input:focus {
@@ -521,30 +522,30 @@
 
 .page-press-tag {
   display: inline-block;
-  padding: 3px 10px;
+  padding: 3px var(--space-3);
   border-radius: var(--radius-full);
   font-size: var(--font-size-xs);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   font-family: var(--font-body);
 }
 
 .page-press-category {
   font-size: var(--font-size-xs);
-  color: #94a3b8;
-  font-weight: 500;
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
   font-family: var(--font-body);
 }
 
 .page-press-date {
-  font-size: 0.82rem;
-  color: #94a3b8;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
   margin-bottom: var(--space-3);
   font-family: var(--font-body);
 }
 
 .page-press-title {
   font-size: var(--font-size-lg);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   margin-bottom: var(--space-3);
   line-height: 1.45;
@@ -552,7 +553,7 @@
 }
 
 .page-press-excerpt {
-  font-size: 0.88rem;
+  font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   line-height: 1.65;
   margin-bottom: var(--space-5);
@@ -565,7 +566,7 @@
   align-items: center;
   gap: var(--space-2);
   font-size: var(--font-size-sm);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   color: var(--color-primary);
   transition: gap 0.2s;
   font-family: var(--font-body);
@@ -612,21 +613,21 @@
 
 .page-press-download-item:hover {
   border-color: var(--color-primary);
-  box-shadow: 0 4px 16px rgba(66, 138, 38, 0.1);
+  box-shadow: 0 var(--space-4) var(--space-4) rgba(66, 138, 38, 0.1);
 }
 
-.page-press-dl-icon { font-size: 1.4rem; }
+.page-press-dl-icon { font-size: var(--font-size-xl); }
 
 .page-press-dl-label {
   font-size: var(--font-size-base);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
   font-family: var(--font-body);
 }
 
 .page-press-dl-size {
-  font-size: 0.78rem;
-  color: #94a3b8;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
   font-family: var(--font-body);
 }
 
@@ -638,7 +639,7 @@
 /* ─── Media Contacts ────────────────────────────────────────── */
 .page-media-contacts-title {
   font-size: var(--font-size-lg);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   margin-bottom: var(--space-4);
   font-family: var(--font-heading);
@@ -661,34 +662,34 @@
 }
 
 .page-media-contact-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
+  width: var(--space-12);
+  height: var(--space-12);
+  border-radius: var(--radius-full);
   background: var(--gradient-primary);
   color: var(--color-white);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 1.1rem;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
   flex-shrink: 0;
 }
 
 .page-media-contact-name {
   font-size: var(--font-size-base);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   font-family: var(--font-body);
 }
 
 .page-media-contact-role {
-  font-size: 0.78rem;
-  color: #94a3b8;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
   font-family: var(--font-body);
 }
 
 .page-media-contact-email {
-  font-size: 0.82rem;
+  font-size: var(--font-size-sm);
   color: var(--color-primary);
   font-family: var(--font-body);
 }
@@ -723,18 +724,18 @@
 }
 
 .page-contact-info-label {
-  font-size: 0.78rem;
-  font-weight: 700;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #94a3b8;
+  color: var(--color-text-muted);
   margin-bottom: var(--space-2);
   font-family: var(--font-body);
 }
 
 .page-contact-info-value {
   font-size: var(--font-size-base);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
   font-family: var(--font-body);
 }
@@ -748,8 +749,8 @@
 }
 
 .page-contact-info-sub {
-  font-size: 0.8rem;
-  color: #94a3b8;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
   margin-top: var(--space-1);
   font-family: var(--font-body);
 }
@@ -776,8 +777,8 @@
 }
 
 .page-contact-form-title {
-  font-size: 1.6rem;
-  font-weight: 800;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-extrabold);
   color: var(--color-text-primary);
   margin-bottom: var(--space-2);
   font-family: var(--font-heading);
@@ -816,8 +817,8 @@
 
 .page-form-label {
   font-size: var(--font-size-sm);
-  font-weight: 600;
-  color: #334155;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
   font-family: var(--font-body);
 }
 
@@ -836,7 +837,7 @@
 
 .page-form-input:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px var(--color-border-focus);
+  box-shadow: 0 0 0 var(--space-1) var(--color-border-focus);
 }
 
 .page-form-select {
@@ -846,7 +847,7 @@
 
 .page-form-textarea {
   resize: vertical;
-  min-height: 120px;
+  min-height: var(--space-16);
 }
 
 .page-form-submit {
@@ -858,8 +859,8 @@
   color: var(--color-white);
   border: none;
   cursor: pointer;
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
   font-family: var(--font-body);
   display: flex;
   align-items: center;
@@ -879,13 +880,13 @@
 }
 
 .page-contact-success-icon {
-  font-size: 3rem;
+  font-size: var(--font-size-4xl);
   margin-bottom: var(--space-4);
 }
 
 .page-contact-success-title {
-  font-size: 1.4rem;
-  font-weight: 700;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   margin-bottom: var(--space-3);
   font-family: var(--font-heading);
@@ -922,8 +923,8 @@
 }
 
 .page-contact-depts-title {
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   margin-bottom: var(--space-4);
   font-family: var(--font-heading);
@@ -942,16 +943,16 @@
 }
 
 .page-contact-dept-name {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: #334155;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
   font-family: var(--font-body);
 }
 
 .page-contact-dept-phone {
   font-size: var(--font-size-sm);
   color: var(--color-primary);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   font-family: var(--font-body);
 }
 

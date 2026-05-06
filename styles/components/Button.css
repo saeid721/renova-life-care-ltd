@@ -1,0 +1,175 @@
+/* ═══════════════════════════════════════════════════════════════
+   COMPONENT: Button
+   File: components/common/Button.css
+   Purpose: Reusable button styles with multiple variants
+   All values pulled from global.css :root tokens
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Base Button Styles ─────────────────────────────────────── */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-8);
+    border-radius: var(--radius-full);
+    font-family: var(--font-body);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: var(--transition-default);
+  }
+  
+  /* Focus state for accessibility */
+  .btn:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: var(--space-1);
+  }
+  
+  /* Disabled state */
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  
+  /* ── Variant: Primary (Green Gradient from Global) ───────────── */
+  .btn-primary {
+    color: var(--color-white);
+    background: var(--gradient-primary);
+    box-shadow: var(--shadow-button);
+  }
+  
+  .btn-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
+    color: var(--color-white);
+    box-shadow: var(--shadow-button-hover);
+    transform: translateY(-1px);
+  }
+  
+  .btn-primary:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  
+  /* ── Variant: Secondary (Gradient Authority on Hover) ────────── */
+  .btn-secondary {
+    color: var(--color-authority);
+    background: transparent;
+    border: 2px solid var(--color-authority);
+  }
+  
+  .btn-secondary:hover:not(:disabled) {
+    /* ✅ Uses global gradient-authority token */
+    background: var(--gradient-authority);
+    color: var(--color-white);
+    box-shadow: var(--shadow-button-hover);
+    transform: translateY(-1px);
+  }
+  
+  /* ── Variant: Outline White (For Dark Backgrounds) ───────────── */
+  .btn-outline-white {
+    color: var(--color-white);
+    background: transparent;
+    border: 2px solid var(--color-white);
+  }
+  
+  .btn-outline-white:hover:not(:disabled) {
+    background: var(--color-white);
+    color: var(--color-primary);
+  }
+  
+  /* ── Variant: Gradient Authority (Solid Gradient Default) ────── */
+  .btn-gradient-authority {
+    color: var(--color-white);
+    background: var(--gradient-authority);
+    box-shadow: var(--shadow-button);
+  }
+  
+  .btn-gradient-authority:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--color-authority-dark), var(--color-authority));
+    box-shadow: var(--shadow-button-hover);
+    transform: translateY(-1px);
+  }
+  
+  /* ── Variant: Gradient Hero (For Dark Sections) ──────────────── */
+  .btn-gradient-hero {
+    color: var(--color-white);
+    background: var(--gradient-hero);
+    box-shadow: var(--shadow-cta);
+  }
+  
+  .btn-gradient-hero:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--color-authority-dark), var(--color-authority-darker));
+    box-shadow: var(--shadow-cta-hover);
+    transform: translateY(-1px);
+  }
+  
+  /* ── Size Variants ───────────────────────────────────────────── */
+  .btn-sm {
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--font-size-sm);
+  }
+  
+  .btn-lg {
+    padding: var(--space-4) var(--space-10);
+    font-size: var(--font-size-lg);
+  }
+  
+  /* ── Icon Button Support ─────────────────────────────────────── */
+  .btn .btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1em;
+    height: 1em;
+    font-size: 1.25em;
+  }
+  
+  .btn-icon-only {
+    padding: var(--space-3);
+    border-radius: var(--radius-full);
+  }
+  
+  /* ── Loading State ───────────────────────────────────────────── */
+  .btn-loading {
+    position: relative;
+    color: transparent !important;
+    pointer-events: none;
+  }
+  
+  .btn-loading::after {
+    content: '';
+    position: absolute;
+    width: 1.25em;
+    height: 1.25em;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: currentColor;
+    border-radius: var(--radius-full);
+    animation: btn-spin 0.6s linear infinite;
+  }
+  
+  @keyframes btn-spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  /* ── Full Width Variant ──────────────────────────────────────── */
+  .btn-full {
+    width: 100%;
+  }
+  
+  /* ── Responsive Adjustments ──────────────────────────────────── */
+  @media (max-width: 768px) {
+    .btn {
+      padding: var(--space-3) var(--space-7);
+      font-size: var(--font-size-sm);
+    }
+    
+    .btn-lg {
+      padding: var(--space-4) var(--space-8);
+      font-size: var(--font-size-base);
+    }
+  }

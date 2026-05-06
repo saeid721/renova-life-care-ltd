@@ -1,14 +1,20 @@
-/* AboutSection Styles */
+/* =============================================
+   COMPONENT: AboutSection
+   File: components/sections/AboutSection.css
+   All values pulled from global.css :root tokens
+   ============================================= */
+
+/* Grid Layout */
 .about-grid {
   display: grid;
-  gap: 3rem;
+  gap: var(--space-12);
   align-items: center;
 }
 
 @media (min-width: 1024px) {
   .about-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 4rem;
+    gap: var(--space-16);
   }
 }
 
@@ -20,9 +26,9 @@
 .about-image-container {
   position: relative;
   aspect-ratio: 4 / 5;
-  border-radius: 1.5rem;
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: 0 4px 24px rgba(4, 65, 125, 0.08);
+  box-shadow: var(--shadow-card);
 }
 
 .about-image {
@@ -32,59 +38,63 @@
 /* Overlay Badge */
 .about-overlay-badge {
   position: absolute;
-  bottom: 1.5rem;
-  left: 1.5rem;
-  right: 1.5rem;
+  bottom: var(--space-6);
+  left: var(--space-6);
+  right: var(--space-6);
   background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(4px);
-  border-radius: 1rem;
-  padding: 1rem;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-cta);
 }
 
 @media (min-width: 768px) {
   .about-overlay-badge {
-    padding: 1rem;
+    padding: var(--space-4);
   }
 }
 
 .about-badge-content {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .about-badge-icon {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 9999px;
+  width: var(--space-12);
+  height: var(--space-12);
+  border-radius: var(--radius-full);
   background-color: rgba(66, 138, 38, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.about-badge-icon svg {
+  stroke: var(--color-authority);
+}
+
 .about-badge-title {
-  font-weight: 600;
-  color: #0f172a;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-heading);
   margin: 0;
 }
 
 .about-badge-subtitle {
-  font-size: 0.875rem;
-  color: #64748b;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
   margin: 0;
 }
 
 /* Floating Stats Card */
 .about-floating-card {
   position: absolute;
-  bottom: -1.5rem;
-  right: -1.5rem;
-  background-color: white;
-  border-radius: 1rem;
-  padding: 1.25rem;
-  box-shadow: 0 4px 24px rgba(4, 65, 125, 0.08);
+  bottom: calc(-1 * var(--space-6));
+  right: calc(-1 * var(--space-6));
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-card);
   display: none;
 }
 
@@ -97,7 +107,7 @@
 .about-floating-content {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .about-floating-stat {
@@ -105,99 +115,120 @@
 }
 
 .about-floating-value {
-  font-family: 'Sen', sans-serif;
-  font-weight: 700;
-  font-size: 1.25rem;
-  color: #428a26;
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xl);
+  color: var(--color-authority);
   margin: 0;
 }
 
 .about-floating-label {
-  font-size: 0.75rem;
-  color: #64748b;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
   margin: 0;
 }
 
 .about-floating-divider {
   width: 1px;
-  height: 2.5rem;
-  background-color: #e2e8f0;
+  height: var(--space-10);
+  background-color: var(--color-border-default);
 }
 
 /* Right - Content Styles */
 .about-content {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--space-6);
 }
 
 /* Features */
 .about-features {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .about-feature-item {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .about-feature-icon {
-  font-size: 1.5rem;
+  font-size: var(--font-size-xl);
   flex-shrink: 0;
 }
 
 .about-feature-title {
-  font-weight: 600;
-  color: #0f172a;
-  margin-bottom: 0.25rem;
-  font-size: 1rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-heading);
+  margin-bottom: var(--space-1);
+  font-size: var(--font-size-base);
 }
 
 .about-feature-description {
-  color: #64748b;
-  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
   line-height: 1.5;
   margin: 0;
 }
 
-/* Stats Grid */
+/* Stats Grid — ✅ Single Row Layout */
 .about-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  padding-top: 1rem;
+  display: flex;
+  gap: var(--space-4);
+  padding-top: var(--space-4);
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: var(--space-2); /* for scrollbar space */
 }
 
 .about-stat-item {
+  flex: 0 0 auto;
+  min-width: 120px;
   text-align: center;
-  padding: 1rem;
-  background-color: #f8fafc;
-  border-radius: 0.75rem;
+  padding: var(--space-4);
+  background-color: var(--color-bg-light);
+  border-radius: var(--radius-md);
+  scroll-snap-align: start;
 }
 
 .about-stat-value {
-  font-family: 'Sen', sans-serif;
-  font-weight: 700;
-  font-size: 1.5rem;
-  color: #428a26;
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-2xl);
+  color: var(--color-authority);
   margin: 0;
 }
 
 .about-stat-label {
-  font-size: 0.75rem;
-  color: #64748b;
-  margin-top: 0.25rem;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
   margin-bottom: 0;
+}
+
+/* Hide scrollbar but keep functionality */
+.about-stats-grid::-webkit-scrollbar {
+  height: 4px;
+}
+
+.about-stats-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.about-stats-grid::-webkit-scrollbar-thumb {
+  background: var(--color-border-muted);
+  border-radius: var(--radius-sm);
 }
 
 /* Buttons */
 .about-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  padding-top: 0.5rem;
+  gap: var(--space-4);
+  padding-top: var(--space-2);
 }
 
 /* Responsive Adjustments */
@@ -212,73 +243,70 @@
     width: 100%;
   }
   
-  .about-stats-grid {
-    gap: 0.75rem;
-  }
-  
   .about-stat-item {
-    padding: 0.75rem;
+    min-width: 100px;
+    padding: var(--space-3);
   }
   
   .about-stat-value {
-    font-size: 1.125rem;
+    font-size: var(--font-size-lg);
   }
   
   .about-overlay-badge {
-    bottom: 1rem;
-    left: 1rem;
-    right: 1rem;
-    padding: 0.75rem;
+    bottom: var(--space-4);
+    left: var(--space-4);
+    right: var(--space-4);
+    padding: var(--space-3);
   }
   
   .about-badge-icon {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: var(--space-10);
+    height: var(--space-10);
   }
   
   .about-badge-icon svg {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: var(--space-5);
+    height: var(--space-5);
   }
   
   .about-badge-title {
-    font-size: 0.875rem;
+    font-size: var(--font-size-sm);
   }
   
   .about-badge-subtitle {
-    font-size: 0.75rem;
+    font-size: var(--font-size-xs);
   }
 }
 
 @media (min-width: 641px) and (max-width: 768px) {
   .about-stat-value {
-    font-size: 1.25rem;
+    font-size: var(--font-size-xl);
   }
   
   .about-floating-card {
-    bottom: -1rem;
-    right: -1rem;
-    padding: 1rem;
+    bottom: calc(-1 * var(--space-4));
+    right: calc(-1 * var(--space-4));
+    padding: var(--space-4);
   }
   
   .about-floating-value {
-    font-size: 1.25rem;
+    font-size: var(--font-size-xl);
   }
   
   .about-feature-item {
-    gap: 0.75rem;
+    gap: var(--space-3);
   }
   
   .about-feature-icon {
-    font-size: 1.25rem;
+    font-size: var(--font-size-lg);
   }
 }
 
-/* Animation Classes */
+/* Animation Classes - Using global transitions */
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(var(--space-12));
   }
   to {
     opacity: 1;
@@ -293,7 +321,17 @@
   }
   
   .about-overlay-badge {
-    background-color: white;
-    border: 1px solid #e2e8f0;
+    background-color: var(--color-white);
+    border: var(--border-default);
+  }
+  
+  .about-stats-grid {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+  
+  .about-stat-item {
+    flex: 1 1 30%;
+    min-width: auto;
   }
 }

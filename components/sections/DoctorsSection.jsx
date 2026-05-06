@@ -26,7 +26,7 @@ export default function DoctorsSection() {
   };
 
   return (
-    <Section id="doctors" bg="bg-slate-50">
+    <Section id="doctors" variant="alternate">
       <SectionHeader
         label="Meet Our Team"
         title="Expert Specialists, Compassionate Care"

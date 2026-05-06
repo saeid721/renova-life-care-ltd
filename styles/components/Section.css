@@ -1,18 +1,18 @@
 /* ─── Section Component Styles ─────────────────────────────────────── */
 
 .section {
-  padding: 5rem 0;
+  padding: 4rem 0;
 }
 
 @media (min-width: 768px) {
   .section {
-    padding: 6rem 0;
+    padding: 4rem 0;
   }
 }
 
 @media (min-width: 1024px) {
   .section {
-    padding: 7rem 0;
+    padding: 4rem 0;
   }
 }
 
@@ -87,7 +87,7 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: 0.75rem;
-  color: var(--color-primary);
+  color: var(--color-text-primary);
   font-family: 'Sen', sans-serif;
 }
 
@@ -104,7 +104,7 @@
   width: 2rem;
   height: 0.125rem;
   border-radius: 9999px;
-  background: var(--color-primary);
+  background: var(--color-text-primary);
 }
 
 /* Title */
@@ -112,7 +112,7 @@
   font-family: 'Sen', sans-serif;
   font-weight: 700;
   line-height: 1.2;
-  color: var(--color-text-primary);
+  color: var(--color-primary);
   font-size: clamp(1.8rem, 3.5vw, 2.8rem);
   margin-bottom: 1rem;
 }

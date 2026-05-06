@@ -1,45 +1,166 @@
-/* ═══════════════════════════════════════════════════
-   COMPONENT: Services Section Layout
-   File: ServicesSection.css
-   Purpose: Grid layout & section-level styles only
-   Note: Card styles are in /common/Card/Card.css
-   ═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   COMPONENT: Services Section
+   File: components/sections/ServicesSection.css
+   Purpose: Styles for the medical services grid display
+   Dependencies: Requires global.css design tokens loaded first
+   ═══════════════════════════════════════════════════════════════ */
 
-/* ── Services Grid Layout ───────────────────────── */
+/* ── Services Grid Layout ───────────────────────────────────── */
 .services-grid {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: var(--space-6);
-}
-
-@media (min-width: 640px) {
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: var(--space-6);
   }
-}
-
-@media (min-width: 1024px) {
-  .services-grid {
-    grid-template-columns: repeat(4, 1fr);
+  
+  @media (min-width: 640px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
-}
-
-/* ── Section CTA (View All Button) ──────────────── */
-.services-cta {
-  display: flex;
-  justify-content: center;
-  margin-top: var(--space-12);
-}
-
-.services-cta-btn {
-  /* Inherits .btn and .btn-secondary from global.css */
-  padding: var(--space-3) var(--space-8);
-}
-
-/* ── Responsive Adjustments ─────────────────────── */
-@media (max-width: 768px) {
-  .services-cta-btn {
-    width: 100%;
+  
+  @media (min-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  /* ── Service Card ──────────────────────────────────────────── */
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6);
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border-muted);
+    transition: var(--transition-hover);
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .service-card:hover {
+    border-color: rgba(var(--color-primary-rgb, 30, 111, 175), 0.2);
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-4px);
+  }
+  
+  /* ── Service Icon Wrapper ──────────────────────────────────── */
+  .service-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
     justify-content: center;
+    margin-bottom: var(--space-5);
+    transition: transform var(--transition-default);
+    /* Dynamic background: uses CSS variable from inline style */
+    background-color: color-mix(in srgb, var(--service-color, var(--color-primary)) 15%, transparent);
   }
-}
+  
+  .service-card:hover .service-icon-wrapper {
+    transform: scale(1.1);
+  }
+  
+  /* ── Service Title ─────────────────────────────────────────── */
+  .service-title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-xl);
+    color: var(--color-text-heading);
+    margin-bottom: var(--space-2);
+    transition: color var(--transition-fast);
+  }
+  
+  .service-card:hover .service-title {
+    color: var(--color-primary);
+  }
+  
+  /* ── Service Description ───────────────────────────────────── */
+  .service-description {
+    font-family: var(--font-body);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--space-4);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  /* ── Service Link (Learn More) ─────────────────────────────── */
+  .service-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--service-color, var(--color-primary));
+    transition: gap var(--transition-default);
+    margin-top: auto;
+  }
+  
+  .service-card:hover .service-link {
+    gap: var(--space-2);
+  }
+  
+  .service-link-icon {
+    transition: transform var(--transition-default);
+  }
+  
+  .service-card:hover .service-link-icon {
+    transform: translateX(4px);
+  }
+  
+  /* ── Services CTA (View All Button) ────────────────────────── */
+  .services-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-12);
+  }
+  
+  .services-cta-btn {
+    /* Inherits .btn and .btn-secondary from global.css */
+    /* Additional spacing for this context */
+    padding: var(--space-3) var(--space-8);
+  }
+  
+  /* ── Responsive Adjustments ────────────────────────────────── */
+  @media (max-width: 768px) {
+    .service-card {
+      padding: var(--space-5);
+    }
+    
+    .service-title {
+      font-size: var(--font-size-lg);
+    }
+    
+    .service-description {
+      font-size: var(--font-size-xs);
+      -webkit-line-clamp: 2;
+    }
+    
+    .services-cta-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+  
+  /* ── Accessibility Enhancements ────────────────────────────── */
+  .service-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-xl);
+  }
+  
+  /* Reduce motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .service-card,
+    .service-icon-wrapper,
+    .service-title,
+    .service-link,
+    .service-link-icon {
+      transition: none !important;
+      transform: none !important;
+    }
+  }

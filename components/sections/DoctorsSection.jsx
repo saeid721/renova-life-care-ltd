@@ -104,12 +104,10 @@ export default function DoctorsSection() {
         ))}
       </div>
 
+
+      {/* View All Services Button */}
       <div className="doctors-view-all">
-        <Link
-          href="/doctors"
-          className="doctors-view-all-btn"
-          aria-label="View all doctors"
-        >
+        <Link href="/doctors" className="btn btn-primary doctors-cta-btn">
           View All Doctors
           <svg
             xmlns="http://www.w3.org/2000/svg"

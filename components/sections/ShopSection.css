@@ -203,26 +203,19 @@
   margin-top: 3rem;
 }
 
-.shop-view-all-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.75rem;
-  border-radius: 9999px;
-  font-weight: 600;
-  font-size: 0.875rem;
-  color: #05417d;
-  border: 2px solid #05417d;
-  background-color: transparent;
-  transition: all 0.3s ease;
-  text-decoration: none;
-}
-
-.shop-view-all-btn:hover {
-  background-color: #05417d;
-  color: white;
-  transform: translateY(-2px);
-}
+ 
+  /* ── shop CTA (View All Button) ────────────────────────── */
+  .shop-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-12);
+  }
+  
+  .shop-cta-btn {
+    /* Inherits .btn and .btn-secondary from global.css */
+    /* Additional spacing for this context */
+    padding: var(--space-3) var(--space-8);
+  }
 
 /* Responsive Adjustments */
 @media (max-width: 640px) {

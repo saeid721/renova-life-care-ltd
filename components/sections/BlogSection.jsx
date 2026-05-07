@@ -87,21 +87,12 @@ export default function BlogSection() {
         ))}
       </div>
 
+      {/* Read All Articles Button */}
       <div className="blog-view-all">
-        <Link href="/blog" className="blog-view-all-btn">
-          Read All Articles
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M5 12h14M12 5l7 7-7 7" />
+        <Link href="/blog" className="btn btn-primary blog-cta-btn">
+        Read All Articles
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
         </Link>
       </div>

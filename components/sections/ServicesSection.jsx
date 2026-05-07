@@ -114,7 +114,7 @@ export default function ServicesSection() {
 
       {/* View All Services Button */}
       <div className="services-cta">
-        <Link href="/services" className="btn btn-secondary services-cta-btn">
+        <Link href="/services" className="btn btn-primary services-cta-btn">
           View All Services
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M5 12h14M12 5l7 7-7 7"/>

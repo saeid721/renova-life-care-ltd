@@ -146,26 +146,12 @@ export default function ShopSection() {
         ))}
       </div>
 
+      {/* View All shop Button */}
       <div className="shop-view-all">
-        <Link
-          href="/shop"
-          className="shop-view-all-btn"
-          aria-label="Browse all products"
-        >
+        <Link href="/shop" className="btn btn-primary shop-cta-btn">
           Browse All Products
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M5 12h14M12 5l7 7-7 7" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
         </Link>
       </div>

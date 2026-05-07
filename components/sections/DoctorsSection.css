@@ -222,10 +222,18 @@
   text-decoration: none;
 }
 
-.doctors-view-all-btn:hover {
-  background-color: #05417d;
-  color: white;
-  transform: translateY(-2px);
+ 
+/* ── doctors CTA (View All Button) ────────────────────────── */
+.doctors-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-12);
+}
+
+.doctors-cta-btn {
+  /* Inherits .btn and .btn-secondary from global.css */
+  /* Additional spacing for this context */
+  padding: var(--space-3) var(--space-8);
 }
 
 /* Responsive Adjustments */

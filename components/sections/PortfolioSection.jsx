@@ -18,7 +18,7 @@ export default function PortfolioSection() {
   };
 
   return (
-    <Section id="portfolio" bg="bg-slate-50">
+    <Section id="portfolio" variant="alternate">
       <SectionHeader
         label="Our Facilities"
         title="World-Class Infrastructure"
@@ -61,13 +61,13 @@ export default function PortfolioSection() {
         ))}
       </div>
 
+      {/* View All portfolio Button */}
       <div className="portfolio-view-all">
-        <Link
-          href="/about#facilities"
-          className="portfolio-view-all-btn"
-          aria-label="View all facilities"
-        >
+        <Link href="/about#facilities" className="btn btn-primary portfolio-cta-btn">
           View All Facilities
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
         </Link>
       </div>
     </Section>

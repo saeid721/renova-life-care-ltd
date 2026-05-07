@@ -18,7 +18,7 @@ export default function PortfolioSection() {
   };
 
   return (
-    <Section id="portfolio" variant="alternate">
+    <Section id="portfolio">
       <SectionHeader
         label="Our Facilities"
         title="World-Class Infrastructure"

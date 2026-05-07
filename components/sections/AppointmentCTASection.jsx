@@ -5,390 +5,425 @@ import { siteConfig } from "@/constants/siteData";
 import { useState, useEffect } from "react";
 import "./AppointmentCTASection.css";
 
-/**
- * AppointmentCTASection — Professional appointment booking section
- * Features: Animated background, smart form validation, accessibility-first design
- */
-export default function AppointmentCTASection() {
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    department: "",
-    date: "",
-  });
-  const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
-  const [isMinDateSet, setIsMinDateSet] = useState(false);
+/* ─── SVG icon helpers ───────────────────────────────────── */
+const Icon = {
+  User: () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+    </svg>
+  ),
+  Phone: () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6.87-6.87A19.79 19.79 0 0 1 4.08 4.18 2 2 0 0 1 6.06 2h3a2 2 0 0 1 2 1.72c.127.946.36 1.874.69 2.76a2 2 0 0 1-.45 2.11L10.09 9.91a16 16 0 0 0 6.29 6.29l1.13-1.14a2 2 0 0 1 2.11-.45c.886.33 1.814.563 2.76.69A2 2 0 0 1 22 16.92z"/>
+    </svg>
+  ),
+  Stethoscope: () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/>
+    </svg>
+  ),
+  Calendar: () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+    </svg>
+  ),
+  Check: () => (
+    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  ),
+  Arrow: () => (
+    <svg className="appt__submit-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+    </svg>
+  ),
+  AlertCircle: () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+  ),
+  CheckCircle: () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+    </svg>
+  ),
+  Shield: () => (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    </svg>
+  ),
+  Clock: () => (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+    </svg>
+  ),
+  Star: () => (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1" aria-hidden="true">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </svg>
+  ),
+};
 
-  // Set minimum date to today for date picker
+/* ─── Department list ────────────────────────────────────── */
+const DEPARTMENTS = [
+  { value: "",              label: "Select Department",    disabled: true },
+  { value: "general",      label: "General Checkup" },
+  { value: "cardiology",   label: "Cardiology" },
+  { value: "orthopedics",  label: "Orthopedics" },
+  { value: "neurology",    label: "Neurology" },
+  { value: "pediatrics",   label: "Pediatrics" },
+  { value: "dental",       label: "Dental Care" },
+  { value: "dermatology",  label: "Dermatology" },
+  { value: "ophthalmology",label: "Eye Care" },
+  { value: "gynecology",   label: "Gynecology & Obs." },
+  { value: "oncology",     label: "Oncology" },
+];
+
+/* ─── Validation ─────────────────────────────────────────── */
+const validate = (data) => {
+  const errs = {};
+  if (!data.name.trim() || data.name.trim().length < 2)
+    errs.name = "Enter a valid full name";
+  if (!data.phone.trim() || !/^(\+880|01)[0-9]{9,10}$/.test(data.phone.replace(/\s/g, "")))
+    errs.phone = "Enter a valid Bangladesh phone number";
+  if (!data.department)
+    errs.department = "Please select a department";
+  if (!data.date)
+    errs.date = "Please select a preferred date";
+  return errs;
+};
+
+/* ─── Component ──────────────────────────────────────────── */
+export default function AppointmentCTASection() {
+  const EMPTY = { name: "", phone: "", department: "", date: "" };
+  const [form,        setForm]        = useState(EMPTY);
+  const [errors,      setErrors]      = useState({});
+  const [submitting,  setSubmitting]  = useState(false);
+  const [status,      setStatus]      = useState(null); // "success" | "error"
+  const [minDate,     setMinDate]     = useState("");
+
   useEffect(() => {
-    setIsMinDateSet(true);
+    setMinDate(new Date().toISOString().split("T")[0]);
   }, []);
 
-  // Validation function
-  const validateForm = () => {
-    const newErrors = {};
-    
-    if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
-    } else if (formData.name.trim().length < 2) {
-      newErrors.name = "Please enter a valid name";
-    }
-    
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required";
-    } else if (!/^(\+880|01)[0-9]{9,10}$/.test(formData.phone.replace(/\s/g, ""))) {
-      newErrors.phone = "Please enter a valid Bangladesh phone number";
-    }
-    
-    if (!formData.department) {
-      newErrors.department = "Please select a department";
-    }
-    
-    if (!formData.date) {
-      newErrors.date = "Please select a preferred date";
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  const change = (field, value) => {
+    setForm(p => ({ ...p, [field]: value }));
+    if (errors[field]) setErrors(p => ({ ...p, [field]: null }));
   };
 
-  const handleSubmit = async (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    
-    if (!validateForm()) return;
-    
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-    
+    const errs = validate(form);
+    if (Object.keys(errs).length) { setErrors(errs); return; }
+    setSubmitting(true);
+    setStatus(null);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      console.log("Form submitted:", formData);
-      setSubmitStatus("success");
-      setFormData({ name: "", phone: "", department: "", date: "" });
-      
-      // Reset status after 5 seconds
-      setTimeout(() => setSubmitStatus(null), 5000);
-    } catch (error) {
-      setSubmitStatus("error");
-      console.error("Submission error:", error);
+      await new Promise(r => setTimeout(r, 1600));
+      setStatus("success");
+      setForm(EMPTY);
+      setTimeout(() => setStatus(null), 6000);
+    } catch {
+      setStatus("error");
     } finally {
-      setIsSubmitting(false);
+      setSubmitting(false);
     }
   };
 
-  const handleChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    // Clear error when user starts typing
-    if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: null }));
-    }
-  };
-
-  const departments = [
-    { value: "", label: "Select Department", disabled: true },
-    { value: "general", label: "🩺 General Checkup", icon: "🩺" },
-    { value: "cardiology", label: "❤️ Cardiology", icon: "❤️" },
-    { value: "orthopedics", label: "🦴 Orthopedics", icon: "🦴" },
-    { value: "neurology", label: "🧠 Neurology", icon: "🧠" },
-    { value: "pediatrics", label: "👶 Pediatrics", icon: "👶" },
-    { value: "dental", label: "🦷 Dental Care", icon: "🦷" },
-    { value: "dermatology", label: "🧴 Dermatology", icon: "🧴" },
-    { value: "ophthalmology", label: "👁️ Eye Care", icon: "👁️" },
+  const FEATURES = [
+    "Instant confirmation",
+    "Free first consultation",
+    "100 % privacy guaranteed",
+    "Available 24 / 7",
   ];
+
+  const STATS = [
+    { num: "50K+",  label: "Patients Served" },
+    { num: "120+",  label: "Specialist Doctors" },
+    { num: "4.9★",  label: "Average Rating" },
+  ];
+
+  const inputCls = (f) =>
+    `appt__input${errors[f] ? " appt__input--err" : ""}`;
+  const selectCls = (f) =>
+    `appt__select${errors[f] ? " appt__select--err" : ""}`;
 
   return (
     <section
       id="appointment"
-      className="appointment-cta-section"
-      aria-labelledby="appointment-heading"
+      className="appt"
+      aria-labelledby="appt-heading"
     >
-      {/* Animated Background */}
-      <div className="appointment-bg-wrapper" aria-hidden="true">
-        <div className="appointment-bg-gradient" />
-        <div className="appointment-bg-dots" />
-        <div className="appointment-bg-blob blob-1" />
-        <div className="appointment-bg-blob blob-2" />
-        <div className="appointment-bg-blob blob-3" />
-        
-        {/* Floating particles */}
-        <div className="appointment-particles">
-          {[...Array(6)].map((_, i) => (
-            <div
-              key={i}
-              className="appointment-particle"
-              style={{
-                left: `${15 + i * 14}%`,
-                animationDelay: `${i * 0.5}s`,
-                animationDuration: `${15 + i * 2}s`,
-              }}
-            />
-          ))}
-        </div>
+      {/* ── Animated background ── */}
+      <div className="appt__bg" aria-hidden="true">
+        <div className="appt__bg-glow" />
+        <div className="appt__bg-grid" />
+        <div className="appt__bg-lines" />
+        <div className="appt__orb appt__orb--a" />
+        <div className="appt__orb appt__orb--b" />
+        <div className="appt__orb appt__orb--c" />
       </div>
 
-      <div className="appointment-container">
-        <div className="appointment-grid">
-          
-          {/* Left - Content */}
-          <div className="appointment-content-left">
-            {/* Badge */}
-            {/* <div className="appointment-badge-wrapper">
-              <span className="appointment-badge-icon" aria-hidden="true">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6.87-6.87A19.79 19.79 0 0 1 2 7.08V4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 1.72c.127.946.36 1.874.69 2.76a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6.29 6.29l1.13-1.14a2 2 0 0 1 2.11-.45c.886.33 1.814.563 2.76.69A2 2 0 0 1 22 16.92z"/>
-                </svg>
-              </span>
-              <span className="appointment-badge-text">Book Now</span>
-            </div> */}
+      <div className="appt__container">
+        <div className="appt__grid">
 
-            {/* Heading */}
-            <h2 id="appointment-heading" className="appointment-heading">
-              Ready to Take the Next Step
-              <br />
-              <span className="appointment-highlight">for Your Health?</span>
+          {/* ════ LEFT ════ */}
+          <div className="appt__left">
+
+            {/* Eyebrow */}
+            <div className="appt__tag" role="presentation">
+              <span className="appt__tag-dot" />
+              <span className="appt__tag-text">Now Accepting Patients</span>
+            </div>
+
+            {/* Headline */}
+            <h2 id="appt-heading" className="appt__headline">
+              Your Health Deserves
+              <em>Expert Care,</em>
+              <span className="appt__headline-accent">Right Now.</span>
             </h2>
-            
-            {/* Description */}
-            <p className="appointment-description">
-              Expert care is just a click away. Schedule your consultation with 
-              Bangladesh's trusted healthcare specialists. Fast, secure, and 
-              available around the clock.
+
+            {/* Subtext */}
+            <p className="appt__subtext">
+              Connect with Bangladesh's leading specialists in seconds. 
+              Smart, secure, and built around your wellbeing — 
+              book an appointment in under two minutes.
             </p>
 
-            {/* Trust Features */}
-            <ul className="appointment-features">
-              <li className="appointment-feature-item">
-                <span className="appointment-feature-icon" aria-hidden="true">✓</span>
-                <span>Instant confirmation</span>
-              </li>
-              <li className="appointment-feature-item">
-                <span className="appointment-feature-icon" aria-hidden="true">✓</span>
-                <span>Free consultation call</span>
-              </li>
-              <li className="appointment-feature-item">
-                <span className="appointment-feature-icon" aria-hidden="true">✓</span>
-                <span>100% privacy guaranteed</span>
-              </li>
+            {/* Feature pills */}
+            <ul className="appt__features" aria-label="Key benefits">
+              {FEATURES.map((f) => (
+                <li key={f} className="appt__feature">
+                  <span className="appt__feature-icon"><Icon.Check /></span>
+                  {f}
+                </li>
+              ))}
             </ul>
 
-            {/* Direct Contact */}
-            <div className="appointment-direct-contact">
-              <p className="appointment-contact-label">Prefer to talk?</p>
+            {/* Stats */}
+            <div className="appt__stats" role="list" aria-label="Clinic statistics">
+              {STATS.map((s) => (
+                <div key={s.label} className="appt__stat" role="listitem">
+                  <span className="appt__stat-num">{s.num}</span>
+                  <span className="appt__stat-label">{s.label}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Phone */}
+            <div className="appt__phone-block">
+              <span className="appt__phone-label">Prefer a call?</span>
               <Link
                 href={`tel:${siteConfig.phone}`}
-                className="appointment-contact-link"
-                aria-label={`Call us directly at ${siteConfig.phone}`}
+                className="appt__phone-link"
+                aria-label={`Call us at ${siteConfig.phone}`}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6.87-6.87A19.79 19.79 0 0 1 4.08 4.18 2 2 0 0 1 6.06 2h3a2 2 0 0 1 2 1.72c.127.946.36 1.874.69 2.76a2 2 0 0 1-.45 2.11L10.09 9.91a16 16 0 0 0 6.29 6.29l1.13-1.14a2 2 0 0 1 2.11-.45c.886.33 1.814.563 2.76.69A2 2 0 0 1 22 16.92z"/>
-                </svg>
+                <span className="appt__phone-icon">
+                  <Icon.Phone />
+                </span>
                 <span>{siteConfig.phone}</span>
               </Link>
             </div>
           </div>
 
-          {/* Right - Form Card */}
-          <div className="appointment-form-card">
-            {/* Card Header */}
-            <div className="appointment-form-header">
-              <h3 className="appointment-form-title">Quick Appointment Request</h3>
-              <p className="appointment-form-subtitle">Fill the form & we'll contact you within 1 hour</p>
+          {/* ════ RIGHT — Form Card ════ */}
+          <div className="appt__card">
+
+            {/* Card header */}
+            <div className="appt__card-head" aria-hidden="true">
+              <div className="appt__card-icon-wrap">
+                <Icon.Stethoscope />
+              </div>
+              <h3 className="appt__card-title">Book an Appointment</h3>
+              <p className="appt__card-subtitle">We'll confirm within 1 hour — guaranteed</p>
             </div>
 
-            {/* Success/Error Messages */}
-            {submitStatus === "success" && (
-              <div className="appointment-alert appointment-alert-success" role="alert">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                  <polyline points="20 6 9 17 4 12"/>
-                </svg>
-                <span>Thank you! We'll contact you shortly.</span>
-              </div>
-            )}
-            
-            {submitStatus === "error" && (
-              <div className="appointment-alert appointment-alert-error" role="alert">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                  <circle cx="12" cy="12" r="10"/>
-                  <line x1="12" y1="8" x2="12" y2="12"/>
-                  <line x1="12" y1="16" x2="12.01" y2="16"/>
-                </svg>
-                <span>Something went wrong. Please try again.</span>
-              </div>
-            )}
+            {/* Card body */}
+            <div className="appt__card-body">
 
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="appointment-form" noValidate>
-              {/* Name Field */}
-              <div className="appointment-form-group">
-                <label htmlFor="appt-name" className="appointment-form-label">
-                  Full Name <span className="appointment-required" aria-hidden="true">*</span>
-                </label>
-                <div className={`appointment-input-wrapper ${errors.name ? "error" : ""}`}>
-                  <svg className="appointment-input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                    <circle cx="12" cy="7" r="4"/>
-                  </svg>
-                  <input
-                    id="appt-name"
-                    type="text"
-                    placeholder="Dr. Fatima Rahman"
-                    value={formData.name}
-                    onChange={(e) => handleChange("name", e.target.value)}
-                    className={`appointment-form-input ${errors.name ? "input-error" : ""}`}
-                    aria-invalid={errors.name ? "true" : "false"}
-                    aria-describedby={errors.name ? "name-error" : undefined}
-                    disabled={isSubmitting}
-                  />
-                </div>
-                {errors.name && (
-                  <span id="name-error" className="appointment-error-message" role="alert">
-                    {errors.name}
+              {/* Alerts */}
+              {status === "success" && (
+                <div className="appt__alert appt__alert--success" role="alert">
+                  <span className="appt__alert-icon" style={{ color: "#1e7a45" }}>
+                    <Icon.CheckCircle />
                   </span>
-                )}
-              </div>
-
-              {/* Phone Field */}
-              <div className="appointment-form-group">
-                <label htmlFor="appt-phone" className="appointment-form-label">
-                  Phone Number <span className="appointment-required" aria-hidden="true">*</span>
-                </label>
-                <div className={`appointment-input-wrapper ${errors.phone ? "error" : ""}`}>
-                  <svg className="appointment-input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6.87-6.87A19.79 19.79 0 0 1 4.08 4.18 2 2 0 0 1 6.06 2h3a2 2 0 0 1 2 1.72c.127.946.36 1.874.69 2.76a2 2 0 0 1-.45 2.11L10.09 9.91a16 16 0 0 0 6.29 6.29l1.13-1.14a2 2 0 0 1 2.11-.45c.886.33 1.814.563 2.76.69A2 2 0 0 1 22 16.92z"/>
-                  </svg>
-                  <input
-                    id="appt-phone"
-                    type="tel"
-                    placeholder="+880 1XXX-XXXXXX"
-                    value={formData.phone}
-                    onChange={(e) => handleChange("phone", e.target.value)}
-                    className={`appointment-form-input ${errors.phone ? "input-error" : ""}`}
-                    aria-invalid={errors.phone ? "true" : "false"}
-                    aria-describedby={errors.phone ? "phone-error" : undefined}
-                    disabled={isSubmitting}
-                    pattern="^(\+880|01)[0-9]{9,10}$"
-                  />
+                  <span>Appointment requested! Our team will call you shortly.</span>
                 </div>
-                {errors.phone && (
-                  <span id="phone-error" className="appointment-error-message" role="alert">
-                    {errors.phone}
+              )}
+              {status === "error" && (
+                <div className="appt__alert appt__alert--error" role="alert">
+                  <span className="appt__alert-icon" style={{ color: "#dc2626" }}>
+                    <Icon.AlertCircle />
                   </span>
-                )}
-              </div>
-
-              {/* Department Select */}
-              <div className="appointment-form-group">
-                <label htmlFor="appt-dept" className="appointment-form-label">
-                  Department <span className="appointment-required" aria-hidden="true">*</span>
-                </label>
-                <div className={`appointment-input-wrapper ${errors.department ? "error" : ""}`}>
-                  <svg className="appointment-input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                    <polyline points="22 4 12 14.01 9 11.01"/>
-                  </svg>
-                  <select
-                    id="appt-dept"
-                    value={formData.department}
-                    onChange={(e) => handleChange("department", e.target.value)}
-                    className={`appointment-form-select ${errors.department ? "input-error" : ""}`}
-                    aria-invalid={errors.department ? "true" : "false"}
-                    aria-describedby={errors.department ? "dept-error" : undefined}
-                    disabled={isSubmitting}
-                  >
-                    {departments.map((dept) => (
-                      <option
-                        key={dept.value || "default"}
-                        value={dept.value}
-                        disabled={dept.disabled}
-                        className="appointment-select-option"
-                      >
-                        {dept.label}
-                      </option>
-                    ))}
-                  </select>
+                  <span>Something went wrong. Please try again or call us directly.</span>
                 </div>
-                {errors.department && (
-                  <span id="dept-error" className="appointment-error-message" role="alert">
-                    {errors.department}
-                  </span>
-                )}
-              </div>
+              )}
 
-              {/* Date Field */}
-              <div className="appointment-form-group">
-                <label htmlFor="appt-date" className="appointment-form-label">
-                  Preferred Date <span className="appointment-required" aria-hidden="true">*</span>
-                </label>
-                <div className={`appointment-input-wrapper ${errors.date ? "error" : ""}`}>
-                  <svg className="appointment-input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                    <line x1="16" y1="2" x2="16" y2="6"/>
-                    <line x1="8" y1="2" x2="8" y2="6"/>
-                    <line x1="3" y1="10" x2="21" y2="10"/>
-                  </svg>
-                  <input
-                    id="appt-date"
-                    type="date"
-                    value={formData.date}
-                    onChange={(e) => handleChange("date", e.target.value)}
-                    className={`appointment-form-input ${errors.date ? "input-error" : ""}`}
-                    aria-invalid={errors.date ? "true" : "false"}
-                    aria-describedby={errors.date ? "date-error" : undefined}
-                    disabled={isSubmitting}
-                    min={isMinDateSet ? new Date().toISOString().split("T")[0] : undefined}
-                  />
+              {/* Form */}
+              <form onSubmit={submit} className="appt__form" noValidate>
+
+                {/* Name + Phone */}
+                <div className="appt__row">
+                  {/* Name */}
+                  <div className="appt__field">
+                    <label htmlFor="appt-name" className="appt__label">
+                      Full Name <span className="appt__req" aria-hidden="true">*</span>
+                    </label>
+                    <div className="appt__input-wrap">
+                      <span className="appt__input-icon"><Icon.User /></span>
+                      <input
+                        id="appt-name"
+                        type="text"
+                        placeholder="Fatima Rahman"
+                        value={form.name}
+                        onChange={(e) => change("name", e.target.value)}
+                        className={inputCls("name")}
+                        aria-invalid={!!errors.name}
+                        aria-describedby={errors.name ? "err-name" : undefined}
+                        disabled={submitting}
+                        autoComplete="name"
+                      />
+                    </div>
+                    {errors.name && (
+                      <span id="err-name" className="appt__error" role="alert">
+                        {errors.name}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Phone */}
+                  <div className="appt__field">
+                    <label htmlFor="appt-phone" className="appt__label">
+                      Phone <span className="appt__req" aria-hidden="true">*</span>
+                    </label>
+                    <div className="appt__input-wrap">
+                      <span className="appt__input-icon"><Icon.Phone /></span>
+                      <input
+                        id="appt-phone"
+                        type="tel"
+                        placeholder="01XXX-XXXXXX"
+                        value={form.phone}
+                        onChange={(e) => change("phone", e.target.value)}
+                        className={inputCls("phone")}
+                        aria-invalid={!!errors.phone}
+                        aria-describedby={errors.phone ? "err-phone" : undefined}
+                        disabled={submitting}
+                        autoComplete="tel"
+                      />
+                    </div>
+                    {errors.phone && (
+                      <span id="err-phone" className="appt__error" role="alert">
+                        {errors.phone}
+                      </span>
+                    )}
+                  </div>
                 </div>
-                {errors.date && (
-                  <span id="date-error" className="appointment-error-message" role="alert">
-                    {errors.date}
-                  </span>
-                )}
-              </div>
 
-              {/* Submit Button */}
-              <button
-                type="submit"
-                className="appointment-submit-btn"
-                disabled={isSubmitting}
-                aria-busy={isSubmitting}
-                aria-label={isSubmitting ? "Submitting your request" : "Submit appointment request"}
-              >
-                {isSubmitting ? (
-                  <>
-                    <span className="appointment-btn-spinner" aria-hidden="true" />
-                    <span>Processing...</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Request Appointment</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <line x1="5" y1="12" x2="19" y2="12"/>
-                      <polyline points="12 5 19 12 12 19"/>
-                    </svg>
-                  </>
-                )}
-              </button>
-            </form>
+                {/* Department */}
+                <div className="appt__field">
+                  <label htmlFor="appt-dept" className="appt__label">
+                    Department <span className="appt__req" aria-hidden="true">*</span>
+                  </label>
+                  <div className="appt__input-wrap">
+                    <span className="appt__input-icon"><Icon.Stethoscope /></span>
+                    <select
+                      id="appt-dept"
+                      value={form.department}
+                      onChange={(e) => change("department", e.target.value)}
+                      className={selectCls("department")}
+                      aria-invalid={!!errors.department}
+                      aria-describedby={errors.department ? "err-dept" : undefined}
+                      disabled={submitting}
+                    >
+                      {DEPARTMENTS.map((d) => (
+                        <option
+                          key={d.value || "placeholder"}
+                          value={d.value}
+                          disabled={d.disabled}
+                        >
+                          {d.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {errors.department && (
+                    <span id="err-dept" className="appt__error" role="alert">
+                      {errors.department}
+                    </span>
+                  )}
+                </div>
 
-            {/* Privacy Note */}
-            {/* <p className="appointment-privacy-note">
-              🔒 Your information is secure and never shared. 
-              <br className="appointment-mobile-break" />
-              By submitting, you agree to our{" "}
-              <Link href="/privacy" className="appointment-privacy-link">Privacy Policy</Link>.
-            </p> */}
+                {/* Date */}
+                <div className="appt__field">
+                  <label htmlFor="appt-date" className="appt__label">
+                    Preferred Date <span className="appt__req" aria-hidden="true">*</span>
+                  </label>
+                  <div className="appt__input-wrap">
+                    <span className="appt__input-icon"><Icon.Calendar /></span>
+                    <input
+                      id="appt-date"
+                      type="date"
+                      value={form.date}
+                      onChange={(e) => change("date", e.target.value)}
+                      className={inputCls("date")}
+                      aria-invalid={!!errors.date}
+                      aria-describedby={errors.date ? "err-date" : undefined}
+                      disabled={submitting}
+                      min={minDate}
+                    />
+                  </div>
+                  {errors.date && (
+                    <span id="err-date" className="appt__error" role="alert">
+                      {errors.date}
+                    </span>
+                  )}
+                </div>
+
+                {/* Submit */}
+                <button
+                  type="submit"
+                  className="appt__submit"
+                  disabled={submitting}
+                  aria-busy={submitting}
+                  aria-label={submitting ? "Submitting…" : "Request appointment"}
+                >
+                  {submitting ? (
+                    <>
+                      <span className="appt__spinner" aria-hidden="true" />
+                      <span>Processing…</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Request Appointment</span>
+                      <Icon.Arrow />
+                    </>
+                  )}
+                </button>
+
+                {/* Trust strip */}
+                <div className="appt__trust">
+                  <Icon.Shield />
+                  <span>SSL Encrypted</span>
+                  <span className="appt__trust-dot" />
+                  <Icon.Clock />
+                  <span>1-hour confirm</span>
+                  <span className="appt__trust-dot" />
+                  <Icon.Star />
+                  <span>4.9 / 5 rating</span>
+                </div>
+              </form>
+            </div>
           </div>
+
         </div>
       </div>
 
-      {/* Decorative Bottom Wave */}
-      <div className="appointment-bottom-wave" aria-hidden="true">
-        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-          <path d="M0 32C240 48 480 16 720 24C960 32 1200 64 1440 48V80H0V32Z" fill="rgba(255,255,255,0.1)"/>
+      {/* Bottom decorative wave */}
+      <div className="appt__wave" aria-hidden="true">
+        <svg viewBox="0 0 1440 80" fill="none" preserveAspectRatio="none">
+          <path d="M0 40C360 80 720 0 1080 40C1260 60 1380 20 1440 40V80H0V40Z"
+                fill="rgba(255,255,255,0.05)"/>
+          <path d="M0 60C240 30 600 80 960 50C1200 28 1380 60 1440 55V80H0V60Z"
+                fill="rgba(255,255,255,0.03)"/>
         </svg>
       </div>
     </section>

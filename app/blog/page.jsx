@@ -66,7 +66,7 @@ export default function BlogPage() {
           <p className="page-cta-subtitle">
             Get the latest health tips and medical news delivered straight to your inbox every week.
           </p>
-          <form className="page-newsletter-form" onSubmit={(e) => e.preventDefault()}>
+          <form className="page-newsletter-form">
             <input
               type="email"
               placeholder="Enter your email address"

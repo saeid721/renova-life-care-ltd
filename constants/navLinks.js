@@ -48,6 +48,12 @@ export const footerLinks = {
   ],
 };
 
+export const loginLinks = [
+  { label: "Sign Up", href: "/signup" },
+  { label: "Signin", href: "/signin" },
+];
+
+
 export const socialLinks = [
   { label: "Facebook", href: "https://facebook.com/renovalifecare", icon: "facebook" },
   { label: "LinkedIn", href: "https://linkedin.com/company/renovalifecare", icon: "linkedin" },

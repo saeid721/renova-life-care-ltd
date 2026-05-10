@@ -164,6 +164,43 @@ const ChevronDownIcon = () => (
   </svg>
 );
 
+/* ── Cart SVG ── */
+const CartIcon = ({ size = 16 }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="9" cy="21" r="1" />
+    <circle cx="20" cy="21" r="1" />
+    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+  </svg>
+);
+
+/* ── User SVG ── */
+const UserIcon = ({ size = 16 }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+    <circle cx="12" cy="7" r="4" />
+  </svg>
+);
+
 /* ════════════════════════════════════════════
    MAIN NAVBAR COMPONENT
    ════════════════════════════════════════════ */
@@ -234,20 +271,36 @@ export default function Navbar() {
             </span>
           </div>
           <div className="top-bar-right">
-            <nav className="topbar-social" aria-label="Follow us on social media">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.icon}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="topbar-social-link"
-                  aria-label={`Follow us on ${social.label}`}
-                >
-                  <SocialIcon type={social.icon} />
-                </a>
-              ))}
-            </nav>
+            <div className="topbar-actions">
+              {/* Cart */}
+              <Link href="/cart" className="topbar-action-link" aria-label="Shopping Cart">
+                <CartIcon size={15} />
+                <span>Cart</span>
+              </Link>
+
+              {/* My Account with dropdown */}
+              <div className="topbar-account">
+                <button className="topbar-action-link topbar-account-btn" aria-haspopup="true" aria-label="My Account">
+                  <UserIcon size={15} />
+                  <span>My Account</span>
+                  <ChevronDownIcon />
+                </button>
+                <div className="topbar-account-dropdown">
+                  <Link href="/signup" className="topbar-dropdown-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/>
+                    </svg>
+                    Sign Up
+                  </Link>
+                  <Link href="/login" className="topbar-dropdown-item">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
+                    </svg>
+                    Login
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

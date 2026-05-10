@@ -58,10 +58,101 @@
   opacity: 0.85;
 }
 
-.top-bar-right {
+/* ── Top Bar Cart & Account Actions ── */
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.topbar-action-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-right: var(--space-3);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-white);
+  text-decoration: none;
+  transition: var(--transition-fast);
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+.topbar-action-link:hover {
+  transform: translateY(-1px);
+  color: #000;
+}
+
+/* My Account dropdown wrapper */
+.topbar-account {
+  position: relative;
+}
+
+.topbar-account-btn {
+  cursor: pointer;
+}
+
+.topbar-account-btn svg:last-child {
+  opacity: 0.75;
+  transition: transform 0.2s ease;
+}
+
+.topbar-account:hover .topbar-account-btn svg:last-child {
+  transform: rotate(180deg);
+}
+
+/* Dropdown */
+.topbar-account-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 160px;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: all 0.2s ease;
+  z-index: 200;
+  padding: var(--space-2) 0;
+}
+
+.topbar-account:hover .topbar-account-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.topbar-dropdown-item {
   display: flex;
   align-items: center;
   gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: var(--transition-fast);
+  border-left: 3px solid transparent;
+}
+
+.topbar-dropdown-item:hover {
+  color: var(--color-authority);
+  background: rgba(66, 138, 38, 0.06);
+  border-left-color: var(--color-authority);
+}
+
+.topbar-dropdown-item svg {
+  opacity: 0.6;
+  flex-shrink: 0;
+  transition: opacity 0.15s ease;
+}
+
+.topbar-dropdown-item:hover svg {
+  opacity: 1;
 }
 
 /* Social Icons in Top Bar */

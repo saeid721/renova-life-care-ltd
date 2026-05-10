@@ -28,7 +28,7 @@ export default function AboutSection() {
         >
           <div className="about-image-container">
             <Image
-              src="/images/doctor-7.jpeg"
+              src="/images/about.jpg"
               alt="Renova Life Care medical team"
               fill
               className="about-image"

@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { siteConfig } from "@/constants/siteData";
 import { footerLinks, socialLinks } from "@/constants/navLinks";
 import "../../styles/components/Footer.css";
@@ -44,7 +47,10 @@ const SocialIcon = ({ type }) => {
 };
 
 export default function Footer() {
+  const pathname = usePathname();
   const currentYear = new Date().getFullYear();
+
+  if (pathname?.startsWith('/PatientPortal')) return null;
 
   return (
     <footer className="footer" role="contentinfo">

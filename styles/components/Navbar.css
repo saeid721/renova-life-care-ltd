@@ -1,3 +1,8 @@
+/**
+ * Navigation Links — Centralized route definitions
+ * Used by Navbar and Footer components.
+ */
+
 /* =============================================
    NAVBAR — Professional & Fully Responsive
    All values pulled from global.css :root tokens
@@ -17,7 +22,7 @@
 }
 
 .top-bar-container {
-  max-width: 1280px;
+  max-width: 1536px;
   margin: 0 auto;
   padding: 0 var(--space-8);
   display: flex;
@@ -117,7 +122,7 @@
 
 /* ── Nav Container ── */
 .nav-container {
-  max-width: 1280px;
+  max-width: 1536px;
   margin: 0 auto;
   padding: 0 var(--space-8);
   display: flex;
@@ -285,6 +290,119 @@
   transform: translateY(-2px);
   box-shadow: var(--shadow-button-hover);
   background: linear-gradient(135deg, var(--color-authority-dark), var(--color-authority));
+}
+
+
+/* ── Desktop Dropdown Menu ── */
+.nav-item-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.nav-link.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding-right: var(--space-2);
+}
+
+.nav-link.dropdown-toggle::after {
+  content: '';
+  position: static;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 4px;
+  border: none;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid currentColor;
+  transition: transform 0.2s ease;
+  transform: none;
+}
+
+.nav-item-dropdown:hover .nav-link.dropdown-toggle::after {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  min-width: 260px;
+  padding: var(--space-3) 0;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.nav-item-dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: var(--transition-fast);
+  border-left: 3px solid transparent;
+}
+
+.dropdown-item::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-border-muted);
+  flex-shrink: 0;
+  transition: var(--transition-fast);
+}
+
+.dropdown-item:hover {
+  color: var(--color-authority);
+  background: rgba(66, 138, 38, 0.06);
+  border-left-color: var(--color-authority);
+  padding-left: calc(var(--space-5) - 3px);
+}
+
+.dropdown-item:hover::before {
+  background: var(--color-authority);
+}
+
+.dropdown-item.active {
+  color: var(--color-authority);
+  background: rgba(66, 138, 38, 0.08);
+  border-left-color: var(--color-authority);
+  font-weight: var(--font-weight-semibold);
+}
+
+.dropdown-item.active::before {
+  background: var(--color-authority);
+}
+
+/* Dropdown divider */
+.dropdown-divider {
+  height: 1px;
+  background: var(--color-border-muted);
+  margin: var(--space-2) 0;
+  border: none;
 }
 
 
@@ -509,6 +627,85 @@
   background: var(--color-authority);
 }
 
+/* ── Mobile Submenu Styles ── */
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.mobile-nav-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: var(--transition-fast);
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mobile-nav-toggle:hover,
+.mobile-nav-toggle.expanded {
+  color: var(--color-authority);
+  background: rgba(66, 138, 38, 0.07);
+}
+
+.mobile-nav-toggle .nav-dot {
+  margin-right: var(--space-1);
+}
+
+.mobile-nav-toggle .toggle-icon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  transition: transform 0.2s ease;
+}
+
+.mobile-nav-toggle.expanded .toggle-icon {
+  transform: rotate(180deg);
+  color: var(--color-authority);
+}
+
+.mobile-submenu {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-left: var(--space-8);
+  margin-top: var(--space-1);
+}
+
+.mobile-submenu.expanded {
+  display: flex;
+}
+
+.mobile-submenu .dropdown-item {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-sm);
+}
+
+/* Chevron icon for mobile toggle */
+.chevron-icon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+}
+
+.chevron-icon.expanded {
+  transform: rotate(180deg);
+}
+
 /* Drawer Footer / CTA */
 .drawer-footer {
   padding: var(--space-5) var(--space-4);
@@ -624,4 +821,60 @@
   background: var(--color-border-muted);
   margin: var(--space-2) 0;
   border: none;
+}
+
+
+/* ── Responsive Adjustments ── */
+@media (max-width: 1200px) {
+  .dropdown-menu {
+    min-width: 240px;
+    left: 0;
+    transform: translateY(-10px);
+  }
+  
+  .nav-item-dropdown:hover .dropdown-menu {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .dropdown-menu {
+    min-width: 100%;
+    left: 0;
+    transform: none;
+  }
+}
+
+/* ── Focus States for Accessibility ── */
+.nav-link:focus-visible,
+.dropdown-item:focus-visible,
+.mobile-nav-link:focus-visible,
+.mobile-nav-toggle:focus-visible,
+.btn-call:focus-visible,
+.btn-appointment:focus-visible,
+.mobile-btn-call:focus-visible,
+.mobile-btn-appointment:focus-visible,
+.topbar-social-link:focus-visible,
+.drawer-social-link:focus-visible {
+  outline: 2px solid var(--color-authority);
+  outline-offset: 2px;
+}
+
+/* ── Reduce Motion Preference ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .dropdown-menu {
+    transition: none;
+  }
+  
+  .mobile-drawer {
+    transition: none;
+  }
 }

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { navLinks, socialLinks } from "@/constants/navLinks";
 import { siteConfig } from "@/constants/siteData";
 import "../../styles/components/Navbar.css";
@@ -69,6 +70,27 @@ const PhoneIcon = ({ size = 15 }) => (
   </svg>
 );
 
+/* ── Report/PDF SVG ── */
+const ReportIcon = ({ size = 15 }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+    <polyline points="14 2 14 8 20 8"></polyline>
+    <line x1="16" y1="13" x2="8" y2="13"></line>
+    <line x1="16" y1="17" x2="8" y2="17"></line>
+    <polyline points="10 9 9 9 8 9"></polyline>
+  </svg>
+);
+
 /* ── Calendar SVG ── */
 const CalendarIcon = ({ size = 15 }) => (
   <svg
@@ -125,14 +147,35 @@ const EmailIcon = ({ size = 13 }) => (
   </svg>
 );
 
+/* ── Chevron Down SVG ── */
+const ChevronDownIcon = () => (
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <polyline points="6 9 12 15 18 9" />
+  </svg>
+);
+
 /* ════════════════════════════════════════════
    MAIN NAVBAR COMPONENT
    ════════════════════════════════════════════ */
 export default function Navbar() {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("/");
+  const [expandedMobileMenu, setExpandedMobileMenu] = useState(null);
   const drawerRef = useRef(null);
+
+  if (pathname?.startsWith('/PatientPortal')) return null;
 
   /* Scroll detection */
   useEffect(() => {
@@ -159,14 +202,16 @@ export default function Navbar() {
   }, []);
 
   const closeDrawer = () => setMobileOpen(false);
+  const toggleMobileSubmenu = (href) => {
+    setExpandedMobileMenu(expandedMobileMenu === href ? null : href);
+  };
 
   return (
     <>
-      {/* ── Top Announcement Bar (desktop only via CSS) ── */}
+      {/* ── Top Announcement Bar ── */}
       <div className="top-bar" role="banner">
         <div className="top-bar-container">
           <div className="top-bar-left">
-            {/* Emergency Phone */}
             <span className="emergency-badge">
               <svg
                 width="13"
@@ -183,20 +228,13 @@ export default function Navbar() {
               </svg>
               Emergency:&nbsp;{siteConfig.phone}
             </span>
-
-            {/* Email */}
             <span className="email-badge">
               <EmailIcon />
               {siteConfig.email}
             </span>
           </div>
-
-          {/* Social Icons */}
           <div className="top-bar-right">
-            <nav
-              className="topbar-social"
-              aria-label="Follow us on social media"
-            >
+            <nav className="topbar-social" aria-label="Follow us on social media">
               {socialLinks.map((social) => (
                 <a
                   key={social.icon}
@@ -216,11 +254,7 @@ export default function Navbar() {
 
       {/* ── Main Header ── */}
       <header className={`main-header${isScrolled ? " scrolled" : ""}`}>
-        <nav
-          className="nav-container"
-          role="navigation"
-          aria-label="Main navigation"
-        >
+        <nav className="nav-container" role="navigation" aria-label="Main navigation">
           {/* Logo */}
           <Link href="/" className="logo-wrapper" aria-label="Renova Life Care — Home">
             <div className="logo">
@@ -235,27 +269,62 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop Nav Links */}
+          {/* Desktop Nav Links with Dropdown Support */}
           <ul className="nav-links" role="list">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className={`nav-link${activeLink === link.href ? " active" : ""}`}
-                  onClick={() => setActiveLink(link.href)}
-                  aria-current={activeLink === link.href ? "page" : undefined}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
+            {navLinks.map((link) => {
+              const hasDropdown = link.children && link.children.length > 0;
+              
+              if (hasDropdown) {
+                return (
+                  <li key={link.href} className="nav-item-dropdown" role="menuitem">
+                    <Link
+                      href={link.href}
+                      className={`nav-link dropdown-toggle${activeLink === link.href ? " active" : ""}`}
+                      onClick={() => setActiveLink(link.href)}
+                      aria-current={activeLink === link.href ? "page" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      {link.label}
+                      <ChevronDownIcon />
+                    </Link>
+                    <div className="dropdown-menu" role="menu">
+                      {link.children.map((child) => (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          className={`dropdown-item${activeLink === child.href ? " active" : ""}`}
+                          onClick={() => setActiveLink(child.href)}
+                          role="menuitem"
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </li>
+                );
+              }
+              
+              return (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={`nav-link${activeLink === link.href ? " active" : ""}`}
+                    onClick={() => setActiveLink(link.href)}
+                    aria-current={activeLink === link.href ? "page" : undefined}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           {/* Desktop CTA Buttons */}
           <div className="nav-buttons">
-            <Link href={`tel:${siteConfig.phone}`} className="btn-call">
-              <PhoneIcon size={15} />
-              Call Now
+            <Link href="/PatientPortal/pportal" target="_blank" rel="noopener noreferrer" className="btn-call">
+              <ReportIcon size={15} />
+              Report Download
             </Link>
             <Link href="/appointment" className="btn-appointment">
               <CalendarIcon size={15} />
@@ -285,7 +354,7 @@ export default function Navbar() {
         aria-hidden="true"
       />
 
-      {/* ── Side Drawer ── */}
+      {/* ── Side Drawer with Submenu Support ── */}
       <aside
         id="mobile-drawer"
         className={`mobile-drawer${mobileOpen ? " open" : ""}`}
@@ -304,11 +373,7 @@ export default function Navbar() {
               style={{ width: "auto", height: "38px", maxHeight: "38px", objectFit: "contain" }}
             />
           </Link>
-          <button
-            className="drawer-close-btn"
-            onClick={closeDrawer}
-            aria-label="Close menu"
-          >
+          <button className="drawer-close-btn" onClick={closeDrawer} aria-label="Close menu">
             <CloseIcon />
           </button>
         </div>
@@ -327,40 +392,76 @@ export default function Navbar() {
 
         <hr className="drawer-divider" style={{ margin: "0.75rem 1rem 0.25rem" }} />
 
-        {/* Drawer Nav Links */}
+        {/* Drawer Nav Links with Submenu Support */}
         <div className="drawer-body">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`mobile-nav-link${activeLink === link.href ? " active" : ""}`}
-              onClick={() => {
-                setActiveLink(link.href);
-                closeDrawer();
-              }}
-              aria-current={activeLink === link.href ? "page" : undefined}
-            >
-              <span className="nav-dot" aria-hidden="true" />
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const hasSubmenu = link.children && link.children.length > 0;
+            const isExpanded = expandedMobileMenu === link.href;
+            
+            if (hasSubmenu) {
+              return (
+                <div key={link.href} className="mobile-nav-item">
+                  <button
+                    className={`mobile-nav-toggle${isExpanded ? " expanded" : ""}`}
+                    onClick={() => toggleMobileSubmenu(link.href)}
+                    aria-expanded={isExpanded}
+                    aria-controls={`submenu-${link.href.replace(/\//g, '')}`}
+                  >
+                    <span style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                      <span className="nav-dot" aria-hidden="true" />
+                      {link.label}
+                    </span>
+                    <span className="toggle-icon">
+                      <ChevronDownIcon />
+                    </span>
+                  </button>
+                  <div
+                    id={`submenu-${link.href.replace(/\//g, '')}`}
+                    className={`mobile-submenu${isExpanded ? " expanded" : ""}`}
+                  >
+                    {link.children.map((child) => (
+                      <Link
+                        key={child.href}
+                        href={child.href}
+                        className={`dropdown-item${activeLink === child.href ? " active" : ""}`}
+                        onClick={() => {
+                          setActiveLink(child.href);
+                          closeDrawer();
+                        }}
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              );
+            }
+            
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`mobile-nav-link${activeLink === link.href ? " active" : ""}`}
+                onClick={() => {
+                  setActiveLink(link.href);
+                  closeDrawer();
+                }}
+                aria-current={activeLink === link.href ? "page" : undefined}
+              >
+                <span className="nav-dot" aria-hidden="true" />
+                {link.label}
+              </Link>
+            );
+          })}
         </div>
 
         {/* Drawer Footer CTAs */}
         <div className="drawer-footer">
-          <Link
-            href={`tel:${siteConfig.phone}`}
-            className="mobile-btn-call"
-            onClick={closeDrawer}
-          >
+          <Link href={`tel:${siteConfig.phone}`} className="mobile-btn-call" onClick={closeDrawer}>
             <PhoneIcon size={16} />
             Call Now
           </Link>
-          <Link
-            href="/appointment"
-            className="mobile-btn-appointment"
-            onClick={closeDrawer}
-          >
+          <Link href="/appointment" className="mobile-btn-appointment" onClick={closeDrawer}>
             <CalendarIcon size={16} />
             Book Appointment
           </Link>

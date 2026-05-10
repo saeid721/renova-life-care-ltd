@@ -5,11 +5,12 @@ import { siteConfig } from "@/constants/siteData";
 import { useState, useEffect } from "react";
 import "./AppointmentCTASection.css";
 
-/* ─── SVG icon helpers ───────────────────────────────────── */
+/* ─── SVG Icons ──────────────────────────────────────────── */
 const Icon = {
   User: () => (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
     </svg>
   ),
   Phone: () => (
@@ -18,55 +19,72 @@ const Icon = {
     </svg>
   ),
   Stethoscope: () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6 6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/>
+      <path d="M8 15v1a6 6 0 0 0 6 6 6 6 0 0 0 6-6v-4"/>
+      <circle cx="20" cy="10" r="2"/>
+    </svg>
+  ),
+  StethoscopeSmall: () => (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/>
+      <path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6 6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/>
+      <path d="M8 15v1a6 6 0 0 0 6 6 6 6 0 0 0 6-6v-4"/>
+      <circle cx="20" cy="10" r="2"/>
     </svg>
   ),
   Calendar: () => (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+      <line x1="16" y1="2" x2="16" y2="6"/>
+      <line x1="8" y1="2" x2="8" y2="6"/>
+      <line x1="3" y1="10" x2="21" y2="10"/>
     </svg>
   ),
   Check: () => (
-    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <polyline points="20 6 9 17 4 12"/>
     </svg>
   ),
   Arrow: () => (
     <svg className="appt__submit-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-    </svg>
-  ),
-  AlertCircle: () => (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+      <line x1="5" y1="12" x2="19" y2="12"/>
+      <polyline points="12 5 19 12 12 19"/>
     </svg>
   ),
   CheckCircle: () => (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+      <polyline points="22 4 12 14.01 9 11.01"/>
+    </svg>
+  ),
+  AlertCircle: () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="12" y1="8" x2="12" y2="12"/>
+      <line x1="12" y1="16" x2="12.01" y2="16"/>
     </svg>
   ),
   Shield: () => (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
     </svg>
   ),
   Clock: () => (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/>
+      <polyline points="12 6 12 12 16 14"/>
     </svg>
   ),
   Star: () => (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1" aria-hidden="true">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1" aria-hidden="true">
       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
     </svg>
   ),
 };
 
-/* ─── Department list ────────────────────────────────────── */
+/* ─── Departments ────────────────────────────────────────── */
 const DEPARTMENTS = [
-  { value: "",              label: "Select Department",    disabled: true },
+  { value: "",              label: "Select Department",     disabled: true },
   { value: "general",      label: "General Checkup" },
   { value: "cardiology",   label: "Cardiology" },
   { value: "orthopedics",  label: "Orthopedics" },
@@ -96,11 +114,12 @@ const validate = (data) => {
 /* ─── Component ──────────────────────────────────────────── */
 export default function AppointmentCTASection() {
   const EMPTY = { name: "", phone: "", department: "", date: "" };
-  const [form,        setForm]        = useState(EMPTY);
-  const [errors,      setErrors]      = useState({});
-  const [submitting,  setSubmitting]  = useState(false);
-  const [status,      setStatus]      = useState(null); // "success" | "error"
-  const [minDate,     setMinDate]     = useState("");
+
+  const [form,       setForm]       = useState(EMPTY);
+  const [errors,     setErrors]     = useState({});
+  const [submitting, setSubmitting] = useState(false);
+  const [status,     setStatus]     = useState(null); // "success" | "error"
+  const [minDate,    setMinDate]    = useState("");
 
   useEffect(() => {
     setMinDate(new Date().toISOString().split("T")[0]);
@@ -129,23 +148,21 @@ export default function AppointmentCTASection() {
     }
   };
 
+  const inputCls  = (f) => `appt__input${errors[f]  ? " appt__input--err"  : ""}`;
+  const selectCls = (f) => `appt__select${errors[f] ? " appt__select--err" : ""}`;
+
   const FEATURES = [
     "Instant confirmation",
     "Free first consultation",
-    "100 % privacy guaranteed",
+    "100% privacy guaranteed",
     "Available 24 / 7",
   ];
 
   const STATS = [
-    { num: "50K+",  label: "Patients Served" },
-    { num: "120+",  label: "Specialist Doctors" },
-    { num: "4.9★",  label: "Average Rating" },
+    { num: "50K+", label: "Patients Served"    },
+    { num: "120+", label: "Specialist Doctors" },
+    { num: "4.9★", label: "Average Rating"     },
   ];
-
-  const inputCls = (f) =>
-    `appt__input${errors[f] ? " appt__input--err" : ""}`;
-  const selectCls = (f) =>
-    `appt__select${errors[f] ? " appt__select--err" : ""}`;
 
   return (
     <section
@@ -153,7 +170,7 @@ export default function AppointmentCTASection() {
       className="appt"
       aria-labelledby="appt-heading"
     >
-      {/* ── Animated background ── */}
+      {/* Animated background */}
       <div className="appt__bg" aria-hidden="true">
         <div className="appt__bg-glow" />
         <div className="appt__bg-grid" />
@@ -166,7 +183,7 @@ export default function AppointmentCTASection() {
       <div className="appt__container">
         <div className="appt__grid">
 
-          {/* ════ LEFT ════ */}
+          {/* ══ LEFT ══ */}
           <div className="appt__left">
 
             {/* Eyebrow */}
@@ -184,8 +201,8 @@ export default function AppointmentCTASection() {
 
             {/* Subtext */}
             <p className="appt__subtext">
-              Connect with Bangladesh's leading specialists in seconds. 
-              Smart, secure, and built around your wellbeing — 
+              Connect with Bangladesh's leading specialists in seconds.
+              Smart, secure, and built around your wellbeing —
               book an appointment in under two minutes.
             </p>
 
@@ -217,24 +234,24 @@ export default function AppointmentCTASection() {
                 className="appt__phone-link"
                 aria-label={`Call us at ${siteConfig.phone}`}
               >
-                <span className="appt__phone-icon">
-                  <Icon.Phone />
-                </span>
+                <span className="appt__phone-icon"><Icon.Phone /></span>
                 <span>{siteConfig.phone}</span>
               </Link>
             </div>
           </div>
 
-          {/* ════ RIGHT — Form Card ════ */}
+          {/* ══ RIGHT — Form Card ══ */}
           <div className="appt__card">
 
             {/* Card header */}
-            <div className="appt__card-head" aria-hidden="true">
+            <div className="appt__card-head">
               <div className="appt__card-icon-wrap">
                 <Icon.Stethoscope />
               </div>
               <h3 className="appt__card-title">Book an Appointment</h3>
-              <p className="appt__card-subtitle">We'll confirm within 1 hour — guaranteed</p>
+              <p className="appt__card-subtitle">
+                We'll confirm within 1 hour — guaranteed
+              </p>
             </div>
 
             {/* Card body */}
@@ -243,17 +260,13 @@ export default function AppointmentCTASection() {
               {/* Alerts */}
               {status === "success" && (
                 <div className="appt__alert appt__alert--success" role="alert">
-                  <span className="appt__alert-icon" style={{ color: "#1e7a45" }}>
-                    <Icon.CheckCircle />
-                  </span>
+                  <span className="appt__alert-icon"><Icon.CheckCircle /></span>
                   <span>Appointment requested! Our team will call you shortly.</span>
                 </div>
               )}
               {status === "error" && (
                 <div className="appt__alert appt__alert--error" role="alert">
-                  <span className="appt__alert-icon" style={{ color: "#dc2626" }}>
-                    <Icon.AlertCircle />
-                  </span>
+                  <span className="appt__alert-icon"><Icon.AlertCircle /></span>
                   <span>Something went wrong. Please try again or call us directly.</span>
                 </div>
               )}
@@ -261,8 +274,9 @@ export default function AppointmentCTASection() {
               {/* Form */}
               <form onSubmit={submit} className="appt__form" noValidate>
 
-                {/* Name + Phone */}
+                {/* Name + Phone row */}
                 <div className="appt__row">
+
                   {/* Name */}
                   <div className="appt__field">
                     <label htmlFor="appt-name" className="appt__label">
@@ -324,7 +338,7 @@ export default function AppointmentCTASection() {
                     Department <span className="appt__req" aria-hidden="true">*</span>
                   </label>
                   <div className="appt__input-wrap">
-                    <span className="appt__input-icon"><Icon.Stethoscope /></span>
+                    <span className="appt__input-icon"><Icon.StethoscopeSmall /></span>
                     <select
                       id="appt-dept"
                       value={form.department}
@@ -410,6 +424,7 @@ export default function AppointmentCTASection() {
                   <Icon.Star />
                   <span>4.9 / 5 rating</span>
                 </div>
+
               </form>
             </div>
           </div>
@@ -420,10 +435,14 @@ export default function AppointmentCTASection() {
       {/* Bottom decorative wave */}
       <div className="appt__wave" aria-hidden="true">
         <svg viewBox="0 0 1440 80" fill="none" preserveAspectRatio="none">
-          <path d="M0 40C360 80 720 0 1080 40C1260 60 1380 20 1440 40V80H0V40Z"
-                fill="rgba(255,255,255,0.05)"/>
-          <path d="M0 60C240 30 600 80 960 50C1200 28 1380 60 1440 55V80H0V60Z"
-                fill="rgba(255,255,255,0.03)"/>
+          <path
+            d="M0 40C360 80 720 0 1080 40C1260 60 1380 20 1440 40V80H0V40Z"
+            fill="rgba(255,255,255,0.04)"
+          />
+          <path
+            d="M0 60C240 30 600 80 960 50C1200 28 1380 60 1440 55V80H0V60Z"
+            fill="rgba(255,255,255,0.025)"
+          />
         </svg>
       </div>
     </section>

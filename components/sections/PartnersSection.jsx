@@ -11,7 +11,7 @@ export default function PartnersSection() {
       className="partners-section"
       aria-label="Our trusted partners"
     >
-      {/* Animated Background - Matching AppointmentCTASection */}
+      {/* Animated Background - Light Theme Adapted */}
       <div className="partners-bg-wrapper" aria-hidden="true">
         <div className="partners-bg-gradient" />
         <div className="partners-bg-dots" />

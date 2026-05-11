@@ -1,20 +1,37 @@
 "use client";
-import Link from "next/link";
 import Image from "next/image";
 import { doctors } from "@/constants/siteData";
-import { Section, SectionHeader } from "@/components/common/Section";
+import Button from "@/components/common/Button";
+import { Section } from "@/components/common/Section";
 import "./DoctorsSection.css";
 
-export default function DoctorsSection() {
-  const getInitials = (name) => {
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2);
-  };
+// ── Correct Icons for Actions ─────────────
+const ProfileIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+    <circle cx="12" cy="7" r="4" />
+  </svg>
+);
 
+const CalendarIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+    <line x1="16" y1="2" x2="16" y2="6" />
+    <line x1="8" y1="2" x2="8" y2="6" />
+    <line x1="3" y1="10" x2="21" y2="10" />
+  </svg>
+);
+
+const UsersIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+  </svg>
+);
+
+export default function DoctorsSection() {
   const accentColors = [
     { from: "#428a26", to: "#86b437" },
     { from: "#05417d", to: "#1E6FAF" },
@@ -69,7 +86,7 @@ export default function DoctorsSection() {
                     alt={`Portrait of ${doc.name}`}
                     fill
                     className="dcard__image"
-                    sizes="(max-width: 640px) 120px, 120px"
+                    sizes="(max-width: 559px) 150px, 180px"
                     onError={(e) => {
                       e.currentTarget.style.display = "none";
                     }}
@@ -112,27 +129,15 @@ export default function DoctorsSection() {
                   </div>
                 </div>
 
-                {/* CTA */}
-                <Link
-                  href="/appointment"
-                  className="dcard__cta"
-                  aria-label={`Book appointment with ${doc.name}`}
-                >
-                  <span>Book Appointment</span>
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </Link>
+                {/* Two CTA buttons - Stacked */}
+                <div className="dcard-cta-group">
+                  <Button variant="secondary" href="/doctors-profile">
+                    <ProfileIcon /> Doctor Profile
+                  </Button>
+                  <Button variant="primary" href="/appointment">
+                    <CalendarIcon /> Book Appointment
+                  </Button>
+                </div>
               </div>
             </article>
           );
@@ -140,24 +145,10 @@ export default function DoctorsSection() {
       </div>
 
       {/* View All CTA */}
-      <div className="doctors-cta-row">
-        <Link href="/doctors" className="doctors-cta-link">
-          <span>View All Doctors</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </Link>
+      <div className="view-all-doctors-btn" style={{ textAlign: "center", marginTop: "var(--space-10)" }}>
+        <Button variant="primary" className="btn-lg" href="/doctors">
+           <UsersIcon /> View All Doctors
+        </Button>
       </div>
     </Section>
   );

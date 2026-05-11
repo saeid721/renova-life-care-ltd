@@ -340,89 +340,74 @@
   flex-shrink: 0;
 }
 
-/* ── CTA Button ──────────────────────────────────────────────── */
-.dcard__cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
+
+/* ── CTA buttons inside card ─────────────────────────────────── */
+.dcard-cta-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
   width: 100%;
-  padding: var(--space-3) var(--space-6);
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-white);
-  background: linear-gradient(135deg, var(--accent-from), var(--accent-to));
-  text-decoration: none;
-  transition:
-    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.25s ease,
-    filter 0.25s ease;
-  box-shadow: 0 3px 12px rgba(66, 138, 38, 0.28);
   margin-top: auto;
+  background: var(--color-white);
 }
 
-.dcard__cta svg {
-  transition: transform 0.25s ease;
+/* ✅ Force full width + specific padding for card buttons */
+.dcard-cta-group .btn {
+  width: 100% !important;
+  padding: var(--space-3) var(--space-6) !important;
+  box-sizing: border-box;
+}
+
+/* Ensure icons stay aligned */
+.dcard-cta-group .btn svg {
   flex-shrink: 0;
 }
 
-.dcard__cta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(66, 138, 38, 0.38);
-  filter: brightness(1.05);
-}
-
-.dcard__cta:hover svg {
-  transform: translateX(4px);
-}
-
-.dcard__cta:active {
-  transform: translateY(0);
-}
-
-/* ── View All CTA ────────────────────────────────────────────── */
-.doctors-cta-row {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  margin-top: var(--space-14);
-}
-
-.doctors-cta-link {
+.dcard-btn {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-4) var(--space-10);
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+  padding: 0.7rem 0.5rem;
   border-radius: var(--radius-full);
-  font-size: var(--font-size-base);
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-white);
-  background: linear-gradient(135deg, var(--color-authority), var(--color-primary));
-  box-shadow: var(--shadow-button);
-  text-decoration: none;
-  transition:
-    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.3s ease,
-    filter 0.3s ease;
+  cursor: pointer; 
+  border: none;
+  transition: var(--transition-default);
+  line-height: 1;
 }
 
-.doctors-cta-link svg {
-  transition: transform 0.3s ease;
+.dcard-btn-cart-popular {
+  background: var(--color-white);
+  color: var(--color-primary-dark);
+  border: 2px solid var(--color-border-default);
 }
 
-.doctors-cta-link:hover {
+.dcard-btn-cart-popular:hover {
+  background: var(--color-primary-dark);
   color: var(--color-white);
-  transform: translateY(-2px);
+  border-color: var(--color-primary-dark);
   box-shadow: var(--shadow-button-hover);
-  filter: brightness(1.06);
+  transform: translateY(-1px);
 }
 
-.doctors-cta-link:hover svg {
-  transform: translateX(5px);
+.dcard-btn-buy-popular {
+  background: var(--color-primary-dark);
+  color: var(--color-white);
+  border: 2px solid var(--color-primary-dark);
+  box-shadow: var(--shadow-button);
 }
 
+.dcard-btn-buy-popular:hover {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-button-hover);
+  transform: translateY(-1px);
+}
 /* ── Responsive Tweaks ───────────────────────────────────────── */
 @media (max-width: 559px) {
   .dcard {

@@ -136,7 +136,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--space-8) var(--space-6) var(--space-6);
+  padding: var(--space-5) var(--space-6) var(--space-6);
   text-align: center;
   transition:
     transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -222,20 +222,6 @@
 .dcard__image {
   object-fit: cover;
   border-radius: 50%;
-}
-
-.dcard__initials {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-heading);
-  font-size: 2.4rem;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-white);
-  letter-spacing: 0.02em;
-  z-index: 0;
 }
 
 /* ── Status Badge ────────────────────────────────────────────── */

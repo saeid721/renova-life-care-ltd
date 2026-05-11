@@ -74,10 +74,6 @@ export default function DoctorsSection() {
                       e.currentTarget.style.display = "none";
                     }}
                   />
-                  {/* Fallback initials */}
-                  <div className="dcard__initials" aria-hidden="true">
-                    {getInitials(doc.name)}
-                  </div>
                 </div>
 
                 {/* Availability indicator */}

@@ -194,72 +194,6 @@ export const testimonials = [
   },
 ];
 
-export const pricingPlans = [
-  {
-    id: 1,
-    name: "Basic Care",
-    price: "500",
-    currency: "৳",
-    period: "per visit",
-    description: "Perfect for routine checkups and preventive care.",
-    features: [
-      "General Consultation",
-      "Basic Health Screening",
-      "Blood Pressure Check",
-      "BMI Assessment",
-      "Health Advice",
-      "Follow-up (1 session)",
-    ],
-    notIncluded: ["Lab Tests", "Specialist Referral"],
-    cta: "Get Started",
-    color: "default",
-    popular: false,
-  },
-  {
-    id: 2,
-    name: "Family Care",
-    price: "2,500",
-    currency: "৳",
-    period: "per month",
-    description: "Comprehensive coverage for your entire family.",
-    features: [
-      "4 Specialist Consultations",
-      "Full Body Checkup",
-      "Lab Tests (Basic Panel)",
-      "Dental Checkup",
-      "Eye Screening",
-      "Priority Appointments",
-      "Emergency Hotline",
-    ],
-    notIncluded: [],
-    cta: "Choose Plan",
-    color: "primary",
-    popular: true,
-  },
-  {
-    id: 3,
-    name: "Premium Health",
-    price: "6,000",
-    currency: "৳",
-    period: "per month",
-    description: "All-inclusive premium healthcare with VIP treatment.",
-    features: [
-      "Unlimited Consultations",
-      "Advanced Lab Tests",
-      "Imaging & Radiology",
-      "Annual Comprehensive Screening",
-      "Home Visit Service",
-      "Dedicated Health Manager",
-      "24/7 Emergency Support",
-      "International Referrals",
-    ],
-    notIncluded: [],
-    cta: "Go Premium",
-    color: "authority",
-    popular: false,
-  },
-];
-
 export const shopProducts = [
   {
     id: 1,
@@ -312,37 +246,37 @@ export const portfolioItems = [
     id: 1,
     title: "State-of-the-Art ICU",
     category: "Facilities",
-    image: "/images/portfolio/image1.jpg", // ✅ Updated
+    image: "/images/image1.jpg",
   },
   {
     id: 2,
     title: "Modern Operating Theater",
     category: "Surgery",
-    image: "/images/portfolio/image2.jpg", // ✅ Updated
+    image: "/images/image2.jpg",
   },
   {
     id: 3,
     title: "Advanced Diagnostic Lab",
     category: "Diagnostics",
-    image: "/images/portfolio/image3.jpg",
+    image: "/images/image3.jpg",
   },
   {
     id: 4,
     title: "Pediatric Care Ward",
     category: "Pediatrics",
-    image: "/images/portfolio/image4.jpg",
+    image: "/images/image4.jpg",
   },
   {
     id: 5,
     title: "Rehabilitation Center",
     category: "Rehabilitation",
-    image: "/images/portfolio/image5.jpg",
+    image: "/images/image5.jpg",
   },
   {
     id: 6,
     title: "Digital Pharmacy",
     category: "Pharmacy",
-    image: "/images/portfolio/image6.jpg",
+    image: "/images/image6.jpg",
   },
 ];
 

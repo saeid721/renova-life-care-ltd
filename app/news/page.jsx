@@ -2,7 +2,7 @@ import { siteConfig } from "@/constants/siteData";
 import Link from "next/link";
 
 export const metadata = {
-  title: `Media & Press | ${siteConfig.name}`,
+  title: `News | ${siteConfig.name}`,
   description: `Latest press releases, news coverage, media resources, and announcements from ${siteConfig.name} — Bangladesh's leading healthcare provider.`,
   openGraph: {
     title: `Media & Press | ${siteConfig.name}`,

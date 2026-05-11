@@ -24,8 +24,8 @@ export const navLinks = [
     children: [
       { label: "Blog", href: "/blog" },
       { label: "News", href: "/news" },
-      { label: "Photos Gallery", href: "/photos-gallery" },
-      { label: "Videos Gallery", href: "/videos-gallery" },
+      { label: "Photos Gallery", href: "/photos" },
+      { label: "Videos Gallery", href: "/videos" },
     ]
   },
   { label: "Contact", href: "/contact" },
@@ -34,17 +34,17 @@ export const navLinks = [
 export const footerLinks = {
   company: [
     { label: "About Us", href: "/about" },
-    { label: "Our Team", href: "/doctors" },
+    { label: "Events", href: "/events" },
     { label: "Careers", href: "/careers" },
-    { label: "News & Blog", href: "/blog" },
-    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Our Team", href: "/doctors" },
+    { label: "Contact Us", href: "/contact" },
   ],
   support: [
     { label: "Book Appointment", href: "/appointment" },
     { label: "Patient Portal", href: "/patient-portal" },
     { label: "FAQ", href: "/faq" },
+    { label: "Privacy Policy", href: "/privacy" },
     { label: "Complain & Advise", href: "/complain" },
-    { label: "Contact Us", href: "/contact" },
   ],
 };
 

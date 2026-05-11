@@ -13,7 +13,7 @@
 }
 
 .page-hero__container {
-  max-width: 800px;
+  max-width: 1536px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -58,7 +58,7 @@
 .page-hero__subtitle {
   font-size: var(--font-size-lg);
   color: var(--color-text-light);
-  max-width: 620px;
+  max-width: 1536px;
   margin: 0 auto var(--space-6);
   line-height: 1.75;
   font-family: var(--font-body);
@@ -98,7 +98,7 @@
 .page-section--green { background: var(--gradient-green-section); }
 
 .page-section__container {
-  max-width: 1200px;
+  max-width: 1536px;
   margin: 0 auto;
 }
 

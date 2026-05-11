@@ -388,7 +388,7 @@ export default function PackagePage() {
                     <Button variant="secondary" className="pkg-btn-stretch">
                       <CartIcon /> Add to Cart
                     </Button>
-                    <Button variant="primary" className="pkg-btn-stretch" href="/appointment">
+                    <Button variant="primary" className="pkg-btn-stretch" href="/checkout">
                       <BuyIcon /> Buy Now
                     </Button>
                   </div>

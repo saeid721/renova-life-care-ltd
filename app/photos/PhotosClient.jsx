@@ -1,0 +1,290 @@
+"use client";
+
+import { useState, useMemo, useEffect } from "react";
+import "@/styles/pages/photos.css";
+
+/* ═══════════════════════════════════════════════════════════════
+   SVG ICONS (Favorites removed)
+   ═══════════════════════════════════════════════════════════════ */
+const Icons = {
+  Search: () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.35-4.35" />
+    </svg>
+  ),
+  Close: () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
+    </svg>
+  ),
+  ArrowLeft: () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="m15 18-6-6 6-6" />
+    </svg>
+  ),
+  ArrowRight: () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="m9 18 6-6-6-6" />
+    </svg>
+  ),
+  Grid: () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <rect x="3" y="3" width="7" height="7" />
+      <rect x="14" y="3" width="7" height="7" />
+      <rect x="14" y="14" width="7" height="7" />
+      <rect x="3" y="14" width="7" height="7" />
+    </svg>
+  ),
+  Download: () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+      <polyline points="7 10 12 15 17 10" />
+      <line x1="12" y1="15" x2="12" y2="3" />
+    </svg>
+  ),
+  Share: () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <circle cx="18" cy="5" r="3" />
+      <circle cx="6" cy="12" r="3" />
+      <circle cx="18" cy="19" r="3" />
+      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+      <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+    </svg>
+  ),
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   GALLERY CLIENT COMPONENT
+   ═══════════════════════════════════════════════════════════════ */
+export default function PhotosClient({ initialData, categories }) {
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [viewMode, setViewMode] = useState("grid");
+  const [loadedImages, setLoadedImages] = useState(new Set());
+
+  const filteredImages = useMemo(() => {
+    return initialData.filter((image) => {
+      const matchesCategory = selectedCategory === "all" || image.category === selectedCategory;
+      const matchesSearch =
+        image.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        image.description.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [initialData, selectedCategory, searchQuery]);
+
+  const openLightbox = (index) => {
+    setCurrentImageIndex(index);
+    setLightboxOpen(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+    document.body.style.overflow = "";
+  };
+
+  const navigateLightbox = (direction) => {
+    setCurrentImageIndex((prev) => {
+      const newIndex = prev + direction;
+      if (newIndex < 0) return filteredImages.length - 1;
+      if (newIndex >= filteredImages.length) return 0;
+      return newIndex;
+    });
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!lightboxOpen) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") navigateLightbox(-1);
+      if (e.key === "ArrowRight") navigateLightbox(1);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [lightboxOpen, filteredImages.length]);
+
+  const handleImageLoad = (id) => {
+    setLoadedImages((prev) => new Set(prev).add(id));
+  };
+
+  const currentImage = filteredImages[currentImageIndex];
+
+  return (
+    <section className="page-section gallery-section">
+      <div className="page-section__container">
+        {/* Controls */}
+        <div className="gallery-controls">
+          <div className="category-filter">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`category-btn ${selectedCategory === cat.id ? "active" : ""}`}
+              >
+                <span className="category-icon">{cat.icon}</span>
+                <span className="category-name">{cat.name}</span>
+                <span className="category-count">{cat.count}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="gallery-actions">
+            <div className="search-box">
+              <Icons.Search />
+              <input
+                type="text"
+                placeholder="Search photos..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="search-input"
+              />
+            </div>
+
+            <div className="view-toggle">
+              <button
+                onClick={() => setViewMode("grid")}
+                className={`view-btn ${viewMode === "grid" ? "active" : ""}`}
+                aria-label="Grid view"
+              >
+                <Icons.Grid />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Results Count */}
+        <div className="gallery-results">
+          Showing <strong>{filteredImages.length}</strong> {filteredImages.length === 1 ? "photo" : "photos"}
+          {selectedCategory !== "all" && ` in ${categories.find(c => c.id === selectedCategory)?.name}`}
+        </div>
+
+        {/* Gallery Grid */}
+        {filteredImages.length === 0 ? (
+          <div className="gallery-empty">
+            <div className="empty-icon">📷</div>
+            <h3>No photos found</h3>
+            <p>Try adjusting your search or filter to find what you're looking for.</p>
+            <button
+              onClick={() => { setSelectedCategory("all"); setSearchQuery(""); }}
+              className="btn btn-primary"
+            >
+              Clear Filters
+            </button>
+          </div>
+        ) : (
+          <div className={`gallery-grid ${viewMode === "masonry" ? "masonry" : ""}`}>
+            {filteredImages.map((image, index) => (
+              <div
+                key={image.id}
+                className={`gallery-item ${loadedImages.has(image.id) ? "loaded" : ""}`}
+                onClick={() => openLightbox(index)}
+              >
+                <div className="gallery-item__wrapper">
+                  {!loadedImages.has(image.id) && <div className="gallery-item__skeleton" />}
+                  <img
+                    src={image.thumbnail}
+                    alt={image.title}
+                    className="gallery-item__image"
+                    loading="lazy"
+                    onLoad={() => handleImageLoad(image.id)}
+                  />
+                  <div className="gallery-item__overlay">
+                    <div className="gallery-item__info">
+                      <h3 className="gallery-item__title">{image.title}</h3>
+                      <p className="gallery-item__desc">{image.description}</p>
+                      <span className="gallery-item__date">
+                        {new Date(image.date).toLocaleDateString("en-US", {
+                          year: "numeric", month: "short", day: "numeric",
+                        })}
+                      </span>
+                    </div>
+                    {/* View button only - Favorite removed */}
+                    <div className="gallery-item__actions">
+                      <button className="action-btn view" aria-label="View full size">
+                        <Icons.Search />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Load More */}
+        {filteredImages.length > 0 && filteredImages.length < initialData.length && (
+          <div className="gallery-load-more">
+            <button className="btn btn-secondary">Load More Photos</button>
+          </div>
+        )}
+      </div>
+
+      {/* Lightbox Modal */}
+      {lightboxOpen && currentImage && (
+        <div className="lightbox" onClick={closeLightbox}>
+          <div className="lightbox__content" onClick={(e) => e.stopPropagation()}>
+            <button className="lightbox__close" onClick={closeLightbox} aria-label="Close lightbox">
+              <Icons.Close />
+            </button>
+
+            <button className="lightbox__nav lightbox__nav--prev" onClick={() => navigateLightbox(-1)} aria-label="Previous image">
+              <Icons.ArrowLeft />
+            </button>
+            <button className="lightbox__nav lightbox__nav--next" onClick={() => navigateLightbox(1)} aria-label="Next image">
+              <Icons.ArrowRight />
+            </button>
+
+            <div className="lightbox__image-wrapper">
+              <img src={currentImage.src} alt={currentImage.title} className="lightbox__image" />
+            </div>
+
+            <div className="lightbox__info">
+              <div className="lightbox__meta">
+                <h2 className="lightbox__title">{currentImage.title}</h2>
+                <p className="lightbox__desc">{currentImage.description}</p>
+                <span className="lightbox__date">
+                  {new Date(currentImage.date).toLocaleDateString("en-US", {
+                    weekday: "long", year: "numeric", month: "long", day: "numeric",
+                  })}
+                </span>
+              </div>
+              {/* Actions: Download & Share only - Favorite removed */}
+              <div className="lightbox__actions">
+                <button className="lightbox__action-btn">
+                  <Icons.Download />
+                  <span>Download</span>
+                </button>
+                <button className="lightbox__action-btn" onClick={() => {
+                  navigator.share?.({
+                    title: currentImage.title,
+                    text: currentImage.description,
+                    url: window.location.href,
+                  });
+                }}>
+                  <Icons.Share />
+                  <span>Share</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="lightbox__thumbnails">
+              {filteredImages.slice(Math.max(0, currentImageIndex - 3), currentImageIndex + 4).map((img) => (
+                <button
+                  key={img.id}
+                  className={`lightbox__thumb ${img.id === currentImage.id ? "active" : ""}`}
+                  onClick={() => setCurrentImageIndex(filteredImages.findIndex(f => f.id === img.id))}
+                >
+                  <img src={img.thumbnail} alt={img.title} />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}

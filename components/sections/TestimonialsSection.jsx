@@ -6,7 +6,7 @@ export default function TestimonialsSection() {
     <Section id="testimonials" variant="alternate">
       <SectionHeader
         label="Patient Stories"
-        title="Real Patients, Real Transformations"
+        title="Real Patients, <span class='text-primary'>Real Transformations</span>"
         subtitle="Thousands of families across Bangladesh trust Renova Life Care with their most precious asset — their health."
       />
 

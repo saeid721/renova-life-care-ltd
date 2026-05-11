@@ -1,6 +1,5 @@
-import { DoctorsSection } from "@/components/sections";
 import { siteConfig } from "@/constants/siteData";
-import Link from "next/link";
+import DoctorsGrid from "./DoctorsGrid";
 import "@/styles/pages/doctors.css";
 
 export const metadata = {
@@ -12,35 +11,6 @@ export const metadata = {
     url: `${siteConfig.url}/doctors`,
   },
 };
-
-
-
-// ── Correct Icons for Actions ─────────────
-const ProfileIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-    <circle cx="12" cy="7" r="4" />
-  </svg>
-);
-
-const CalendarIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-    <line x1="16" y1="2" x2="16" y2="6" />
-    <line x1="8" y1="2" x2="8" y2="6" />
-    <line x1="3" y1="10" x2="21" y2="10" />
-  </svg>
-);
-
-const UsersIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-    <circle cx="9" cy="7" r="4" />
-    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-  </svg>
-);
-
 
 export default function DoctorsPage() {
   return (
@@ -63,8 +33,15 @@ export default function DoctorsPage() {
         </div>
       </section>
 
-      {/* Doctors Section (reused) */}
-      <DoctorsSection />
+      {/* Doctors Grid (Client Component) */}
+      
+
+      {/* Doctor */}
+      <section className="page-section">
+        <div className="page-section__container">
+          <DoctorsGrid />
+        </div>
+      </section>
 
       {/* Join Our Team CTA */}
       <section className="page-section page-section--slate">
@@ -85,14 +62,14 @@ export default function DoctorsPage() {
                   "Collaborative and supportive team",
                 ].map((benefit) => (
                   <div key={benefit} className="page-join-benefit-item">
-                    <span className="page-join-check">✓</span>
+                    <span className="page-join-check" aria-hidden="true">✓</span>
                     <span>{benefit}</span>
                   </div>
                 ))}
               </div>
-              <Link href="/contact" className="page-cta-btn page-cta-btn--outline">
+              <a href="/contact" className="page-cta-btn page-cta-btn--outline">
                 Apply Now
-              </Link>
+              </a>
             </div>
             <div className="page-join-visual">
               <div className="page-join-badge-stack">
@@ -119,9 +96,9 @@ export default function DoctorsPage() {
         <div className="page-section__container page-cta-center">
           <h2 className="page-cta-title">Book a Consultation</h2>
           <p className="page-cta-subtitle">Choose your preferred specialist and schedule an appointment at your convenience.</p>
-          <Link href="/appointment" className="page-cta-btn">
+          <a href="/appointment" className="page-cta-btn">
             Book Appointment
-          </Link>
+          </a>
         </div>
       </section>
     </>

@@ -6,10 +6,10 @@ import "./BlogSection.css";
 
 export default function BlogSection() {
   return (
-    <Section id="blog" bg="bg-white">
+    <Section id="blog" variant="alternate">
       <SectionHeader
         label="Health Insights"
-        title="Stay Informed, Stay Healthy"
+        title="Stay Informed,  <span class='text-primary'>Stay Healthy</span>"
         subtitle="Expert articles and health tips from our specialist team — written in easy-to-understand language."
       />
 

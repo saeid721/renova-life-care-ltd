@@ -103,7 +103,7 @@
      --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
      --gradient-authority: linear-gradient(135deg, var(--color-authority), var(--color-accent));
      --gradient-hero: linear-gradient(135deg, var(--color-authority) 0%, var(--color-authority-dark) 40%, var(--color-authority-darker) 100%);
-     --gradient-green-section: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+     --gradient-green-section: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
    }
    
    /* ─── 🔧 Base Resets ─────────────────────────────────────────── */

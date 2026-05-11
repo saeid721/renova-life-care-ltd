@@ -79,7 +79,7 @@ export default function ServicesSection() {
     <Section id="services" bg="bg-white">
       <SectionHeader
         label="Our Services"
-        title="Comprehensive Medical Care Under One Roof"
+        title="Comprehensive Medical <span class='text-primary'>Care Under One Roof</span>"
         subtitle="From preventive checkups to complex surgical procedures, our specialists deliver the highest standard of care for every patient."
       />
       

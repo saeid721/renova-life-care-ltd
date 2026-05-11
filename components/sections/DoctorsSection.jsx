@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { useState } from "react";
 import { doctors } from "@/constants/siteData";
-import Button from "@/components/common/Button";
-import { Section } from "@/components/common/Section";
+import Button from "@/components/common/Button"
+import { Section, SectionHeader } from "@/components/common/Section";
 import "./DoctorsSection.css";
 
 // ── Icons ─────────────────────────────────────────────────────
@@ -79,26 +79,13 @@ export default function DoctorsSection() {
 
   return (
     <Section id="doctors" variant="alternate">
-      {/* Decorative Background Elements */}
-      <div className="doctors-bg-orb doctors-bg-orb--1" aria-hidden="true" />
-      <div className="doctors-bg-orb doctors-bg-orb--2" aria-hidden="true" />
-      <div className="doctors-bg-grid" aria-hidden="true" />
-
-      {/* Header */}
-      <div className="doctors-header-wrapper">
-        <div className="doctors-label-pill">
-          <span className="doctors-label-dot" aria-hidden="true" />
-          Meet Our Team
-        </div>
-        <h2 className="doctors-heading">
-          Expert Specialists,
-          <span className="doctors-heading-accent"> Compassionate Care</span>
-        </h2>
-        <p className="doctors-subheading">
-          Our doctors bring decades of experience and international training to
-          deliver the best healthcare in Bangladesh.
-        </p>
-      </div>
+      
+      <SectionHeader
+        label="Meet Our Team"
+        title="Expert Specialists, <span class='text-primary'>Compassionate Care</span>"
+        subtitle="Our doctors bring decades of experience and international training to
+          deliver the best healthcare in Bangladesh."
+      />
 
       {/* Doctors Grid */}
       <div className="doctors-grid">

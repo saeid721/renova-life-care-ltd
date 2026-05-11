@@ -5,7 +5,7 @@
 
 /* ─── Page Hero ─────────────────────────────────────────────── */
 .page-hero {
-  background: var(--gradient-hero);
+  background: var(--gradient-primary);
   padding: var(--space-section-xl) var(--space-6) var(--space-section-lg);
   text-align: center;
   position: relative;

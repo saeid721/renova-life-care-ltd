@@ -7,6 +7,7 @@
 #doctors {
   position: relative;
   overflow: hidden;
+  background: var(--color-white);
 }
 
 /* ── Decorative Background ──────────────────────────────────── */
@@ -22,7 +23,6 @@
   height: 600px;
   top: -200px;
   right: -200px;
-  background: radial-gradient(circle, rgba(66, 138, 38, 0.07) 0%, transparent 70%);
 }
 
 .doctors-bg-orb--2 {
@@ -30,18 +30,6 @@
   height: 500px;
   bottom: -150px;
   left: -150px;
-  background: radial-gradient(circle, rgba(5, 65, 125, 0.06) 0%, transparent 70%);
-}
-
-.doctors-bg-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(66, 138, 38, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(66, 138, 38, 0.03) 1px, transparent 1px);
-  background-size: 48px 48px;
-  pointer-events: none;
-  z-index: 0;
 }
 
 /* ── Header ─────────────────────────────────────────────────── */
@@ -108,6 +96,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
+  padding: var(--space-8) var(--space-4) var(--space-10);
 }
 
 @media (min-width: 560px) {
@@ -220,10 +209,19 @@
 }
 
 .dcard__image {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  /* ✅ KRITICAL: Ensures face is always centered regardless of image dimensions */
   object-position: center center;
-  border-radius: 50;
+  border-radius: 50%;
+}
+
+.dcard__initials {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-white);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  user-select: none;
 }
 
 /* ── Status Badge ────────────────────────────────────────────── */
@@ -342,84 +340,43 @@
   flex-shrink: 0;
 }
 
-
 /* ── CTA buttons inside card ─────────────────────────────────── */
 .dcard-cta-group {
   display: flex;
   flex-direction: column;
-  gap: 0.625rem;
+  gap: var(--space-2);
   width: 100%;
   margin-top: auto;
-  background: var(--color-white);
 }
 
-/* ✅ Force full width + specific padding for card buttons */
 .dcard-cta-group .btn {
   width: 100% !important;
   padding: var(--space-3) var(--space-6) !important;
   box-sizing: border-box;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: var(--space-2) !important;
 }
 
-/* Ensure icons stay aligned */
 .dcard-cta-group .btn svg {
   flex-shrink: 0;
 }
 
-.dcard-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  width: 100%;
-  padding: 0.7rem 0.5rem;
-  border-radius: var(--radius-full);
-  font-family: var(--font-body);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  cursor: pointer; 
-  border: none;
-  transition: var(--transition-default);
-  line-height: 1;
-}
 
-.dcard-btn-cart-popular {
-  background: var(--color-white);
-  color: var(--color-primary-dark);
-  border: 2px solid var(--color-border-default);
-}
-
-.dcard-btn-cart-popular:hover {
-  background: var(--color-primary-dark);
-  color: var(--color-white);
-  border-color: var(--color-primary-dark);
-  box-shadow: var(--shadow-button-hover);
-  transform: translateY(-1px);
-}
-
-.dcard-btn-buy-popular {
-  background: var(--color-primary-dark);
-  color: var(--color-white);
-  border: 2px solid var(--color-primary-dark);
-  box-shadow: var(--shadow-button);
-}
-
-.dcard-btn-buy-popular:hover {
-  background: var(--color-primary);
-  color: var(--color-white);
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-button-hover);
-  transform: translateY(-1px);
-}
 /* ── Responsive Tweaks ───────────────────────────────────────── */
 @media (max-width: 559px) {
   .dcard {
     padding: var(--space-6) var(--space-5) var(--space-5);
   }
 
-  .dcard__image-wrap {
-    width: 150px;
-    height: 150px;
-  }
+.dcard__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 50%;
+}
 
   .dcard__initials {
     font-size: 2rem;
@@ -439,8 +396,6 @@
 
 /* ── Print ───────────────────────────────────────────────────── */
 @media print {
-  .doctors-bg-orb,
-  .doctors-bg-grid,
   .dcard__accent-bar { display: none; }
 
   .dcard {

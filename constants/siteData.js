@@ -3,8 +3,11 @@
  * Edit this file to update all page content from a single location.
  */
 
+import { SITE_URL } from "@/config";
+
 export const siteConfig = {
   name: "Renova Life Care Ltd.",
+  url: SITE_URL,
   slogan: "Caring Today, Healthy Tomorrow.",
   tagline: "Bangladesh's Most Trusted Health Services Provider",
   description:

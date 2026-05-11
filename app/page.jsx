@@ -20,7 +20,7 @@ export const metadata = {
   openGraph: {
     title: `${siteConfig.name} | ${siteConfig.slogan}`,
     description: siteConfig.description,
-    url: "https://www.renovalifecare.com",
+    url: siteConfig.url,
     siteName: siteConfig.name,
     type: "website",
   },

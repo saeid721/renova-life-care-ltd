@@ -7,7 +7,7 @@ export const metadata = {
   openGraph: {
     title: `Contact Us | ${siteConfig.name}`,
     description: `Reach ${siteConfig.name} for appointments, inquiries, and emergency care.`,
-    url: "https://www.renovalifecare.com/contact",
+    url: `${siteConfig.url}/contact`,
   },
 };
 

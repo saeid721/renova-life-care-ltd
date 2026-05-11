@@ -7,7 +7,7 @@ export const metadata = {
   openGraph: {
     title: `Media & Press | ${siteConfig.name}`,
     description: `Press releases and media resources from ${siteConfig.name}.`,
-    url: "https://www.renovalifecare.com/media",
+    url: `${siteConfig.url}/media`,
   },
 };
 

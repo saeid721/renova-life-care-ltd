@@ -8,7 +8,7 @@ export const metadata = {
   openGraph: {
     title: `Health Shop | ${siteConfig.name}`,
     description: `Trusted medical devices, supplements, and health kits from certified brands.`,
-    url: "https://www.renovalifecare.com/shop",
+    url: `${siteConfig.url}/shop`,
   },
 };
 

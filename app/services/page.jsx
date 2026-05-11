@@ -8,7 +8,7 @@ export const metadata = {
   openGraph: {
     title: `Our Services | ${siteConfig.name}`,
     description: `Comprehensive medical care under one roof at ${siteConfig.name}.`,
-    url: "https://www.renovalifecare.com/services",
+    url: `${siteConfig.url}/services`,
   },
 };
 

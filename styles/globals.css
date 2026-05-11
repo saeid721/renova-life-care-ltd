@@ -2,7 +2,7 @@
    GLOBAL.CSS — Design Tokens & Base Styles (Single Source of Truth)
    ═══════════════════════════════════════════════════════════════ */
 
-   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+   @import url('https://fonts.googleapis.com/css2?family=Sen:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
    @tailwind base;
    @tailwind components;
@@ -43,7 +43,7 @@
      --color-status-info: #1E6FAF;
    
      /* Typography */
-     --font-heading: 'Playfair Display', serif;
+     --font-heading: 'Sen', sans-serif;
      --font-body: 'DM Sans', sans-serif;
      
      --font-size-xs: 0.75rem;

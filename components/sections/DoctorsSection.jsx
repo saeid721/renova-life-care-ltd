@@ -1,11 +1,13 @@
 "use client";
+
 import Image from "next/image";
+import { useState } from "react";
 import { doctors } from "@/constants/siteData";
 import Button from "@/components/common/Button";
 import { Section } from "@/components/common/Section";
 import "./DoctorsSection.css";
 
-// ── Correct Icons for Actions ─────────────
+// ── Icons ─────────────────────────────────────────────────────
 const ProfileIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
@@ -31,13 +33,49 @@ const UsersIcon = () => (
   </svg>
 );
 
+const StarIcon = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--color-status-warning)" aria-hidden="true">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+  </svg>
+);
+
+// ── Initials Fallback Component (JSX - No TypeScript) ─────────
+const InitialsFallback = ({ name, accentFrom, accentTo }) => {
+  const initials = name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
+  return (
+    <div 
+      className="dcard__image-wrap"
+      style={{ 
+        background: `linear-gradient(135deg, ${accentFrom}, ${accentTo})`,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "white",
+        fontSize: "2rem",
+        fontWeight: "var(--font-weight-bold)",
+      }}
+      aria-label={`${name} - photo unavailable`}
+    >
+      <span className="initials-fallback">{initials}</span>
+    </div>
+  );
+};
+
 export default function DoctorsSection() {
   const accentColors = [
-    { from: "#428a26", to: "#86b437" },
-    { from: "#05417d", to: "#1E6FAF" },
-    { from: "#1E6FAF", to: "#428a26" },
-    { from: "#86b437", to: "#05417d" },
+    { from: "var(--color-authority)", to: "var(--color-secondary)" },
+    { from: "var(--color-primary-dark)", to: "var(--color-primary)" },
+    { from: "var(--color-primary)", to: "var(--color-authority)" },
+    { from: "var(--color-secondary)", to: "var(--color-primary-dark)" },
   ];
+
+  const [imageErrors, setImageErrors] = useState({});
 
   return (
     <Section id="doctors" variant="alternate">
@@ -46,6 +84,7 @@ export default function DoctorsSection() {
       <div className="doctors-bg-orb doctors-bg-orb--2" aria-hidden="true" />
       <div className="doctors-bg-grid" aria-hidden="true" />
 
+      {/* Header */}
       <div className="doctors-header-wrapper">
         <div className="doctors-label-pill">
           <span className="doctors-label-dot" aria-hidden="true" />
@@ -61,9 +100,12 @@ export default function DoctorsSection() {
         </p>
       </div>
 
+      {/* Doctors Grid */}
       <div className="doctors-grid">
         {doctors.map((doc, index) => {
           const accent = accentColors[index % accentColors.length];
+          const hasImageError = imageErrors[doc.id];
+
           return (
             <article
               key={doc.id}
@@ -80,18 +122,25 @@ export default function DoctorsSection() {
               {/* Image / Avatar */}
               <div className="dcard__visual">
                 <div className="dcard__image-ring" aria-hidden="true" />
-                <div className="dcard__image-wrap">
-                  <Image
-                    src={`/images/doctors/doctor-${doc.id}.jpg`}
-                    alt={`Portrait of ${doc.name}`}
-                    fill
-                    className="dcard__image"
-                    sizes="(max-width: 559px) 150px, 180px"
-                    onError={(e) => {
-                      e.currentTarget.style.display = "none";
-                    }}
+                
+                {hasImageError ? (
+                  <InitialsFallback 
+                    name={doc.name} 
+                    accentFrom={accent.from} 
+                    accentTo={accent.to} 
                   />
-                </div>
+                ) : (
+                  <div className="dcard__image-wrap">
+                    <Image
+                      src={`/images/doctors/doctor-${doc.id}.jpg`}
+                      alt={`Portrait of ${doc.name}`}
+                      fill
+                      sizes="(max-width: 559px) 150px, 180px"
+                      className="dcard__image"
+                      onError={() => setImageErrors((prev) => ({ ...prev, [doc.id]: true }))}
+                    />
+                  </div>
+                )}
 
                 {/* Availability indicator */}
                 <div className="dcard__status" role="status" aria-label="Available for appointments">
@@ -115,9 +164,7 @@ export default function DoctorsSection() {
                   <div className="dcard__stat-divider" aria-hidden="true" />
                   <div className="dcard__stat">
                     <span className="dcard__stat-value">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true">
-                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                      </svg>
+                      <StarIcon />
                       {doc.rating}
                     </span>
                     <span className="dcard__stat-label">Rating</span>
@@ -131,10 +178,10 @@ export default function DoctorsSection() {
 
                 {/* Two CTA buttons - Stacked */}
                 <div className="dcard-cta-group">
-                  <Button variant="secondary" href="/doctors-profile">
+                  <Button variant="secondary" href={`/doctors/${doc.id}`}>
                     <ProfileIcon /> Doctor Profile
                   </Button>
-                  <Button variant="primary" href="/appointment">
+                  <Button variant="primary" href={`/appointment?doctor=${doc.id}`}>
                     <CalendarIcon /> Book Appointment
                   </Button>
                 </div>
@@ -145,9 +192,9 @@ export default function DoctorsSection() {
       </div>
 
       {/* View All CTA */}
-      <div className="view-all-doctors-btn" style={{ textAlign: "center", marginTop: "var(--space-10)" }}>
+      <div style={{ textAlign: "center", marginTop: "var(--space-10)" }}>
         <Button variant="primary" className="btn-lg" href="/doctors">
-           <UsersIcon /> View All Doctors
+          <UsersIcon /> View All Doctors
         </Button>
       </div>
     </Section>

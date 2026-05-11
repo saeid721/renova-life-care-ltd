@@ -221,19 +221,20 @@
 
 .dcard__image {
   object-fit: cover;
+  /* ✅ KRITICAL: Ensures face is always centered regardless of image dimensions */
   object-position: center center;
-  border-radius: 50%; /* ✅ FIXED: was "50" missing % */
+  border-radius: 50;
 }
 
 /* ── Status Badge ────────────────────────────────────────────── */
 .dcard__status {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
-  background: rgba(66, 138, 38, 0.1); /* ✅ Uses CSS variable color */
-  border: 1px solid rgba(66, 138, 38, 0.3);
+  gap: 5px;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
   border-radius: var(--radius-full);
-  padding: var(--space-1) var(--space-3);
+  padding: 3px 10px;
   margin-top: var(--space-3);
 }
 
@@ -241,7 +242,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--color-status-success); /* ✅ Uses token */
+  background: #22c55e;
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
@@ -251,9 +252,9 @@
 }
 
 .dcard__status-text {
-  font-size: var(--font-size-xs);
+  font-size: 0.7rem;
   font-weight: var(--font-weight-bold);
-  color: var(--color-authority); /* ✅ Uses token */
+  color: #16a34a;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -285,7 +286,7 @@
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   color: var(--color-authority);
-  margin-bottom: var(--space-1);
+  margin-bottom: 4px;
 }
 
 .dcard__qualification {
@@ -312,22 +313,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-05, 2px);
+  gap: 2px;
   flex: 1;
 }
 
 .dcard__stat-value {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: 3px;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   line-height: 1;
-}
-
-.dcard__stat-value svg {
-  flex-shrink: 0;
 }
 
 .dcard__stat-label {
@@ -345,29 +342,74 @@
   flex-shrink: 0;
 }
 
+
 /* ── CTA buttons inside card ─────────────────────────────────── */
 .dcard-cta-group {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: 0.625rem;
   width: 100%;
   margin-top: auto;
+  background: var(--color-white);
 }
 
+/* ✅ Force full width + specific padding for card buttons */
 .dcard-cta-group .btn {
   width: 100% !important;
   padding: var(--space-3) var(--space-6) !important;
   box-sizing: border-box;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: var(--space-2) !important;
 }
 
+/* Ensure icons stay aligned */
 .dcard-cta-group .btn svg {
   flex-shrink: 0;
 }
 
+.dcard-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+  padding: 0.7rem 0.5rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer; 
+  border: none;
+  transition: var(--transition-default);
+  line-height: 1;
+}
+
+.dcard-btn-cart-popular {
+  background: var(--color-white);
+  color: var(--color-primary-dark);
+  border: 2px solid var(--color-border-default);
+}
+
+.dcard-btn-cart-popular:hover {
+  background: var(--color-primary-dark);
+  color: var(--color-white);
+  border-color: var(--color-primary-dark);
+  box-shadow: var(--shadow-button-hover);
+  transform: translateY(-1px);
+}
+
+.dcard-btn-buy-popular {
+  background: var(--color-primary-dark);
+  color: var(--color-white);
+  border: 2px solid var(--color-primary-dark);
+  box-shadow: var(--shadow-button);
+}
+
+.dcard-btn-buy-popular:hover {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-button-hover);
+  transform: translateY(-1px);
+}
 /* ── Responsive Tweaks ───────────────────────────────────────── */
 @media (max-width: 559px) {
   .dcard {
@@ -377,6 +419,10 @@
   .dcard__image-wrap {
     width: 150px;
     height: 150px;
+  }
+
+  .dcard__initials {
+    font-size: 2rem;
   }
 
   .doctors-cta-link {
@@ -395,9 +441,7 @@
 @media print {
   .doctors-bg-orb,
   .doctors-bg-grid,
-  .dcard__accent-bar { 
-    display: none; 
-  }
+  .dcard__accent-bar { display: none; }
 
   .dcard {
     break-inside: avoid;
@@ -406,7 +450,5 @@
     animation: none;
   }
 
-  .doctors-cta-row { 
-    display: none; 
-  }
+  .doctors-cta-row { display: none; }
 }

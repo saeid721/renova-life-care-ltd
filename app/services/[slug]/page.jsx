@@ -2,8 +2,11 @@
 import { siteConfig, services } from "@/constants/siteData";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { doctors } from "@/constants/siteData";
+import "@/components/sections/DoctorsSection.css";
 import ServiceIcon from "@/components/common/ServiceIcon";
 import "@/styles/pages/service-details.css";
+import DoctorsGrid from "./DoctorsGrid";
 
 // Generate static params for SSG/ISR
 export async function generateStaticParams() {
@@ -58,6 +61,8 @@ export default async function ServiceDetailPage({ params }) {
   if (!service) {
     notFound();
   }
+
+  const displayedDoctors = doctors.slice(0, 3);
 
   // Mock detailed content - replace with CMS/API in production
   const serviceContent = {
@@ -123,27 +128,6 @@ export default async function ServiceDetailPage({ params }) {
       }
     ],
     
-    specialists: [
-      { 
-        name: "Dr. Fatima Rahman", 
-        role: "Lead Specialist, MBBS, FCPS", 
-        image: "/images/doctors/fatima.jpg",
-        bio: "15+ years experience in specialized care"
-      },
-      { 
-        name: "Dr. Ahmed Hassan", 
-        role: "Senior Consultant, MD, MRCP", 
-        image: "/images/doctors/ahmed.jpg",
-        bio: "Expert in advanced diagnostic procedures"
-      },
-      { 
-        name: "Dr. Nusrat Jahan", 
-        role: "Consultant, MBBS, DCH", 
-        image: "/images/doctors/nusrat.jpg",
-        bio: "Compassionate care with patient-centered approach"
-      },
-    ],
-    
     relatedServices: services
       .filter(s => s.id !== service.id && s.category === service.category)
       .slice(0, 4),
@@ -151,14 +135,6 @@ export default async function ServiceDetailPage({ params }) {
 
   return (
     <article className="service-detail-page">
-      {/* Breadcrumb Navigation */}
-      {/* <nav aria-label="Breadcrumb" className="breadcrumb-nav container-custom">
-        <ol className="breadcrumb-list">
-          <li><Link href="/">Home</Link></li>
-          <li><Link href="/services">Services</Link></li>
-          <li aria-current="page">{service.title}</li>
-        </ol>
-      </nav> */}
 
       {/* Page Hero */}
       <section className="page-hero">
@@ -225,26 +201,7 @@ export default async function ServiceDetailPage({ params }) {
           {/* Specialists Section */}
           <section className="service-section" aria-labelledby="specialists-heading">
             <h2 id="specialists-heading" className="section-title">Meet Our Specialists</h2>
-            <div className="specialists-grid">
-              {serviceContent.specialists.map((doctor) => (
-                <article key={doctor.name} className="specialist-card">
-                  <div className="specialist-avatar">
-                    {/* Placeholder avatar - replace with actual image */}
-                    <div className="specialist-avatar__placeholder" aria-hidden="true">
-                      {doctor.name.split(' ').map(n => n[0]).join('')}
-                    </div>
-                  </div>
-                  <div className="specialist-info">
-                    <h3 className="specialist-name">{doctor.name}</h3>
-                    <p className="specialist-role">{doctor.role}</p>
-                    <p className="specialist-bio">{doctor.bio}</p>
-                    <button className="btn btn-sm btn-outline" aria-label={`View profile of ${doctor.name}`}>
-                      View Profile
-                    </button>
-                  </div>
-                </article>
-              ))}
-            </div>
+            <DoctorsGrid doctors={displayedDoctors} />
           </section>
 
           {/* FAQ Section */}

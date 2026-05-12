@@ -94,7 +94,7 @@
 }
 
 .page-section--white { background: var(--color-white); }
-.page-section--slate { background: var(--color-bg-light); }
+.page-section--slate { background: var(--color-bg-section); }
 .page-section--green { background: var(--gradient-green-section); }
 
 .page-section__container {

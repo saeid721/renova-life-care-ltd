@@ -243,6 +243,16 @@ export default function Navbar() {
     setExpandedMobileMenu(expandedMobileMenu === href ? null : href);
   };
 
+  /* ── Helper: Split array into N chunks for mega menu ── */
+  const chunkArray = (arr, chunks = 3) => {
+    const result = [];
+    const chunkSize = Math.ceil(arr.length / chunks);
+    for (let i = 0; i < arr.length; i += chunkSize) {
+      result.push(arr.slice(i, i + chunkSize));
+    }
+    return result;
+  };
+
   return (
     <>
       {/* ── Top Announcement Bar ── */}
@@ -328,6 +338,10 @@ export default function Navbar() {
               const hasDropdown = link.children && link.children.length > 0;
               
               if (hasDropdown) {
+                // ✅ Check if this is Services → use Mega Menu
+                const isMegaMenu = link.href === "/services";
+                const menuColumns = isMegaMenu ? chunkArray(link.children, 3) : [link.children];
+                
                 return (
                   <li key={link.href} className="nav-item-dropdown" role="menuitem">
                     <Link
@@ -341,23 +355,31 @@ export default function Navbar() {
                       {link.label}
                       <ChevronDownIcon />
                     </Link>
-                    <div className="dropdown-menu" role="menu">
-                      {link.children.map((child) => (
-                        <Link
-                          key={child.href}
-                          href={child.href}
-                          className={`dropdown-item${activeLink === child.href ? " active" : ""}`}
-                          onClick={() => setActiveLink(child.href)}
-                          role="menuitem"
-                        >
-                          {child.label}
-                        </Link>
+                    
+                    {/* ✅ Conditional: Mega Menu or Regular Dropdown */}
+                    <div className={`dropdown-menu${isMegaMenu ? " mega-menu" : ""}`} role="menu">
+                      {menuColumns.map((columnItems, colIndex) => (
+                        <div key={colIndex} className="dropdown-column">
+                          {/* ✅ Headers removed - only menu items */}
+                          {columnItems.map((child) => (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              className={`dropdown-item${activeLink === child.href ? " active" : ""}`}
+                              onClick={() => setActiveLink(child.href)}
+                              role="menuitem"
+                            >
+                              {child.label}
+                            </Link>
+                          ))}
+                        </div>
                       ))}
                     </div>
                   </li>
                 );
               }
               
+              // Regular menu item (no dropdown)
               return (
                 <li key={link.href}>
                   <Link
@@ -452,43 +474,47 @@ export default function Navbar() {
             const isExpanded = expandedMobileMenu === link.href;
             
             if (hasSubmenu) {
-              return (
-                <div key={link.href} className="mobile-nav-item">
-                  <button
-                    className={`mobile-nav-toggle${isExpanded ? " expanded" : ""}`}
-                    onClick={() => toggleMobileSubmenu(link.href)}
-                    aria-expanded={isExpanded}
-                    aria-controls={`submenu-${link.href.replace(/\//g, '')}`}
-                  >
-                    <span style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
-                      <span className="nav-dot" aria-hidden="true" />
-                      {link.label}
-                    </span>
-                    <span className="toggle-icon">
-                      <ChevronDownIcon />
-                    </span>
-                  </button>
-                  <div
-                    id={`submenu-${link.href.replace(/\//g, '')}`}
-                    className={`mobile-submenu${isExpanded ? " expanded" : ""}`}
-                  >
-                    {link.children.map((child) => (
-                      <Link
-                        key={child.href}
-                        href={child.href}
-                        className={`dropdown-item${activeLink === child.href ? " active" : ""}`}
-                        onClick={() => {
-                          setActiveLink(child.href);
-                          closeDrawer();
-                        }}
-                      >
-                        {child.label}
-                      </Link>
-                    ))}
+                const isMegaMenu = link.href === "/services";
+                
+                return (
+                  <div key={link.href} className="mobile-nav-item">
+                    <button
+                      className={`mobile-nav-toggle${isExpanded ? " expanded" : ""}`}
+                      onClick={() => toggleMobileSubmenu(link.href)}
+                      aria-expanded={isExpanded}
+                      aria-controls={`submenu-${link.href.replace(/\//g, '')}`}
+                    >
+                      <span style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                        <span className="nav-dot" aria-hidden="true" />
+                        {link.label}
+                      </span>
+                      <span className="toggle-icon">
+                        <ChevronDownIcon />
+                      </span>
+                    </button>
+                    
+                    <div
+                      id={`submenu-${link.href.replace(/\//g, '')}`}
+                      className={`mobile-submenu${isExpanded ? " expanded" : ""}`}
+                    >
+                      {/* ✅ Mobile: Single stacked list for ALL menus (including Services) */}
+                      {link.children.map((child) => (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          className={`dropdown-item${activeLink === child.href ? " active" : ""}`}
+                          onClick={() => {
+                            setActiveLink(child.href);
+                            closeDrawer();
+                          }}
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              );
-            }
+                );
+              }
             
             return (
               <Link

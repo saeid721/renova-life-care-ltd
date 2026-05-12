@@ -77,6 +77,9 @@ export default function DoctorsSection() {
 
   const [imageErrors, setImageErrors] = useState({});
 
+  // ✅ NEW: Show only first 4 doctors on home page section
+  const displayedDoctors = doctors.slice(0, 4);
+
   return (
     <Section id="doctors" variant="alternate">
       
@@ -89,7 +92,8 @@ export default function DoctorsSection() {
 
       {/* Doctors Grid */}
       <div className="doctors-grid">
-        {doctors.map((doc, index) => {
+        {/* ✅ UPDATED: Map over displayedDoctors instead of full doctors array */}
+        {displayedDoctors.map((doc, index) => {
           const accent = accentColors[index % accentColors.length];
           const hasImageError = imageErrors[doc.id];
 

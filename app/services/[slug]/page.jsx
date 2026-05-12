@@ -1,0 +1,401 @@
+// app/services/[slug]/page.jsx
+import { siteConfig, services } from "@/constants/siteData";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import "@/styles/pages/service-details.css";
+
+// Generate static params for SSG/ISR
+export async function generateStaticParams() {
+  return services.map((service) => ({
+    slug: service.href.replace('/services/', ''),
+  }));
+}
+
+// Generate SEO metadata dynamically
+export async function generateMetadata({ params }) {
+  const service = services.find((s) => s.href === `/services/${params.slug}`);
+  
+  if (!service) {
+    return {
+      title: "Service Not Found",
+      description: "The requested medical service could not be found.",
+    };
+  }
+
+  return {
+    title: `${service.title} | ${siteConfig.name}`,
+    description: service.seoDescription || `Learn about ${service.title} services at ${siteConfig.name}. Expert care with modern facilities.`,
+    openGraph: {
+      title: `${service.title} | ${siteConfig.name}`,
+      description: service.seoDescription || `Comprehensive ${service.title.toLowerCase()} care at ${siteConfig.name}.`,
+      url: `${siteConfig.url}${service.href}`,
+      type: "article",
+      images: [
+        {
+          url: service.ogImage || `${siteConfig.url}/images/services/${service.id}-og.jpg`,
+          width: 1200,
+          height: 630,
+          alt: `${service.title} at ${siteConfig.name}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${service.title} | ${siteConfig.name}`,
+      description: service.seoDescription || `Expert ${service.title.toLowerCase()} care at ${siteConfig.name}.`,
+      images: [service.ogImage || `${siteConfig.url}/images/services/${service.id}-og.jpg`],
+    },
+  };
+}
+
+// Service Detail Page Component
+export default function ServiceDetailPage({ params }) {
+  const service = services.find((s) => s.href === `/services/${params.slug}`);
+  
+  if (!service) {
+    notFound();
+  }
+
+  // Mock detailed content - replace with CMS/API in production
+  const serviceContent = {
+    overview: service.description,
+    detailedDescription: `Our ${service.title} service provides comprehensive care using evidence-based practices and the latest medical technology. Our team of BMDC-certified specialists works collaboratively to ensure you receive personalized, compassionate care tailored to your unique health needs.`,
+    
+    benefits: [
+      "Personalized treatment plans designed for your specific health profile",
+      "Board-certified specialists with extensive clinical experience",
+      "Advanced diagnostic equipment for precise, accurate assessments",
+      "Seamless coordination with other departments for holistic care",
+      "Patient education resources to empower your health decisions",
+      "Flexible scheduling including evening and weekend appointments",
+    ],
+    
+    process: [
+      { 
+        step: 1, 
+        title: "Initial Consultation", 
+        desc: "Meet with our specialist to discuss your symptoms, medical history, and health goals. We take time to listen and understand your concerns.",
+        icon: "user-check"
+      },
+      { 
+        step: 2, 
+        title: "Comprehensive Assessment", 
+        desc: "Undergo thorough evaluation using state-of-the-art diagnostic tools and laboratory testing as needed.",
+        icon: "scan-search"
+      },
+      { 
+        step: 3, 
+        title: "Personalized Treatment Plan", 
+        desc: "Receive a clear, customized care plan with explained options, expected outcomes, and timeline.",
+        icon: "file-check"
+      },
+      { 
+        step: 4, 
+        title: "Ongoing Support & Follow-up", 
+        desc: "Regular check-ins, progress monitoring, and plan adjustments to ensure optimal health outcomes.",
+        icon: "heart-pulse"
+      },
+    ],
+    
+    faqs: [
+      {
+        q: "How do I prepare for my first appointment?",
+        a: "Please bring your national ID, insurance card (if applicable), list of current medications, and any relevant medical records or test results. Arrive 15 minutes early to complete registration paperwork. Wear comfortable clothing if diagnostic tests are anticipated."
+      },
+      {
+        q: "Do you accept my insurance?",
+        a: "We accept most major insurance providers in Bangladesh. Please contact our billing department at +880 1234-567890 or email billing@renovalifecare.com to verify your specific coverage before your visit."
+      },
+      {
+        q: "What if I need emergency care?",
+        a: "For life-threatening emergencies, immediately call 999 or visit our 24/7 Emergency Department. For urgent but non-emergency concerns, call our nurse triage line at +880 1234-567891 for guidance on next steps."
+      },
+      {
+        q: "Can I schedule a virtual consultation?",
+        a: "Yes! Many of our services offer secure telehealth appointments via our patient portal. Virtual visits are ideal for follow-ups, medication management, and initial consultations when appropriate. Check with our scheduling team to see if telehealth suits your needs."
+      },
+      {
+        q: "How long will my appointment take?",
+        a: "Initial consultations typically last 30-45 minutes. Follow-up appointments are usually 15-20 minutes. Diagnostic procedures vary in duration; our staff will inform you of expected timeframes when scheduling."
+      }
+    ],
+    
+    specialists: [
+      { 
+        name: "Dr. Fatima Rahman", 
+        role: "Lead Specialist, MBBS, FCPS", 
+        image: "/images/doctors/fatima.jpg",
+        bio: "15+ years experience in specialized care"
+      },
+      { 
+        name: "Dr. Ahmed Hassan", 
+        role: "Senior Consultant, MD, MRCP", 
+        image: "/images/doctors/ahmed.jpg",
+        bio: "Expert in advanced diagnostic procedures"
+      },
+      { 
+        name: "Dr. Nusrat Jahan", 
+        role: "Consultant, MBBS, DCH", 
+        image: "/images/doctors/nusrat.jpg",
+        bio: "Compassionate care with patient-centered approach"
+      },
+    ],
+    
+    relatedServices: services
+      .filter(s => s.id !== service.id && s.category === service.category)
+      .slice(0, 4),
+  };
+
+  return (
+    <article className="service-detail-page">
+      {/* Breadcrumb Navigation */}
+      <nav aria-label="Breadcrumb" className="breadcrumb-nav container-custom">
+        <ol className="breadcrumb-list">
+          <li><Link href="/">Home</Link></li>
+          <li><Link href="/services">Services</Link></li>
+          <li aria-current="page">{service.title}</li>
+        </ol>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="service-hero" style={{ '--service-color': service.color }}>
+        <div className="container-custom service-hero__content">
+          <div className="service-hero__icon-wrapper" aria-hidden="true">
+            <ServiceIcon type={service.icon} color="var(--service-color)" />
+          </div>
+          <h1 className="service-hero__title">{service.title}</h1>
+          <p className="service-hero__subtitle">{serviceContent.overview}</p>
+          <div className="service-hero__actions">
+            <Link href="/appointments" className="btn btn-primary">
+              Book Appointment
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </Link>
+            <Link href="#contact-info" className="btn btn-secondary">Contact Us</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Content Grid */}
+      <div className="container-custom service-detail-grid">
+        
+        {/* Left Column - Primary Content */}
+        <main className="service-detail-main" id="main-content">
+          
+          {/* What to Expect Section */}
+          <section className="service-section" aria-labelledby="process-heading">
+            <h2 id="process-heading" className="section-title">What to Expect</h2>
+            <div className="process-steps">
+              {serviceContent.process.map((item) => (
+                <div key={item.step} className="process-step">
+                  <div className="process-step__number" aria-hidden="true">
+                    <ServiceIcon type={item.icon} color="white" />
+                  </div>
+                  <div className="process-step__content">
+                    <h3 className="process-step__title">{item.step}. {item.title}</h3>
+                    <p className="process-step__desc">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Benefits Section */}
+          <section className="service-section service-section--highlight" aria-labelledby="benefits-heading">
+            <h2 id="benefits-heading" className="section-title">Why Choose Our {service.title} Services</h2>
+            <ul className="benefits-list">
+              {serviceContent.benefits.map((benefit, index) => (
+                <li key={index} className="benefit-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-status-success)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="benefit-icon">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span>{benefit}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* Detailed Description */}
+          <section className="service-section" aria-labelledby="about-heading">
+            <h2 id="about-heading" className="section-title">About This Service</h2>
+            <div className="service-description-content">
+              <p>{serviceContent.detailedDescription}</p>
+              <p>At {siteConfig.name}, we believe in treating the whole person, not just symptoms. Our integrated approach combines clinical excellence with compassionate care to support your journey to better health.</p>
+            </div>
+          </section>
+
+          {/* Specialists Section */}
+          <section className="service-section" aria-labelledby="specialists-heading">
+            <h2 id="specialists-heading" className="section-title">Meet Our Specialists</h2>
+            <div className="specialists-grid">
+              {serviceContent.specialists.map((doctor) => (
+                <article key={doctor.name} className="specialist-card">
+                  <div className="specialist-avatar">
+                    {/* Placeholder avatar - replace with actual image */}
+                    <div className="specialist-avatar__placeholder" aria-hidden="true">
+                      {doctor.name.split(' ').map(n => n[0]).join('')}
+                    </div>
+                  </div>
+                  <div className="specialist-info">
+                    <h3 className="specialist-name">{doctor.name}</h3>
+                    <p className="specialist-role">{doctor.role}</p>
+                    <p className="specialist-bio">{doctor.bio}</p>
+                    <button className="btn btn-sm btn-outline" aria-label={`View profile of ${doctor.name}`}>
+                      View Profile
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* FAQ Section */}
+          <section className="service-section" id="faqs" aria-labelledby="faq-heading">
+            <h2 id="faq-heading" className="section-title">Frequently Asked Questions</h2>
+            <div className="faq-list" role="list">
+              {serviceContent.faqs.map((faq, index) => (
+                <details key={index} className="faq-item" role="listitem">
+                  <summary className="faq-question">
+                    <span>{faq.q}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="faq-toggle-icon" aria-hidden="true">
+                      <path d="m6 9 6 6 6-6"/>
+                    </svg>
+                  </summary>
+                  <div className="faq-answer">
+                    <p>{faq.a}</p>
+                  </div>
+                </details>
+              ))}
+            </div>
+          </section>
+
+        </main>
+
+        {/* Right Column - Sticky Sidebar */}
+        <aside className="service-detail-sidebar" aria-label="Service actions and information">
+          
+          {/* Quick Actions Card */}
+          <div className="sidebar-card sidebar-card--primary">
+            <h3 className="sidebar-card__title">Get Started Today</h3>
+            <p className="sidebar-card__desc">Ready to take the next step in your healthcare journey? Our team is here to help.</p>
+            <div className="sidebar-actions">
+              <Link href="/appointments" className="btn btn-primary btn-full">
+                Schedule Appointment
+              </Link>
+              <Link href="/contact" className="btn btn-secondary btn-full">
+                Ask a Question
+              </Link>
+            </div>
+          </div>
+
+          {/* Contact Info Card */}
+          <div className="sidebar-card" id="contact-info">
+            <h3 className="sidebar-card__title">Contact Information</h3>
+            <div className="contact-info">
+              <div className="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+                <div>
+                  <strong>Phone</strong>
+                  <p><a href="tel:+8801234567890">+880 1234-567890</a></p>
+                </div>
+              </div>
+              <div className="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                <div>
+                  <strong>Email</strong>
+                  <p><a href="mailto:info@renovalifecare.com">info@renovalifecare.com</a></p>
+                </div>
+              </div>
+              <div className="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                <div>
+                  <strong>Location</strong>
+                  <p>123 Health Avenue, Dhaka, Bangladesh</p>
+                </div>
+              </div>
+              <div className="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <div>
+                  <strong>Hours</strong>
+                  <p>Sun-Thu: 8AM-8PM<br/>Fri-Sat: 9AM-5PM</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Related Services */}
+          {serviceContent.relatedServices.length > 0 && (
+            <div className="sidebar-card">
+              <h3 className="sidebar-card__title">Related Services</h3>
+              <ul className="related-services-list">
+                {serviceContent.relatedServices.map((related) => (
+                  <li key={related.id}>
+                    <Link href={related.href} className="related-service-link">
+                      <ServiceIcon type={related.icon} color="var(--color-primary)" />
+                      <span>{related.title}</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                      </svg>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <Link href="/services" className="view-all-link">
+                View All Services
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </Link>
+            </div>
+          )}
+
+          {/* Emergency Banner */}
+          <div className="sidebar-card sidebar-card--emergency" role="complementary" aria-label="Emergency contact">
+            <div className="emergency-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </div>
+            <h4>Need Emergency Care?</h4>
+            <p>Our emergency department is open 24/7 for urgent medical needs.</p>
+            <a href="tel:+8801234567890" className="emergency-link">
+              Call Emergency: <strong>+880 1234-567890</strong>
+            </a>
+          </div>
+
+        </aside>
+      </div>
+
+      {/* CTA Section */}
+      <section className="service-cta" id="contact" aria-labelledby="cta-heading">
+        <div className="container-custom service-cta__content">
+          <h2 id="cta-heading" className="service-cta__title">Ready to Start Your Journey to Better Health?</h2>
+          <p className="service-cta__subtitle">Our team is here to provide compassionate, expert care tailored to your unique needs.</p>
+          <div className="service-cta__actions">
+            <Link href="/appointments" className="btn btn-primary btn-lg">
+              Book Your Appointment
+            </Link>
+            <Link href="/contact" className="btn btn-outline-white btn-lg">
+              Contact Our Team
+            </Link>
+          </div>
+        </div>
+      </section>
+    </article>
+  );
+}

@@ -315,7 +315,7 @@ export const services = [
 export const doctors = [
   {
     id: 1,
-    name: "Dr. Fariha Rahman",
+    name: "Fariha Rahman",
     specialty: "Cardiologist",
     qualification: "MBBS, MD (Cardiology), FCPS",
     experience: "18 Years",
@@ -326,7 +326,7 @@ export const doctors = [
   },
   {
     id: 2,
-    name: "Dr. Tasnim Farin",
+    name: "Tasnim Farin",
     specialty: "Neurologist",
     qualification: "MBBS, MD (Neurology), PhD",
     experience: "22 Years",
@@ -337,7 +337,7 @@ export const doctors = [
   },
   {
     id: 3,
-    name: "Dr. Aysha Aktar Tripti",
+    name: "Aysha Aktar Tripti",
     specialty: "Pediatrician",
     qualification: "MBBS, DCH, FCPS (Pediatrics)",
     experience: "15 Years",
@@ -348,7 +348,7 @@ export const doctors = [
   },
   {
     id: 4,
-    name: "Dr. Humayon Kabir",
+    name: "Humayon Kabir",
     specialty: "Orthopedic Surgeon",
     qualification: "MBBS, MS (Orthopedics), FRCS",
     experience: "20 Years",
@@ -360,7 +360,7 @@ export const doctors = [
   
   {
     id: 5,
-    name: "Dr. Nasreen Akter",
+    name: "Nasreen Akter",
     specialty: "Cardiologist",
     qualification: "MBBS, MD (Cardiology), FCPS",
     experience: "18 Years",
@@ -382,7 +382,7 @@ export const doctors = [
   },
   {
     id: 7,
-    name: "Dr. Alifa Aktar",
+    name: "Alifa Aktar",
     specialty: "Pediatrician",
     qualification: "MBBS, DCH, FCPS (Pediatrics)",
     experience: "15 Years",
@@ -393,7 +393,7 @@ export const doctors = [
   },
   {
     id: 8,
-    name: "Dr. Maria Hoque",
+    name: "Maria Hoque",
     specialty: "Orthopedic Surgeon",
     qualification: "MBBS, MS (Orthopedics), FRCS",
     experience: "20 Years",

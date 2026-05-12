@@ -1,6 +1,7 @@
 import { ServicesSection } from "@/components/sections";
 import { siteConfig, services } from "@/constants/siteData";
 import Link from "next/link";
+import "@/styles/pages/services.css";
 
 export const metadata = {
   title: `Our Services | ${siteConfig.name}`,

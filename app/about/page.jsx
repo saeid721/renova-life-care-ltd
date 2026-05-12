@@ -188,7 +188,7 @@ export default function AboutPage() {
       {/* ══════════════════════════════════════
           MISSION · VISION · VALUES
       ══════════════════════════════════════ */}
-      <section className="page-section page-section--white">
+      <section className="page-section page-section--slate">
         <div className="page-section__container">
           <div className="page-mv-grid">
             <div className="page-mv-card page-mv-card--mission anim-fade-up anim-d1">
@@ -330,7 +330,7 @@ export default function AboutPage() {
       {/* ══════════════════════════════════════
           MANAGEMENT TEAM
       ══════════════════════════════════════ */}
-      <section className="page-section" id="management">
+      <section className="page-section page-section--slate" id="management">
         <div className="page-section__container">
 
           {/* Section header */}

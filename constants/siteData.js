@@ -60,7 +60,7 @@ export const services = [
     description: "Specialized testing for blood disorders, anemia, clotting issues, and blood cancer screening.",
     icon: "droplets",
     color: "#dc2626",
-    href: "/services/hematology",
+    href: "/services/hematology-services",  
   },
   {
     id: 4,
@@ -68,7 +68,7 @@ export const services = [
     description: "Precise measurement of hormones and immune markers for endocrine and autoimmune condition management.",
     icon: "shield",
     color: "#8b5cf6",
-    href: "/services/hormone-immunology",
+    href: "/services/hormone-immunology-tests",
   },
   {
     id: 5,
@@ -84,7 +84,7 @@ export const services = [
     description: "High-resolution imaging for bones, chest, and internal organs with minimal radiation exposure.",
     icon: "scan",
     color: "#6366f1",
-    href: "/services/digital-xray",
+    href: "/services/digital-x-ray", 
   },
   {
     id: 7,
@@ -92,7 +92,7 @@ export const services = [
     description: "Safe, real-time imaging for abdominal, pelvic, vascular, and prenatal examinations.",
     icon: "waves",
     color: "#14b8a6",
-    href: "/services/ultrasonography",
+    href: "/services/ultrasonography-usg",
   },
   {
     id: 8,
@@ -100,7 +100,7 @@ export const services = [
     description: "Advanced ultrasound technology to visualize blood flow and detect vascular abnormalities.",
     icon: "activity",
     color: "#0ea5e9",
-    href: "/services/color-doppler",
+    href: "/services/color-doppler-imaging",
   },
   {
     id: 9,
@@ -108,7 +108,7 @@ export const services = [
     description: "Quick, painless heart rhythm monitoring to detect arrhythmias, heart attacks, and cardiac conditions.",
     icon: "heart-pulse",
     color: "#ef4444",
-    href: "/services/ecg",
+    href: "/services/ecg-electrocardiogram",
   },
   {
     id: 10,
@@ -116,7 +116,7 @@ export const services = [
     description: "Detailed ultrasound imaging of heart structure and function for comprehensive cardiac assessment.",
     icon: "heart",
     color: "#f43f5e",
-    href: "/services/echocardiography",
+    href: "/services/echocardiography-echo", 
   },
   {
     id: 11,
@@ -124,7 +124,7 @@ export const services = [
     description: "Cross-sectional imaging for detailed views of bones, blood vessels, and soft tissues.",
     icon: "scan",
     color: "#8b5cf6",
-    href: "/services/ct-scan",
+    href: "/services/ct-scan-services", 
   },
   {
     id: 12,
@@ -132,7 +132,7 @@ export const services = [
     description: "High-definition magnetic resonance imaging for brain, spine, joints, and soft tissue evaluation.",
     icon: "scan-line",
     color: "#7c3aed",
-    href: "/services/mri-scan",
+    href: "/services/mri-scan-services", 
   },
   {
     id: 13,
@@ -156,7 +156,7 @@ export const services = [
     description: "Comprehensive lung function assessment for asthma, COPD, and respiratory disorder diagnosis.",
     icon: "wind",
     color: "#0ea5e9",
-    href: "/services/pulmonary-function-test",
+    href: "/services/pulmonary-function-test-pft",
   },
   {
     id: 16,
@@ -164,7 +164,7 @@ export const services = [
     description: "Neurological diagnostics to evaluate brain activity and nerve-muscle function for seizure and neuropathy assessment.",
     icon: "brain",
     color: "#6366f1",
-    href: "/services/eeg-emg",
+    href: "/services/eeg-emg-testing", 
   },
   {
     id: 17,
@@ -172,7 +172,7 @@ export const services = [
     description: "Complete heart health evaluation including stress tests, Holter monitoring, and advanced cardiac imaging.",
     icon: "heart-pulse",
     color: "#e53e3e",
-    href: "/services/cardiology-diagnostics",
+    href: "/services/cardiology-diagnostic-services",
   },
   {
     id: 18,
@@ -180,7 +180,7 @@ export const services = [
     description: "Comprehensive glucose testing, HbA1c monitoring, and personalized diabetes care planning.",
     icon: "droplet",
     color: "#f59e0b",
-    href: "/services/diabetes-screening",
+    href: "/services/diabetes-screening-management",
   },
   {
     id: 19,
@@ -188,7 +188,7 @@ export const services = [
     description: "Essential blood and urine tests to evaluate kidney health and detect renal disorders early.",
     icon: "droplets",
     color: "#06b6d4",
-    href: "/services/kidney-function",
+    href: "/services/kidney-function-tests",
   },
   {
     id: 20,
@@ -196,7 +196,7 @@ export const services = [
     description: "Critical blood panels to assess liver health, detect hepatitis, and monitor treatment effectiveness.",
     icon: "flask-conical",
     color: "#84cc16",
-    href: "/services/liver-function",
+    href: "/services/liver-function-tests", 
   },
   {
     id: 21,
@@ -204,7 +204,7 @@ export const services = [
     description: "Accurate thyroid hormone testing for diagnosing hypothyroidism, hyperthyroidism, and metabolic disorders.",
     icon: "activity",
     color: "#22c55e",
-    href: "/services/thyroid-profile",
+    href: "/services/thyroid-profile-tests"
   },
   {
     id: 22,
@@ -220,7 +220,7 @@ export const services = [
     description: "Customized wellness packages designed to identify health risks before symptoms appear.",
     icon: "shield-check",
     color: "#10b981",
-    href: "/services/preventive-checkup",
+    href: "/services/preventive-health-checkup-packages",
   },
   {
     id: 24,
@@ -228,7 +228,7 @@ export const services = [
     description: "Comprehensive head-to-toe evaluation covering all major organ systems for complete health assessment.",
     icon: "user-check",
     color: "#3b82f6",
-    href: "/services/full-body-checkup",
+    href: "/services/full-body-health-checkup",
   },
   {
     id: 25,
@@ -236,7 +236,7 @@ export const services = [
     description: "Rapid and PCR testing for coronavirus and other viral infections with quick, reliable results.",
     icon: "virus",
     color: "#ef4444",
-    href: "/services/covid-viral-screening",
+    href: "/services/covid-19-viral-screening",
   },
   {
     id: 26,
@@ -252,7 +252,7 @@ export const services = [
     description: "Easy access to experienced physicians for diagnosis, treatment planning, and health guidance.",
     icon: "stethoscope",
     color: "#6366f1",
-    href: "/services/doctor-consultation",
+    href: "/services/doctor-consultation-services",
   },
   {
     id: 28,
@@ -260,7 +260,7 @@ export const services = [
     description: "Dedicated consultation rooms with expert specialists across multiple medical disciplines.",
     icon: "building",
     color: "#05417d",
-    href: "/services/specialist-chamber",
+    href: "/services/specialist-chamber-services",
   },
   {
     id: 29,
@@ -268,7 +268,7 @@ export const services = [
     description: "Specialized screening and testing for reproductive health, hormonal balance, and women-specific conditions.",
     icon: "heart",
     color: "#ec4899",
-    href: "/services/womens-health",
+    href: "/services/womens-health-diagnostics",
   },
   {
     id: 30,
@@ -276,7 +276,7 @@ export const services = [
     description: "Gentle, age-appropriate diagnostic services tailored for infants, children, and adolescents.",
     icon: "baby",
     color: "#f59e0b",
-    href: "/services/child-health",
+    href: "/services/child-health-diagnostics",
   },
   {
     id: 31,
@@ -284,7 +284,7 @@ export const services = [
     description: "Comprehensive maternal care including ultrasounds, genetic screening, and pregnancy monitoring.",
     icon: "baby",
     color: "#8b5cf6",
-    href: "/services/prenatal-pregnancy",
+    href: "/services/prenatal-pregnancy-checkups",
   },
   {
     id: 32,
@@ -292,7 +292,7 @@ export const services = [
     description: "Customized employee wellness programs with on-site or clinic-based health assessments.",
     icon: "users",
     color: "#14b8a6",
-    href: "/services/corporate-screening",
+    href: "/services/health-screening-corporate-clients",
   },
   {
     id: 33,
@@ -300,7 +300,7 @@ export const services = [
     description: "Rapid testing and imaging services available 24/7 for urgent and critical care situations.",
     icon: "alarm",
     color: "#dc2626",
-    href: "/services/emergency-diagnostics",
+    href: "/services/emergency-diagnostic-support",
   },
   {
     id: 34,
@@ -308,7 +308,7 @@ export const services = [
     description: "Secure, instant access to your test results via our patient portal with expert interpretation.",
     icon: "file-check",
     color: "#22c55e",
-    href: "/services/digital-reporting",
+    href: "/services/digital-reporting-online-reports",
   },
 ];
 

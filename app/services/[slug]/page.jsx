@@ -2,18 +2,20 @@
 import { siteConfig, services } from "@/constants/siteData";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ServiceIcon from "@/components/common/ServiceIcon";
 import "@/styles/pages/service-details.css";
 
 // Generate static params for SSG/ISR
 export async function generateStaticParams() {
   return services.map((service) => ({
-    slug: service.href.replace('/services/', ''),
+    slug: service.href.replace(/^\/services\//, ''),
   }));
 }
 
 // Generate SEO metadata dynamically
 export async function generateMetadata({ params }) {
-  const service = services.find((s) => s.href === `/services/${params.slug}`);
+  const { slug } = await params;
+  const service = services.find((s) => s.href === `/services/${slug}`);
   
   if (!service) {
     return {
@@ -49,8 +51,9 @@ export async function generateMetadata({ params }) {
 }
 
 // Service Detail Page Component
-export default function ServiceDetailPage({ params }) {
-  const service = services.find((s) => s.href === `/services/${params.slug}`);
+export default async function ServiceDetailPage({ params }) {
+  const { slug } = await params;
+  const service = services.find((s) => s.href === `/services/${slug}`);
   
   if (!service) {
     notFound();
@@ -149,31 +152,25 @@ export default function ServiceDetailPage({ params }) {
   return (
     <article className="service-detail-page">
       {/* Breadcrumb Navigation */}
-      <nav aria-label="Breadcrumb" className="breadcrumb-nav container-custom">
+      {/* <nav aria-label="Breadcrumb" className="breadcrumb-nav container-custom">
         <ol className="breadcrumb-list">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/services">Services</Link></li>
           <li aria-current="page">{service.title}</li>
         </ol>
-      </nav>
+      </nav> */}
 
-      {/* Hero Section */}
-      <section className="service-hero" style={{ '--service-color': service.color }}>
-        <div className="container-custom service-hero__content">
-          <div className="service-hero__icon-wrapper" aria-hidden="true">
-            <ServiceIcon type={service.icon} color="var(--service-color)" />
-          </div>
-          <h1 className="service-hero__title">{service.title}</h1>
-          <p className="service-hero__subtitle">{serviceContent.overview}</p>
-          <div className="service-hero__actions">
-            <Link href="/appointments" className="btn btn-primary">
-              Book Appointment
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </Link>
-            <Link href="#contact-info" className="btn btn-secondary">Contact Us</Link>
-          </div>
+      {/* Page Hero */}
+      <section className="page-hero">
+        <div className="page-hero__container">
+          <span className="page-hero__label">Services</span>
+          <h1 className="page-hero__title">{service.title}</h1>
+          <p className="page-hero__subtitle">{serviceContent.overview}</p>
+          <nav aria-label="Breadcrumb" className="page-hero__breadcrumb">
+            <a href="/">Home</a>
+            <span aria-hidden="true"> / </span>
+            <span aria-current="page">Services</span>
+          </nav>
         </div>
       </section>
 
@@ -373,8 +370,8 @@ export default function ServiceDetailPage({ params }) {
             </div>
             <h4>Need Emergency Care?</h4>
             <p>Our emergency department is open 24/7 for urgent medical needs.</p>
-            <a href="tel:+8801234567890" className="emergency-link">
-              Call Emergency: <strong>+880 1234-567890</strong>
+            <a href="tel:+8801700000000" className="emergency-link">
+              Call Emergency: <strong>+880 1700-000000</strong>
             </a>
           </div>
 
@@ -382,7 +379,7 @@ export default function ServiceDetailPage({ params }) {
       </div>
 
       {/* CTA Section */}
-      <section className="service-cta" id="contact" aria-labelledby="cta-heading">
+      <section className="page-section page-section--green" id="contact" aria-labelledby="cta-heading">
         <div className="container-custom service-cta__content">
           <h2 id="cta-heading" className="service-cta__title">Ready to Start Your Journey to Better Health?</h2>
           <p className="service-cta__subtitle">Our team is here to provide compassionate, expert care tailored to your unique needs.</p>

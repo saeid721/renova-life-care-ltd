@@ -618,8 +618,9 @@
 }
 
 .service-cta__content {
-  max-width: 700px;
+  max-width: 1536px;
   margin: 0 auto;
+  text-align: center;
 }
 
 .service-cta__title {

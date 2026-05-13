@@ -13,6 +13,19 @@
   overflow: hidden;
 }
 
+.page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--hero-bg-image, url('/images/header.jpg'));
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.18;
+  z-index: 0;
+  pointer-events: none;
+}
+
 .page-hero__container {
   max-width: 1536px;
   margin: 0 auto;
@@ -28,7 +41,7 @@
   font-weight: var(--font-weight-semibold);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-secondary);
+  color: var(--color-text-light);
   margin-bottom: var(--space-4);
   font-family: var(--font-body);
 }
@@ -53,12 +66,12 @@
 }
 
 .page-hero__highlight {
-  color: var(--color-secondary);
+  color: #05417d;
 }
 
 .page-hero__subtitle {
   font-size: var(--font-size-lg);
-  color: var(--color-text-light);
+  color: var(--color-white);
   max-width: 1536px;
   margin: 0 auto var(--space-6);
   line-height: 1.75;

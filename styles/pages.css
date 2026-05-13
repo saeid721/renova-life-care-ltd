@@ -85,7 +85,7 @@
 }
 
 .page-hero__breadcrumb [aria-current="page"] {
-  color: var(--color-secondary);
+  color: var(--color-text-light);
   font-weight: var(--font-weight-medium);
 }
 

@@ -5,6 +5,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
+import { useState, useEffect } from "react";
 import "@/styles/pages/package.css";
 
 /* ═══════════════════════════════════════════════════════════════
@@ -302,6 +303,23 @@ function SaveRibbon({ amount, isPopular }) {
   );
 }
 
+/* ── ✅ NEW: Toast Component (ADD THIS BLOCK) ── */
+function Toast({ message }) {
+  return (
+    <div className="toast toast--visible" role="status" aria-live="polite">
+      <span className="toast__icon" aria-hidden="true">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+          stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      </span>
+      <span className="toast__message">{message}</span>
+    </div>
+  );
+}
+
+let toastIdCounter = 0; // ✅ Global counter for unique toast IDs
+
 /* ═══════════════════════════════════════════════════════════════
    PLAN CARD — individual card with cart logic
    ═══════════════════════════════════════════════════════════════ */
@@ -327,6 +345,13 @@ function PlanCard({ plan }) {
       oldPrice: plan.totalCost,
       category: "Health Package",
     });
+    
+    // ✅ Dispatch toast event (NEW)
+    window.dispatchEvent(
+      new CustomEvent("show-toast", {
+        detail: { message: `${plan.name} added to cart!` },
+      })
+    );
   };
 
   const handleBuyNow = () => {
@@ -419,6 +444,21 @@ function PlanCard({ plan }) {
    PAGE
    ═══════════════════════════════════════════════════════════════ */
 export default function PackagePage() {
+  // ✅ ADD THESE LINES:
+  const [toasts, setToasts] = useState([]);
+
+  useEffect(() => {
+    const handler = (e) => {
+      const id = ++toastIdCounter;
+      setToasts((prev) => [...prev, { id, message: e.detail.message }]);
+      setTimeout(
+        () => setToasts((prev) => prev.filter((t) => t.id !== id)),
+        2400
+      );
+    };
+    window.addEventListener("show-toast", handler);
+    return () => window.removeEventListener("show-toast", handler);
+  }, []);
   return (
     <>
       {/* Page Hero */}
@@ -454,6 +494,11 @@ export default function PackagePage() {
           </p>
         </div>
       </section>
+      <div className="toast-container" aria-live="polite" aria-atomic="true">
+        {toasts.map((t) => (
+          <Toast key={t.id} message={t.message} />
+        ))}
+      </div>
     </>
   );
 }

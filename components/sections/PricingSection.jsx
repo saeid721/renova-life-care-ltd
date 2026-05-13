@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Section, SectionHeader } from "@/components/common/Section";
 import Button from "@/components/common/Button";
 import { useCart } from "@/context/CartContext";
+import { useState, useEffect } from "react";
 import "./PricingSection.css";
 
 /* ═══════════════════════════════════════════════════════════════
@@ -148,6 +149,23 @@ function SaveRibbon({ amount, isPopular }) {
   );
 }
 
+/* ── Toast Component (ADD THIS BLOCK) ── */
+function Toast({ message }) {
+  return (
+    <div className="toast toast--visible" role="status" aria-live="polite">
+      <span className="toast__icon" aria-hidden="true">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+          stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      </span>
+      <span className="toast__message">{message}</span>
+    </div>
+  );
+}
+
+let toastIdCounter = 0; // ✅ Global counter for unique toast IDs
+
 /* ═══════════════════════════════════════════════════════════════
    PLAN CARD — individual card with cart logic
    ═══════════════════════════════════════════════════════════════ */
@@ -167,6 +185,13 @@ function PlanCard({ plan }) {
       oldPrice: plan.totalCost,
       category: "Health Package",
     });
+    
+    // ✅ Dispatch toast event
+    window.dispatchEvent(
+      new CustomEvent("show-toast", {
+        detail: { message: `${plan.name} added to cart!` },
+      })
+    );
   };
 
   const handleBuyNow = () => {
@@ -259,6 +284,21 @@ function PlanCard({ plan }) {
    SECTION
    ═══════════════════════════════════════════════════════════════ */
 export default function PricingSection() {
+  // ✅ ADD THESE LINES:
+  const [toasts, setToasts] = useState([]);
+
+  useEffect(() => {
+    const handler = (e) => {
+      const id = ++toastIdCounter;
+      setToasts((prev) => [...prev, { id, message: e.detail.message }]);
+      setTimeout(
+        () => setToasts((prev) => prev.filter((t) => t.id !== id)),
+        2400
+      );
+    };
+    window.addEventListener("show-toast", handler);
+    return () => window.removeEventListener("show-toast", handler);
+  }, []);
   return (
     <Section id="pricing" variant="alternate" className="pricing-section">
       <SectionHeader
@@ -287,6 +327,11 @@ export default function PricingSection() {
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
         </Link>
+      </div>
+      <div className="toast-container" aria-live="polite" aria-atomic="true">
+        {toasts.map((t) => (
+          <Toast key={t.id} message={t.message} />
+        ))}
       </div>
     </Section>
   );

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -42,8 +42,25 @@ const StarIcon = ({ filled }) => (
 /* ── Badge color map ── */
 const badgeClass = {
   "Best Seller": "shop-badge-bestseller",
-  "New":         "shop-badge-new",
+  "New": "shop-badge-new",
 };
+
+/* ── Toast ── */
+function Toast({ message }) {
+  return (
+    <div className="toast toast--visible" role="status" aria-live="polite">
+      <span className="toast__icon" aria-hidden="true">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+          stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      </span>
+      <span className="toast__message">{message}</span>
+    </div>
+  );
+}
+
+let toastIdCounter = 0;
 
 /* ════════════════════════════════════════════════════════════════
    PRODUCT CARD
@@ -52,13 +69,18 @@ function ProductCard({ product }) {
   const { addToCart, cartItems } = useCart();
   const router = useRouter();
 
-  const inCart  = cartItems.some((i) => i.id === product.id);
+  const inCart = cartItems.some((i) => i.id === product.id);
   const [added, setAdded] = useState(false);
 
   const handleAddToCart = () => {
     addToCart(product);
     setAdded(true);
     setTimeout(() => setAdded(false), 1800);
+    window.dispatchEvent(
+      new CustomEvent("show-toast", {
+        detail: { message: `${product.name} added to cart!` },
+      })
+    );
   };
 
   const handleBuyNow = () => {
@@ -66,9 +88,9 @@ function ProductCard({ product }) {
     router.push("/cart");
   };
 
-  const badgeKey  = product.badge;
-  const badgeCls  = badgeClass[badgeKey] || "shop-badge-sale";
-  const discount  = product.oldPrice
+  const badgeKey = product.badge;
+  const badgeCls = badgeClass[badgeKey] || "shop-badge-sale";
+  const discount = product.oldPrice
     ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)
     : null;
 
@@ -117,7 +139,7 @@ function ProductCard({ product }) {
         <div className="spc-meta">
           <span className="spc-category">{product.category}</span>
           <div className="spc-stars" aria-label={`${product.rating} stars`}>
-            {[1,2,3,4,5].map((s) => (
+            {[1, 2, 3, 4, 5].map((s) => (
               <StarIcon key={s} filled={s <= Math.floor(product.rating)} />
             ))}
             <span className="spc-reviews">({product.reviews})</span>
@@ -131,7 +153,9 @@ function ProductCard({ product }) {
         <div className="spc-price-row">
           <span className="spc-price">৳{product.price.toLocaleString()}</span>
           {product.oldPrice && (
-            <span className="spc-old-price">৳{product.oldPrice.toLocaleString()}</span>
+            <span className="spc-old-price">
+              ৳{product.oldPrice.toLocaleString()}
+            </span>
           )}
         </div>
 
@@ -140,7 +164,9 @@ function ProductCard({ product }) {
           <button
             type="button"
             onClick={handleAddToCart}
-            className={`btn btn-secondary spc-btn-cart ${added ? "spc-btn-cart--added" : ""}`}
+            className={`btn btn-secondary spc-btn-cart ${
+              added ? "spc-btn-cart--added" : ""
+            }`}
             aria-label={added ? "Added to cart" : `Add ${product.name} to cart`}
           >
             {added ? <CheckIcon /> : <CartIcon />}
@@ -166,30 +192,62 @@ function ProductCard({ product }) {
    SECTION
    ════════════════════════════════════════════════════════════════ */
 export default function ShopSection() {
-  return (
-    <Section id="shop" bg="bg-white">
-      <SectionHeader
-        label="Our Shop"
-        title="Health Products, <span class='text-primary'>Delivered to Your Door</span>"
-        subtitle="Trusted medical devices, supplements, and health kits from certified brands — all in one place."
-      />
+  const [toasts, setToasts] = useState([]);
 
-      <div className="shop-grid">
-        {shopProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+  useEffect(() => {
+    const handler = (e) => {
+      const id = ++toastIdCounter;
+      setToasts((prev) => [...prev, { id, message: e.detail.message }]);
+      setTimeout(
+        () => setToasts((prev) => prev.filter((t) => t.id !== id)),
+        2400
+      );
+    };
+    window.addEventListener("show-toast", handler);
+    return () => window.removeEventListener("show-toast", handler);
+  }, []);
+
+  return (
+    <>
+      <Section id="shop" bg="bg-white">
+        <SectionHeader
+          label="Our Shop"
+          title="Health Products, <span class='text-primary'>Delivered to Your Door</span>"
+          subtitle="Trusted medical devices, supplements, and health kits from certified brands — all in one place."
+        />
+
+        <div className="shop-grid">
+          {shopProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+
+        <div className="shop-view-all">
+          <Link href="/shop" className="btn btn-primary shop-cta-btn">
+            Browse All Products
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </div>
+      </Section>
+
+      {/* Toast Container - Fixed position, outside Section for proper stacking */}
+      <div className="toast-container" aria-live="polite" aria-atomic="true">
+        {toasts.map((t) => (
+          <Toast key={t.id} message={t.message} />
         ))}
       </div>
-
-      <div className="shop-view-all">
-        <Link href="/shop" className="btn btn-primary shop-cta-btn">
-          Browse All Products
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </Link>
-      </div>
-    </Section>
+    </>
   );
 }

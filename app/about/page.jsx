@@ -17,7 +17,7 @@ export const metadata = {
 // ── Management team data ────────────────────────────────────────────────────
 const managementTeam = [
   {
-    name: "Dr. Rafiqul Islam",
+    name: "Dr. Homayon Kabir",
     role: "Managing Director",
     specialty: "MBBS, FCPS (Medicine)",
     image: "/images/team/md.jpg",
@@ -29,31 +29,31 @@ const managementTeam = [
     name: "Prof. Nasrin Akter",
     role: "Medical Director",
     specialty: "MBBS, MS (Gynaecology)",
-    image: "/images/team/member1.jpg",
+    image: "/images/team/01.jpg",  // 🔄 UPDATED: member1.jpg → 1.jpg (Line 20)
   },
   {
-    name: "Dr. Kamal Hossain",
+    name: "Dr. Kamrun Nahar",
     role: "Chief Operations Officer",
     specialty: "MBA (Healthcare Management)",
-    image: "/images/team/member2.jpg",
+    image: "/images/team/02.jpg",  // 🔄 UPDATED: member2.jpg → 2.jpg (Line 26)
   },
   {
     name: "Dr. Shirin Sultana",
     role: "Head of Diagnostics",
     specialty: "MBBS, MD (Pathology)",
-    image: "/images/team/member3.jpg",
+    image: "/images/team/03.jpg",  // 🔄 UPDATED: member3.jpg → 3.jpg (Line 32)
   },
   {
-    name: "Mr. Tanvir Ahmed",
+    name: "Dr. Shehreen Amin Monami",
     role: "Chief Financial Officer",
     specialty: "CA, MBA (Finance)",
-    image: "/images/team/member4.jpg",
+    image: "/images/team/04.jpg",  // 🔄 UPDATED: member4.jpg → 4.jpg (Line 38)
   },
   {
     name: "Dr. Farhana Begum",
     role: "Head of Nursing",
     specialty: "BSc Nursing, MPH",
-    image: "/images/team/member5.jpg",
+    image: "/images/team/05.jpg",  // 🔄 UPDATED: member5.jpg → 5.jpg (Line 44)
   },
 ];
 

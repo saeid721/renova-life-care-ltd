@@ -3,10 +3,10 @@ import { siteConfig, services } from "@/constants/siteData";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { doctors } from "@/constants/siteData";
-import "@/components/sections/DoctorsSection.css";
 import ServiceIcon from "@/components/common/ServiceIcon";
-import "@/styles/pages/service-details.css";
 import DoctorsGrid from "./DoctorsGrid";
+import "@/styles/pages/service-details.css";
+import "./doctor.css";
 
 // Generate static params for SSG/ISR
 export async function generateStaticParams() {
@@ -112,7 +112,7 @@ export default async function ServiceDetailPage({ params }) {
       },
       {
         q: "Do you accept my insurance?",
-        a: "We accept most major insurance providers in Bangladesh. Please contact our billing department at +880 1234-567890 or email billing@renovalifecare.com to verify your specific coverage before your visit."
+        a: "We accept most major insurance providers in Bangladesh. Please contact our billing department at +880 1700-000000 or email billing@renovalifecare.com to verify your specific coverage before your visit."
       },
       {
         q: "What if I need emergency care?",
@@ -253,7 +253,7 @@ export default async function ServiceDetailPage({ params }) {
                 </svg>
                 <div>
                   <strong>Phone</strong>
-                  <p><a href="tel:+8801234567890">+880 1234-567890</a></p>
+                  <p><a href="tel:+8801234567890">+880 1700-000000</a></p>
                 </div>
               </div>
               <div className="contact-item">

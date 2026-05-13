@@ -2,7 +2,6 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { doctors } from "@/constants/siteData";
 import Button from "@/components/common/Button";
 
 // ── Icons ─────────────────────────────────────────────────────
@@ -54,7 +53,7 @@ const InitialsFallback = ({ name, accentFrom, accentTo }) => {
 };
 
 // ── Main Client Component ─────────────────────────────────────
-export default function DoctorsGrid() {
+export default function DoctorsGrid({ doctors = [] }) {  // ← ADDED: accept doctors as prop with default empty array
   const accentColors = [
     { from: "var(--color-authority)", to: "var(--color-secondary)" },
     { from: "var(--color-primary-dark)", to: "var(--color-primary)" },
@@ -63,6 +62,11 @@ export default function DoctorsGrid() {
   ];
 
   const [imageErrors, setImageErrors] = useState({});
+
+  // If no doctors provided, don't render anything
+  if (!doctors || doctors.length === 0) {
+    return null;
+  }
 
   return (
     <>
@@ -144,15 +148,15 @@ export default function DoctorsGrid() {
                     </div>
                   </div>
 
-                    {/* Two CTA buttons - Stacked */}
-                    <div className="dcard-cta-group">
+                  {/* Two CTA buttons - Stacked */}
+                  <div className="dcard-cta-group">
                     <Button variant="secondary" href={`/doctors/${doc.id}`}>
-                        <ProfileIcon /> Doctor Profile
+                      <ProfileIcon /> Doctor Profile
                     </Button>
                     <Button variant="primary" href={`/appointment?doctor=${doc.id}`}>
-                        <CalendarIcon /> Book Appointment
+                      <CalendarIcon /> Book Appointment
                     </Button>
-                    </div>
+                  </div>
                 </div>
               </article>
             );

@@ -401,7 +401,7 @@ export default function Navbar() {
               <ReportIcon size={15} />
               Report Download
             </Link>
-            <Link href="/appointment" className="btn-appointment">
+            <Link href="/appointment" className="btn btn-primary">
               <CalendarIcon size={15} />
               Book Appointment
             </Link>

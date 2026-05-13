@@ -1,5 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════
    SHARED PAGE STYLES — Uses Global Variables Only
+   ⚠️ NO classes from global.css are redefined here
    All colors, fonts, spacing pulled from global.css :root tokens
    ═══════════════════════════════════════════════════════════════ */
 

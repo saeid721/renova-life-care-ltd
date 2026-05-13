@@ -2,43 +2,10 @@
    COMPONENT: ServiceDetail.css
    Follows global.css design tokens & patterns exactly
    ═══════════════════════════════════════════════════════════════ */
-
-/* ── Breadcrumb Navigation ───────────────────────────────────── */
-.breadcrumb-nav {
-  padding: var(--space-4) 0;
-}
-
-.breadcrumb-list {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  list-style: none;
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-  flex-wrap: wrap;
-}
-
-.breadcrumb-list li:not(:last-child)::after {
-  content: "/";
-  margin-left: var(--space-2);
-  color: var(--color-text-muted);
-  flex-shrink: 0;
-}
-
-.breadcrumb-list a {
-  color: var(--color-primary);
-  transition: color var(--transition-fast);
-  font-weight: var(--font-weight-medium);
-}
-
-.breadcrumb-list a:hover {
-  color: var(--color-primary-dark);
-  text-decoration: underline;
-}
-
-.breadcrumb-list [aria-current="page"] {
-  color: var(--color-text-primary);
-  font-weight: var(--font-weight-semibold);
+.container-custom {
+  max-width: 1536px;
+  margin: 0 auto;
+  padding: 0 auto
 }
 
 /* ── Service Hero Section ───────────────────────────────────── */
@@ -107,7 +74,7 @@
 
 @media (min-width: 1024px) {
   .service-detail-grid {
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 2fr .8fr;
     align-items: start;
   }
 }
@@ -409,15 +376,16 @@
 }
 
 .sidebar-card--primary {
-  background: var(--gradient-primary);
-  color: var(--color-white);
-  border: none;
-  box-shadow: var(--shadow-button);
+  background: var(--color-white);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  border: 1px solid var(--color-border-muted);
+  box-shadow: var(--shadow-sm);
 }
 
 .sidebar-card--primary .sidebar-card__title,
 .sidebar-card--primary .sidebar-card__desc {
-  color: var(--color-white);
+  color: var(--color-primary);
 }
 
 .sidebar-card--emergency {
@@ -756,6 +724,10 @@
     width: 40px;
     height: 40px;
     font-size: var(--font-size-base);
+  }
+  .container-custom {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 

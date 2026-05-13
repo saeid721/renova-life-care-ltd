@@ -1,6 +1,7 @@
-import { BlogSection } from "@/components/sections";
-import { siteConfig } from "@/constants/siteData";
 import Link from "next/link";
+import { siteConfig, blogs } from "@/constants/siteData";
+import Image from "next/image";
+import "@/styles/pages/blog.css";
 
 export const metadata = {
   title: `Health Blog | ${siteConfig.name}`,
@@ -56,10 +57,86 @@ export default function BlogPage() {
       </section>
 
       {/* Blog Posts (reused) */}
-      <BlogSection />
+      <section className="page-section page-section--white">
+        <div className="page-section__container">
+          <div className="blog-grid">
+            {blogs.map((post) => (
+              <Link
+                key={post.id}
+                href={post.href}
+                className="blog-card"
+              >
+                {/* Image Container */}
+                <div className="blog-image-container">
+                  <Image
+                    src={`/images/blog/image${post.id}.jpg`}
+                    alt={post.title}
+                    fill
+                    className="blog-image"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                  {/* Fallback Icon */}
+                  <div className="blog-fallback" aria-hidden="true">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="48"
+                      height="48"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#428a26"
+                      strokeWidth="1"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                    </svg>
+                  </div>
+                  <div className="blog-category-badge">
+                    <span className="blog-category">
+                      {post.category}
+                    </span>
+                  </div>
+                </div>
+                
+                {/* Content */}
+                <div className="blog-content">
+                  <div className="blog-meta">
+                    <span>{post.date}</span>
+                    <span className="blog-meta-separator">·</span>
+                    <span>{post.readTime}</span>
+                  </div>
+                  <h3 className="blog-title">
+                    {post.title}
+                  </h3>
+                  <p className="blog-excerpt">
+                    {post.excerpt}
+                  </p>
+                  <div className="blog-read-more">
+                    Read More
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="blog-read-more-icon"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Newsletter CTA */}
-      <section className="page-section page-section--slate">
+      <section className="page-section page-section--green">
         <div className="page-section__container page-cta-center">
           <span className="page-section__label">Stay Updated</span>
           <h2 className="page-cta-title">Subscribe to Our Health Newsletter</h2>

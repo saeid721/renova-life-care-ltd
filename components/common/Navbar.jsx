@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { navLinks, socialLinks } from "@/constants/navLinks";
 import { siteConfig } from "@/constants/siteData";
+import CartBadge from "@/components/common/CartBadge";
 import "../../styles/components/Navbar.css";
 
 /* ── Inline SVG social icons ── */
@@ -283,10 +284,7 @@ export default function Navbar() {
           <div className="top-bar-right">
             <div className="topbar-actions">
               {/* Cart */}
-              <Link href="/cart" className="topbar-action-link" aria-label="Shopping Cart">
-                <CartIcon size={15} />
-                <span>Cart</span>
-              </Link>
+              <CartBadge />
 
               {/* My Account with dropdown */}
               <div className="topbar-account">

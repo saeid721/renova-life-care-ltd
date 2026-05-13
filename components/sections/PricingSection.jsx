@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Section, SectionHeader } from "@/components/common/Section";
 import Button from "@/components/common/Button";
+import { useCart } from "@/context/CartContext";
 import "./PricingSection.css";
 
 /* ═══════════════════════════════════════════════════════════════
@@ -99,6 +101,13 @@ const CartIcon = () => (
   </svg>
 );
 
+const CheckIcon = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
+
 const BuyIcon = () => (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
     stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -140,7 +149,114 @@ function SaveRibbon({ amount, isPopular }) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   COMPONENT
+   PLAN CARD — individual card with cart logic
+   ═══════════════════════════════════════════════════════════════ */
+function PlanCard({ plan }) {
+  const { addToCart, cartItems } = useCart();
+  const router = useRouter();
+  const icon = planIcons[plan.id];
+
+  // Check if already in cart
+  const inCart = cartItems.some((i) => i.id === plan.id);
+
+  const handleAddToCart = () => {
+    addToCart({
+      id:       plan.id,
+      name:     plan.name,
+      price:    plan.price,
+      oldPrice: plan.totalCost,
+      category: "Health Package",
+    });
+  };
+
+  const handleBuyNow = () => {
+    addToCart({
+      id:       plan.id,
+      name:     plan.name,
+      price:    plan.price,
+      oldPrice: plan.totalCost,
+      category: "Health Package",
+    });
+    router.push("/cart");
+  };
+
+  return (
+    <div className={`pricing-card card ${plan.popular ? "popular" : ""}`}>
+      <SaveRibbon amount={plan.savings} isPopular={plan.popular} />
+
+      {/* Header: icon + name */}
+      <div className="pkg-header">
+        <div className={`plan-icon-wrap ${plan.popular ? "icon-popular" : ""}`}>
+          {icon}
+        </div>
+        <div>
+          <h3 className={`pkg-plan-name ${plan.popular ? "name-popular" : ""}`}>
+            {plan.name}
+          </h3>
+          <p className="pkg-plan-sub">{plan.description}</p>
+        </div>
+      </div>
+
+      <div className={`pkg-divider ${plan.popular ? "divider-popular" : ""}`} />
+
+      {/* Feature rows */}
+      <ul className="pkg-features">
+        {plan.features.map((feature, i) => (
+          <li
+            key={i}
+            className={`pkg-feature-row ${i % 2 === 0 ? "row-even" : "row-odd"}`}
+          >
+            <span className="pkg-feature-name">{feature.name}</span>
+            <span className="pkg-feature-price">
+              BDT {feature.price.toLocaleString()}.00
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      {/* Price summary */}
+      <div className="pkg-price-block">
+        <div className="pkg-price-row">
+          <span className="pkg-price-label">Total Cost:</span>
+          <span className="pkg-total-value">
+            BDT {plan.totalCost.toLocaleString()}.00
+          </span>
+        </div>
+        <div className="pkg-price-row">
+          <span className="pkg-price-label strong">Discounted Price:</span>
+          <span className="pkg-discounted-value">
+            BDT {plan.price.toLocaleString()}.00
+          </span>
+        </div>
+      </div>
+
+      {/* Two CTA buttons */}
+      <div className="pkg-cta-group">
+        <button
+          type="button"
+          onClick={handleAddToCart}
+          className={`btn pkg-btn-stretch ${inCart ? "btn-secondary pkg-btn--added" : "btn-secondary"}`}
+          aria-label={inCart ? `${plan.name} added to cart` : `Add ${plan.name} to cart`}
+        >
+          {inCart ? <CheckIcon /> : <CartIcon />}
+          {inCart ? "Added!" : "Add to Cart"}
+        </button>
+
+        <button
+          type="button"
+          onClick={handleBuyNow}
+          className="btn btn-primary pkg-btn-stretch"
+          aria-label={`Buy ${plan.name} now`}
+        >
+          <BuyIcon /> Buy Now
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTION
    ═══════════════════════════════════════════════════════════════ */
 export default function PricingSection() {
   return (
@@ -153,83 +269,17 @@ export default function PricingSection() {
 
       {/* 3-column grid */}
       <div className="pricing-grid">
-        {pricingPlans.map((plan) => {
-          const icon = planIcons[plan.id];
-
-          return (
-            <div
-              key={plan.id}
-              className={`pricing-card card ${plan.popular ? "popular" : ""}`}
-            >
-              <SaveRibbon amount={plan.savings} isPopular={plan.popular} />
-
-              {/* Header: icon + name */}
-              <div className="pkg-header">
-                <div className={`plan-icon-wrap ${plan.popular ? "icon-popular" : ""}`}>
-                  {icon}
-                </div>
-                <div>
-                  <h3 className={`pkg-plan-name ${plan.popular ? "name-popular" : ""}`}>
-                    {plan.name}
-                  </h3>
-                  <p className="pkg-plan-sub">{plan.description}</p>
-                </div>
-              </div>
-
-              <div className={`pkg-divider ${plan.popular ? "divider-popular" : ""}`} />
-
-              {/* Feature rows */}
-              <ul className="pkg-features">
-                {plan.features.map((feature, i) => (
-                  <li
-                    key={i}
-                    className={`pkg-feature-row ${i % 2 === 0 ? "row-even" : "row-odd"}`}
-                  >
-                    <span className="pkg-feature-name">{feature.name}</span>
-                    <span className="pkg-feature-price">
-                      BDT {feature.price.toLocaleString()}.00
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              {/* Price summary */}
-              <div className="pkg-price-block">
-                <div className="pkg-price-row">
-                  <span className="pkg-price-label">Total Cost:</span>
-                  <span className="pkg-total-value">
-                    BDT {plan.totalCost.toLocaleString()}.00
-                  </span>
-                </div>
-                <div className="pkg-price-row">
-                  <span className="pkg-price-label strong">Discounted Price:</span>
-                  <span className="pkg-discounted-value">
-                    BDT {plan.price.toLocaleString()}.00
-                  </span>
-                </div>
-              </div>
-
-              {/* Two CTA buttons */}
-              <div className="pkg-cta-group">
-                <Button variant="secondary" className="pkg-btn-stretch">
-                  <CartIcon /> Add to Cart
-                </Button>
-                <Button variant="primary" className="pkg-btn-stretch" href="/appointment">
-                  <BuyIcon /> Buy Now
-                </Button>
-              </div>
-            </div>
-          );
-        })}
+        {pricingPlans.map((plan) => (
+          <PlanCard key={plan.id} plan={plan} />
+        ))}
       </div>
 
       <p className="custom-plans-note">
         Custom packages available for corporate health programs.{" "}
         <Link href="/contact" className="contact-link">Contact us →</Link>
       </p>
-      
 
-      {/* View All shop Button */}
+      {/* View All Packages Button */}
       <div className="shop-view-all">
         <Link href="/packages" className="btn btn-primary shop-cta-btn">
           Browse All Packages

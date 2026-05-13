@@ -3,6 +3,7 @@ import "@/styles/pages.css";
 import { siteConfig } from "@/constants/siteData";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
+import { CartProvider } from "@/context/CartContext";
 
 export const metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -74,11 +75,13 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/images/favicon.png" sizes="any" />
       </head>
       <body className="font-body antialiased" suppressHydrationWarning>
-        <Navbar />
-        <main id="main-content">
-          {children}
-        </main>
-        <Footer />
+        <CartProvider>
+          <Navbar />
+          <main id="main-content">
+            {children}
+          </main>
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );

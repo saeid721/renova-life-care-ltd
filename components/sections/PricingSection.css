@@ -330,3 +330,29 @@
   color: var(--color-primary);
   font-weight: 700;
 }
+
+
+
+
+/* Button full-width stretch inside pkg-cta-group */
+.pkg-btn-stretch {
+  width: 100%;
+  justify-content: center;
+  padding: 0.65rem 0.5rem;
+  font-size: var(--font-size-sm);
+  border-radius: var(--radius-full);
+  gap: 0.4rem;
+}
+ 
+/* "Added!" state — green tint */
+.pkg-btn--added {
+  background: rgba(66, 138, 38, 0.1) !important;
+  color: var(--color-authority, #428a26) !important;
+  border-color: rgba(66, 138, 38, 0.35) !important;
+}
+ 
+.pkg-btn--added:hover {
+  background: var(--color-authority, #428a26) !important;
+  color: white !important;
+}
+ 

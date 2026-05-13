@@ -301,60 +301,6 @@
   gap: 1rem;
 }
 
-.hero-btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.625rem;
-  padding: 0.875rem 1.75rem;
-  border-radius: 9999px;
-  font-weight: 600;
-  color: white;
-  background: linear-gradient(135deg, #428a26, #86b437);
-  box-shadow: 0 4px 20px rgba(66, 138, 38, 0.45);
-  transition: all 0.3s ease-in-out;
-  text-decoration: none;
-  font-size: 1rem;
-}
-
-.hero-btn-primary:hover {
-  background: linear-gradient(135deg, #2e6a1a, #428a26);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(66, 138, 38, 0.6);
-}
-
-.hero-btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.625rem;
-  padding: 0.875rem 1.75rem;
-  border-radius: 9999px;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  color: #05417d;
-  font-weight: 800;
-  font-size: 1rem;
-  text-decoration: none;
-  transition: all 0.3s ease-in-out;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(4px);
-}
-
-.hero-btn-secondary:hover {
-  border-color: #ffffff;
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-}
-
-.hero-btn-call-icon {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 9999px;
-  background-color: rgba(255, 255, 255, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 /* Trust Indicators */
 .hero-trust-indicators {
   display: flex;
@@ -658,13 +604,7 @@
     flex-direction: column;
     width: 100%;
   }
-  
-  .hero-btn-primary,
-  .hero-btn-secondary {
-    justify-content: center;
-    width: 100%;
-  }
-  
+    
   .hero-trust-indicators {
     flex-direction: column;
     align-items: flex-start;
@@ -693,8 +633,6 @@
 /* ===== ACCESSIBILITY & PERFORMANCE ===== */
 @media (prefers-reduced-motion: reduce) {
   .hero-bg-image,
-  .hero-btn-primary,
-  .hero-btn-secondary,
   .hero-stat-item,
   .hero-availability-dot {
     animation: none !important;
@@ -704,9 +642,7 @@
 }
 
 /* Focus states for keyboard navigation */
-.hero-slider-dot:focus-visible,
-.hero-btn-primary:focus-visible,
-.hero-btn-secondary:focus-visible {
+.hero-slider-dot:focus-visible{
   outline: 3px solid #86b437;
   outline-offset: 2px;
 }

@@ -395,7 +395,7 @@ export default function AppointmentCTASection() {
                 {/* Submit */}
                 <button
                   type="submit"
-                  className="appt__submit"
+                  className="btn btn-primary"
                   disabled={submitting}
                   aria-busy={submitting}
                   aria-label={submitting ? "Submitting…" : "Request appointment"}

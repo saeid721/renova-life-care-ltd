@@ -1,443 +1,644 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import Link from "next/link";
-import Button from "@/components/common/Button";
+import {
+  DEPARTMENTS, DOCTORS, BRANCHES, SLOTS,
+  INITIAL_FORM, validateStep1, validateStep2, validateStep3,
+} from "./appointmentData";
 import "@/styles/pages/appointment.css";
 
 /* ═══════════════════════════════════════════════════════════════
-   DATA & CONFIG
+   INLINE SVG ICONS
    ═══════════════════════════════════════════════════════════════ */
-const DEPARTMENTS = [
-  { id: "general", name: "General Checkup", icon: "🩺", desc: "Routine health screening", waitTime: "15-30 min" },
-  { id: "cardiology", name: "Cardiology", icon: "❤️", desc: "Heart health, ECG, stress tests", waitTime: "30-45 min" },
-  { id: "orthopedics", name: "Orthopedics", icon: "🦴", desc: "Bone, joint & muscle care", waitTime: "30-45 min" },
-  { id: "neurology", name: "Neurology", icon: "🧠", desc: "Brain & nervous system", waitTime: "45-60 min" },
-  { id: "pediatrics", name: "Pediatrics", icon: "👶", desc: "Child health & development", waitTime: "20-35 min" },
-  { id: "dental", name: "Dental Care", icon: "🦷", desc: "Teeth cleaning, fillings", waitTime: "30-60 min" },
-  { id: "dermatology", name: "Dermatology", icon: "🧴", desc: "Skin, hair & nail treatments", waitTime: "25-40 min" },
-  { id: "ophthalmology", name: "Eye Care", icon: "👁️", desc: "Vision tests, eye diseases", waitTime: "30-50 min" },
-  { id: "gynecology", name: "Gynecology", icon: "🤰", desc: "Women's health & prenatal", waitTime: "35-50 min" },
-  { id: "oncology", name: "Oncology", icon: "🎗️", desc: "Cancer screening & treatment", waitTime: "45-75 min" },
-];
+const SVG_PROPS = { fill: "none", stroke: "currentColor", strokeWidth: "1.8" };
 
-const TIME_SLOTS = [
-  "08:00 AM", "08:30 AM", "09:00 AM", "09:30 AM",
-  "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
-  "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM",
-  "04:00 PM", "04:30 PM", "05:00 PM", "05:30 PM",
-];
-
-const BRANCHES = [
-  { id: "dhaka-main", name: "Dhaka - Main Branch", address: "House 45, Road 12, Dhanmondi" },
-  { id: "dhaka-uttara", name: "Dhaka - Uttara", address: "Sector 7, Road 4, Uttara" },
-  { id: "chittagong", name: "Chittagong", address: "GEC Circle, Agrabad" },
-  { id: "sylhet", name: "Sylhet", address: "Zindabazar, Amberkhana" },
-  { id: "rajshahi", name: "Rajshahi", address: "Shaheb Bazar" },
-];
-
-const DOCTORS = {
-  cardiology: [
-    { id: "doc-c1", name: "Dr. Fatima Rahman", title: "Senior Cardiologist", exp: "15+ years", img: "👩‍⚕️" },
-    { id: "doc-c2", name: "Dr. Ahmed Hassan", title: "Interventional Cardiologist", exp: "12 years", img: "👨‍⚕️" },
-  ],
-  orthopedics: [
-    { id: "doc-o1", name: "Dr. Kamal Uddin", title: "Orthopedic Surgeon", exp: "18 years", img: "👨‍⚕️" },
-  ],
-};
+const IconUser     = ({ size = 18 }) => <svg width={size} height={size} viewBox="0 0 24 24" {...SVG_PROPS}><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>;
+const IconMail     = ({ size = 18 }) => <svg width={size} height={size} viewBox="0 0 24 24" {...SVG_PROPS}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>;
+const IconPhone    = ({ size = 18 }) => <svg width={size} height={size} viewBox="0 0 24 24" {...SVG_PROPS}><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 4.08 4.18 2 2 0 0 1 6.06 2h3a2 2 0 0 1 2 1.72c.127.946.36 1.874.69 2.76a2 2 0 0 1-.45 2.11L10.09 9.91a16 16 0 0 0 6.29 6.29l1.13-1.14a2 2 0 0 1 2.11-.45c.886.33 1.814.563 2.76.69A2 2 0 0 1 22 16.92z"/></svg>;
+const IconCalendar = ({ size = 18 }) => <svg width={size} height={size} viewBox="0 0 24 24" {...SVG_PROPS}><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>;
+const IconPin      = ({ size = 18 }) => <svg width={size} height={size} viewBox="0 0 24 24" {...SVG_PROPS}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>;
+const IconCheck    = ({ size = 16 }) => <svg width={size} height={size} viewBox="0 0 24 24" {...SVG_PROPS} strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>;
+const IconArrowR   = ({ size = 18 }) => <svg width={size} height={size} viewBox="0 0 24 24" {...SVG_PROPS} strokeWidth="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>;
+const IconArrowL   = ({ size = 18 }) => <svg width={size} height={size} viewBox="0 0 24 24" {...SVG_PROPS} strokeWidth="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>;
+const IconLock     = ({ size = 16 }) => <svg width={size} height={size} viewBox="0 0 24 24" {...SVG_PROPS}><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>;
+const IconInfo     = ({ size = 16 }) => <svg width={size} height={size} viewBox="0 0 24 24" {...SVG_PROPS}><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>;
 
 /* ═══════════════════════════════════════════════════════════════
-   SVG ICONS (Inline for client component)
+   FIELD WRAPPER — label + icon + error message
    ═══════════════════════════════════════════════════════════════ */
-const Icons = {
-  User: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>,
-  Mail: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,
-  Phone: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2a19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 4.08 4.18A2 2 0 0 1 6.06 2h3a2 2 0 0 1 2 1.72c.127.946.36 1.874.69 2.76a2 2 0 0 1-.45 2.11L10.09 9.91a16 16 0 0 0 6.29 6.29l1.13-1.14a2 2 0 0 1 2.11-.45c.886.33 1.814.563 2.76.69A2 2 0 0 1 22 16.92z"/></svg>,
-  Calendar: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>,
-  Location: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>,
-  Check: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg>,
-  ArrowRight: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>,
-  ArrowLeft: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>,
-  Lock: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>,
-  Info: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>,
-};
+function Field({ label, error, icon: IconComponent, children }) {
+  return (
+    <div className="appt-field">
+      {label && <label>{label}</label>}
+      {IconComponent
+        ? (
+          <div className="appt-input-wrap">
+            <span className="appt-ico"><IconComponent size={16} /></span>
+            {children}
+          </div>
+        )
+        : children
+      }
+      {error && <span className="appt-err-msg">{error}</span>}
+    </div>
+  );
+}
 
 /* ═══════════════════════════════════════════════════════════════
-   VALIDATION UTILS
+   STEP 1 — Personal Information
    ═══════════════════════════════════════════════════════════════ */
-const validateStep1 = (data) => {
-  const errs = {};
-  if (!data.fullName?.trim() || data.fullName.trim().length < 3) errs.fullName = "Please enter your full name";
-  if (!data.email?.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) errs.email = "Enter a valid email";
-  if (!data.phone?.trim() || !/^(\+880|01)[0-9]{9,10}$/.test(data.phone.replace(/\s/g, ""))) errs.phone = "Valid BD phone required";
-  if (!data.dob) errs.dob = "Date of birth is required";
-  if (!data.gender) errs.gender = "Please select gender";
-  return errs;
-};
+function Step1({ data, errors, upd, onNext }) {
+  return (
+    <div className="appt-card">
+      <div className="appt-card__head">
+        <div className="appt-card__icon">🪪</div>
+        <div>
+          <div className="appt-card__title">Patient Information</div>
+          <div className="appt-card__sub">Tell us about yourself so we can serve you better</div>
+        </div>
+      </div>
 
-const validateStep2 = (data) => {
-  const errs = {};
-  if (!data.department) errs.department = "Please select a department";
-  if (!data.doctor) errs.doctor = "Please select a doctor";
-  if (!data.branch) errs.branch = "Please choose a branch";
-  if (!data.appointmentDate) errs.appointmentDate = "Select preferred date";
-  if (!data.timeSlot) errs.timeSlot = "Select a time slot";
-  return errs;
-};
+      <div className="appt-card__body appt-stack">
+        <div className="appt-grid-2">
+          <Field label="Full Name *" icon={IconUser} error={errors.fullName}>
+            <input
+              className={`appt-inp${errors.fullName ? " err" : ""}`}
+              type="text"
+              placeholder="Fatima Rahman"
+              value={data.fullName}
+              onChange={e => upd("fullName", e.target.value)}
+              autoComplete="name"
+              aria-invalid={!!errors.fullName}
+            />
+          </Field>
 
-const validateStep3 = (data) => {
-  const errs = {};
-  if (!data.symptoms?.trim() || data.symptoms.trim().length < 10) errs.symptoms = "Please describe your symptoms (min 10 chars)";
-  if (!data.consent) errs.consent = "You must agree to proceed";
-  return errs;
-};
+          <Field label="Email Address *" icon={IconMail} error={errors.email}>
+            <input
+              className={`appt-inp${errors.email ? " err" : ""}`}
+              type="email"
+              placeholder="you@example.com"
+              value={data.email}
+              onChange={e => upd("email", e.target.value)}
+              autoComplete="email"
+              aria-invalid={!!errors.email}
+            />
+          </Field>
+
+          <Field label="Phone Number *" icon={IconPhone} error={errors.phone}>
+            <input
+              className={`appt-inp${errors.phone ? " err" : ""}`}
+              type="tel"
+              placeholder="+880 1XXX-XXXXXX"
+              value={data.phone}
+              onChange={e => upd("phone", e.target.value)}
+              autoComplete="tel"
+              aria-invalid={!!errors.phone}
+            />
+          </Field>
+
+          <Field label="Date of Birth *" icon={IconCalendar} error={errors.dob}>
+            <input
+              className={`appt-inp${errors.dob ? " err" : ""}`}
+              type="date"
+              value={data.dob}
+              onChange={e => upd("dob", e.target.value)}
+              max={new Date().toISOString().split("T")[0]}
+              aria-invalid={!!errors.dob}
+            />
+          </Field>
+        </div>
+
+        <Field label="Gender *" error={errors.gender}>
+          <div className="appt-radio-group">
+            {["Male", "Female", "Other"].map(g => (
+              <label
+                key={g}
+                className={`appt-radio-pill${data.gender === g.toLowerCase() ? " sel" : ""}`}
+              >
+                <input
+                  type="radio"
+                  name="gender"
+                  value={g.toLowerCase()}
+                  checked={data.gender === g.toLowerCase()}
+                  onChange={e => upd("gender", e.target.value)}
+                />
+                {g}
+              </label>
+            ))}
+          </div>
+        </Field>
+      </div>
+
+      <div className="appt-card__foot">
+        <span className="appt-step-counter">Step 1 of 3</span>
+        <button className="btn btn-primary" onClick={onNext} type="button">
+          Continue <IconArrowR size={16} />
+        </button>
+      </div>
+    </div>
+  );
+}
 
 /* ═══════════════════════════════════════════════════════════════
-   CLIENT COMPONENT
+   STEP 2 — Appointment Details
    ═══════════════════════════════════════════════════════════════ */
-export default function AppointmentForm() {
-  const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
-    fullName: "", email: "", phone: "", dob: "", gender: "",
-    department: "", doctor: "", branch: "", appointmentDate: "", timeSlot: "",
-    symptoms: "", medicalHistory: "", consent: false,
-  });
+function Step2({ data, errors, upd, onNext, onBack, bookedSlots, minDate }) {
+  const doctors = useMemo(
+    () => (data.dept ? DOCTORS[data.dept] || [] : []),
+    [data.dept]
+  );
+
+  return (
+    <div className="appt-card">
+      <div className="appt-card__head">
+        <div className="appt-card__icon">📅</div>
+        <div>
+          <div className="appt-card__title">Appointment Details</div>
+          <div className="appt-card__sub">Choose your department, doctor, and preferred time</div>
+        </div>
+      </div>
+
+      <div className="appt-card__body appt-stack">
+
+        {/* Department */}
+        <Field label="Select Department *" error={errors.dept}>
+          <div className="appt-dept-grid">
+            {DEPARTMENTS.map(dept => (
+              <button
+                key={dept.id}
+                type="button"
+                className={`appt-dept-card${data.dept === dept.id ? " sel" : ""}`}
+                onClick={() => { upd("dept", dept.id); upd("doctor", ""); }}
+                aria-pressed={data.dept === dept.id}
+              >
+                <span className="appt-dept-card__icon">{dept.icon}</span>
+                <span className="appt-dept-card__name">{dept.name}</span>
+                <span className="appt-dept-card__wait">{dept.wait}</span>
+              </button>
+            ))}
+          </div>
+        </Field>
+
+        {/* Doctor */}
+        {data.dept && doctors.length > 0 && (
+          <Field label="Select Doctor *" error={errors.doctor}>
+            <div className="appt-doc-list">
+              {doctors.map(doc => (
+                <label
+                  key={doc.id}
+                  className={`appt-doc-card${data.doctor === doc.id ? " sel" : ""}`}
+                >
+                  <input
+                    type="radio"
+                    name="doctor"
+                    value={doc.id}
+                    checked={data.doctor === doc.id}
+                    onChange={e => upd("doctor", e.target.value)}
+                  />
+                  <div className="appt-doc-avatar">{doc.avatar}</div>
+                  <div>
+                    <div className="appt-doc-name">{doc.name}</div>
+                    <div className="appt-doc-meta">{doc.title} · {doc.exp} experience</div>
+                  </div>
+                </label>
+              ))}
+            </div>
+          </Field>
+        )}
+
+        {data.dept && doctors.length === 0 && (
+          <div className="appt-doc-fallback">
+            Our team will assign the most suitable specialist upon confirmation.
+          </div>
+        )}
+
+        {/* Branch & Date */}
+        <div className="appt-grid-2">
+          <Field label="Branch Location *" icon={IconPin} error={errors.branch}>
+            <select
+              className={`appt-sel${errors.branch ? " err" : ""}`}
+              value={data.branch}
+              onChange={e => upd("branch", e.target.value)}
+              aria-invalid={!!errors.branch}
+            >
+              <option value="">Select a branch</option>
+              {BRANCHES.map(b => (
+                <option key={b.id} value={b.id}>{b.name} — {b.addr}</option>
+              ))}
+            </select>
+          </Field>
+
+          <Field label="Preferred Date *" icon={IconCalendar} error={errors.date}>
+            <input
+              className={`appt-inp${errors.date ? " err" : ""}`}
+              type="date"
+              value={data.date}
+              onChange={e => upd("date", e.target.value)}
+              min={minDate}
+              aria-invalid={!!errors.date}
+            />
+          </Field>
+        </div>
+
+        {/* Time Slots */}
+        {data.date && (
+          <Field label="Select Time Slot *" error={errors.slot}>
+            <div className="appt-time-grid">
+              {SLOTS.map(slot => {
+                const isBooked = bookedSlots.has(slot);
+                return (
+                  <button
+                    key={slot}
+                    type="button"
+                    disabled={isBooked}
+                    className={[
+                      "appt-slot-btn",
+                      data.slot === slot ? "active" : "",
+                      isBooked ? "booked" : "",
+                    ].join(" ").trim()}
+                    onClick={() => upd("slot", slot)}
+                    aria-pressed={data.slot === slot}
+                    aria-disabled={isBooked}
+                  >
+                    {slot}
+                    {isBooked && <span className="appt-slot-badge">Full</span>}
+                  </button>
+                );
+              })}
+            </div>
+          </Field>
+        )}
+      </div>
+
+      <div className="appt-card__foot">
+        <button className="appt-btn appt-btn-ghost" onClick={onBack} type="button">
+          <IconArrowL size={16} /> Back
+        </button>
+        <button className="appt-btn appt-btn-primary" onClick={onNext} type="button">
+          Continue <IconArrowR size={16} />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   STEP 3 — Review & Confirm
+   ═══════════════════════════════════════════════════════════════ */
+function Step3({ data, errors, upd, onBack, onSubmit, busy }) {
+  const dept   = DEPARTMENTS.find(d => d.id === data.dept);
+  const doctors = data.dept ? (DOCTORS[data.dept] || []) : [];
+  const doctor  = doctors.find(d => d.id === data.doctor);
+  const branch  = BRANCHES.find(b => b.id === data.branch);
+
+  return (
+    <form className="appt-card" onSubmit={onSubmit}>
+      <div className="appt-card__head">
+        <div className="appt-card__icon">✅</div>
+        <div>
+          <div className="appt-card__title">Review & Confirm</div>
+          <div className="appt-card__sub">Verify your details before finalising your booking</div>
+        </div>
+      </div>
+
+      <div className="appt-card__body appt-stack">
+        {/* Summary cards */}
+        <div className="appt-summary-grid">
+          <div className="appt-summ-card">
+            <h4>👤 Patient</h4>
+            <p><strong>{data.fullName}</strong><br />{data.email}<br />{data.phone}</p>
+          </div>
+          <div className="appt-summ-card">
+            <h4>🏥 Appointment</h4>
+            <p>
+              <strong>{dept?.name}</strong><br />
+              {doctor?.name || "Doctor to be assigned"}<br />
+              {branch?.name}
+            </p>
+          </div>
+          <div className="appt-summ-card">
+            <h4>📅 Schedule</h4>
+            <p><strong>{data.date}</strong><br />{data.slot}</p>
+          </div>
+          <div className="appt-summ-card">
+            <h4>👤 Profile</h4>
+            <p>
+              DOB: <strong>{data.dob}</strong><br />
+              Gender: <strong style={{ textTransform: "capitalize" }}>{data.gender}</strong>
+            </p>
+          </div>
+        </div>
+
+        <div className="appt-divider" />
+
+        {/* Symptoms */}
+        <Field label="Describe Your Symptoms *" error={errors.symptoms}>
+          <textarea
+            className={`appt-ta${errors.symptoms ? " err" : ""}`}
+            rows={4}
+            placeholder="Describe what you're experiencing, how long it has been happening, and any relevant details…"
+            value={data.symptoms}
+            onChange={e => upd("symptoms", e.target.value)}
+            aria-invalid={!!errors.symptoms}
+          />
+        </Field>
+
+        {/* Medical History */}
+        <Field label="Previous Medical History (optional)">
+          <textarea
+            className="appt-ta"
+            rows={3}
+            placeholder="Any existing conditions, allergies, or medications you're currently taking…"
+            value={data.medHistory}
+            onChange={e => upd("medHistory", e.target.value)}
+          />
+        </Field>
+
+        {/* Consent */}
+        <label className={`appt-check-wrap${errors.consent ? " err" : ""}`}>
+          <input
+            type="checkbox"
+            checked={data.consent}
+            onChange={e => upd("consent", e.target.checked)}
+          />
+          <span>
+            I agree to the{" "}
+            <a href="/terms" onClick={e => e.stopPropagation()}>Terms of Service</a> and{" "}
+            <a href="/privacy" onClick={e => e.stopPropagation()}>Privacy Policy</a>.
+            I consent to my information being used to facilitate this appointment.
+          </span>
+        </label>
+        {errors.consent && <span className="appt-err-msg">{errors.consent}</span>}
+
+        {errors.submit && (
+          <div className="appt-submit-err">⚠️ {errors.submit}</div>
+        )}
+      </div>
+
+      <div className="appt-card__foot">
+        <button type="button" className="appt-btn appt-btn-ghost" onClick={onBack}>
+          <IconArrowL size={16} /> Edit Details
+        </button>
+        <button type="submit" className="appt-btn appt-btn-primary" disabled={busy}>
+          {busy
+            ? <><span className="appt-spinner" /> Processing…</>
+            : <><IconLock size={15} /> Confirm Booking</>
+          }
+        </button>
+      </div>
+    </form>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CONFIRMATION VIEW
+   ═══════════════════════════════════════════════════════════════ */
+function Confirmation({ data, bookingRef, onReset }) {
+  const dept   = DEPARTMENTS.find(d => d.id === data.dept);
+  const doctors = data.dept ? (DOCTORS[data.dept] || []) : [];
+  const doctor  = doctors.find(d => d.id === data.doctor);
+  const branch  = BRANCHES.find(b => b.id === data.branch);
+
+  const rows = [
+    ["Patient",    data.fullName],
+    ["Department", dept?.name],
+    ["Doctor",     doctor?.name || "To be assigned"],
+    ["Branch",     branch?.name],
+    ["Date",       data.date],
+    ["Time",       data.slot],
+  ];
+
+  return (
+    <div className="appt-confirm-wrap">
+      <div className="appt-confirm-card appt-card">
+        <div className="appt-card__body">
+          <div className="appt-confirm-icon">✅</div>
+          <h2 className="appt-confirm-title">Booking Confirmed!</h2>
+          <p style={{ color: "var(--appt-ink3)", marginBottom: 8 }}>Your reference number</p>
+          <div className="appt-confirm-ref">{bookingRef}</div>
+
+          <div className="appt-confirm-rows">
+            {rows.filter(([, v]) => v).map(([k, v]) => (
+              <div className="appt-conf-row" key={k}>
+                <span>{k}</span>
+                <strong>{v}</strong>
+              </div>
+            ))}
+          </div>
+
+          <div className="appt-confirm-actions">
+            <a href="/" className="appt-btn appt-btn-primary">
+              <IconCheck size={16} /> Go to Homepage
+            </a>
+            <button className="appt-btn appt-btn-ghost" onClick={onReset} type="button">
+              Book Another Appointment
+            </button>
+          </div>
+
+          <div className="appt-confirm-note">
+            <span style={{ fontSize: 18, flexShrink: 0, marginTop: 1 }}>💡</span>
+            <p>
+              <strong>Before your visit:</strong> Arrive 15 minutes early.
+              Bring your national ID and any previous medical reports or prescriptions.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SIDEBAR
+   ═══════════════════════════════════════════════════════════════ */
+function Sidebar({ phone, email }) {
+  return (
+    <aside className="appt-sidebar">
+      <div className="appt-sb-card">
+        <h4>Why book with us?</h4>
+        <ul className="appt-benefit-list">
+          {[
+            "Instant confirmation",
+            "Free rescheduling",
+            "SSL-encrypted data",
+            "Board-certified doctors",
+            "Digital reports delivered",
+            "24/7 support available",
+          ].map(b => (
+            <li key={b}>
+              <span className="appt-benefit-dot">✓</span>
+              {b}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="appt-sb-card">
+        <h4>Need help?</h4>
+        <p>Our support team is available 24/7</p>
+        <a href={`tel:${phone}`} className="appt-contact-link">
+          <span className="c-ico">📞</span> {phone}
+        </a>
+        <a href={`mailto:${email}`} className="appt-contact-link">
+          <span className="c-ico">✉️</span> {email}
+        </a>
+      </div>
+
+      <div className="appt-trust-badge">
+        <span style={{ fontSize: 20 }}>🛡️</span>
+        <span>Your personal data is never sold or shared with third parties.</span>
+      </div>
+    </aside>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MAIN EXPORT — AppointmentForm
+   Usage: <AppointmentForm phone="+880 1234-567890" email="appointments@clinic.com" />
+   ═══════════════════════════════════════════════════════════════ */
+export default function AppointmentForm({
+  phone = "+880 1234-567890",
+  email = "appointments@clinic.com",
+}) {
+  const [step,   setStep]   = useState(1);
+  const [data,   setData]   = useState(INITIAL_FORM);
   const [errors, setErrors] = useState({});
-  const [submitting, setSubmitting] = useState(false);
-  const [bookingConfirmed, setBookingConfirmed] = useState(false);
-  const [bookingRef, setBookingRef] = useState("");
+  const [busy,   setBusy]   = useState(false);
+  const [done,   setDone]   = useState(false);
+  const [ref,    setRef]    = useState("");
   const [minDate, setMinDate] = useState("");
+
+  /* Stable "booked" slots — generated once per session */
+  const [bookedSlots] = useState(
+    () => new Set(SLOTS.filter((_, i) => i % 3 === 2))
+  );
 
   useEffect(() => {
     setMinDate(new Date().toISOString().split("T")[0]);
   }, []);
 
-  const availableDoctors = useMemo(() => {
-    return formData.department ? DOCTORS[formData.department] || [] : [];
-  }, [formData.department]);
-
-  const updateField = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    if (errors[field]) setErrors(prev => ({ ...prev, [field]: null }));
+  /* Field updater — also clears the matching error */
+  const upd = (key, value) => {
+    setData(prev => ({ ...prev, [key]: value }));
+    if (errors[key]) setErrors(prev => ({ ...prev, [key]: null }));
   };
 
-  const nextStep = () => {
-    let validationFn, stepData;
-    if (step === 1) { validationFn = validateStep1; stepData = formData; }
-    else if (step === 2) { validationFn = validateStep2; stepData = formData; }
-    else if (step === 3) { validationFn = validateStep3; stepData = formData; }
-    
-    const errs = validationFn(stepData);
-    if (Object.keys(errs).length) { setErrors(errs); return; }
-    
-    setErrors({});
-    setStep(prev => Math.min(prev + 1, 4));
+  /* Advance / retreat step */
+  const go = (direction) => {
+    if (direction === 1) {
+      const validators = { 1: validateStep1, 2: validateStep2, 3: validateStep3 };
+      const e = validators[step](data);
+      if (Object.keys(e).length) { setErrors(e); return; }
+      setErrors({});
+    }
+    setStep(s => s + direction);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const prevStep = () => {
-    setStep(prev => Math.max(prev - 1, 1));
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
+  /* Final submit */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const errs = validateStep3(formData);
+    const errs = validateStep3(data);
     if (Object.keys(errs).length) { setErrors(errs); return; }
-    
-    setSubmitting(true);
+
+    setBusy(true);
     setErrors({});
-    
     try {
-      await new Promise(res => setTimeout(res, 2000));
-      const ref = `APPT-${Date.now().toString(36).toUpperCase()}`;
-      setBookingRef(ref);
-      setBookingConfirmed(true);
-    } catch (err) {
-      setErrors({ submit: "Booking failed. Please try again or call us." });
+      await new Promise(resolve => setTimeout(resolve, 1800));
+      setRef(`APPT-${Date.now().toString(36).toUpperCase()}`);
+      setDone(true);
+    } catch {
+      setErrors({ submit: "Booking failed. Please try again or call us directly." });
     } finally {
-      setSubmitting(false);
+      setBusy(false);
     }
   };
 
-  // Confirmation View
-  if (bookingConfirmed) {
-    return (
-      <div className="confirm-card card">
-        <div className="confirm-header">
-          <div className="confirm-icon">✓</div>
-          <h3>Booking Reference</h3>
-          <p className="confirm-ref">{bookingRef}</p>
-        </div>
-        
-        <div className="confirm-details">
-          <div className="confirm-row"><span>Patient</span><strong>{formData.fullName}</strong></div>
-          <div className="confirm-row"><span>Department</span><strong>{DEPARTMENTS.find(d => d.id === formData.department)?.name}</strong></div>
-          <div className="confirm-row"><span>Doctor</span><strong>{availableDoctors.find(d => d.id === formData.doctor)?.name}</strong></div>
-          <div className="confirm-row"><span>Branch</span><strong>{BRANCHES.find(b => b.id === formData.branch)?.name}</strong></div>
-          <div className="confirm-row"><span>Date & Time</span><strong>{formData.appointmentDate} at {formData.timeSlot}</strong></div>
-        </div>
+  /* Reset back to step 1 */
+  const handleReset = () => {
+    setDone(false);
+    setStep(1);
+    setData(INITIAL_FORM);
+    setErrors({});
+  };
 
-        <div className="confirm-actions">
-          <Button variant="primary" href="/dashboard" className="confirm-btn">View My Appointments</Button>
-          <Button variant="secondary" href="/" className="confirm-btn">Return Home</Button>
-          <a href="tel:+8801234567890" className="confirm-call">📞 Need to reschedule? Call us</a>
-        </div>
+  /* ── PROGRESS BAR ── */
+  const STEPS = [
+    { label: "Patient Info",  sub: "Personal details" },
+    { label: "Schedule",      sub: "Date & doctor" },
+    { label: "Confirm",       sub: "Review & book" },
+  ];
 
-        <div className="confirm-tips">
-          <Icons.Info />
-          <p><strong>Before your visit:</strong> Arrive 15 minutes early, bring your ID & previous reports.</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Main Form
   return (
     <>
-      {/* Progress Steps */}
-      <div className="appt-progress">
-        {[1, 2, 3].map((s) => (
-          <div key={s} className={`appt-progress__step ${step >= s ? "active" : ""} ${step > s ? "completed" : ""}`}>
-            <div className="appt-progress__number">{step > s ? "✓" : s}</div>
-            <span className="appt-progress__label">{s === 1 ? "Details" : s === 2 ? "Schedule" : "Confirm"}</span>
-          </div>
-        ))}
-        <div className="appt-progress__line" />
+      {/* Sticky progress */}
+      {!done && (
+        <div className="appt-progress-wrap">
+          <nav className="appt-progress" aria-label="Booking progress">
+            {STEPS.map((s, i) => {
+              const n = i + 1;
+              const cls = [
+                "appt-progress__step",
+                step === n ? "active" : "",
+                step > n  ? "done"   : "",
+              ].join(" ").trim();
+              return (
+                <div key={n} className={cls}>
+                  <div className="appt-progress__num">{step > n ? "✓" : n}</div>
+                  <div>
+                    <div className="appt-progress__label">{s.label}</div>
+                    <div className="appt-progress__sublabel">{s.sub}</div>
+                  </div>
+                </div>
+              );
+            })}
+          </nav>
+        </div>
+      )}
+
+      {/* Main body */}
+      <div className="appt-body">
+        {done && (
+          <Confirmation data={data} bookingRef={ref} onReset={handleReset} />
+        )}
+
+        {!done && step === 1 && (
+          <Step1
+            data={data}
+            errors={errors}
+            upd={upd}
+            onNext={() => go(1)}
+          />
+        )}
+
+        {!done && step === 2 && (
+          <Step2
+            data={data}
+            errors={errors}
+            upd={upd}
+            onNext={() => go(1)}
+            onBack={() => go(-1)}
+            bookedSlots={bookedSlots}
+            minDate={minDate}
+          />
+        )}
+
+        {!done && step === 3 && (
+          <Step3
+            data={data}
+            errors={errors}
+            upd={upd}
+            onBack={() => go(-1)}
+            onSubmit={handleSubmit}
+            busy={busy}
+          />
+        )}
+
+        {/* Sidebar only during form steps */}
+        {!done && (
+          <Sidebar phone={phone} email={email} />
+        )}
       </div>
-
-      <form onSubmit={handleSubmit} className="appt-form-wrapper">
-        
-        {/* Step 1: Personal Information */}
-        {step === 1 && (
-          <div className="appt-step card">
-            <div className="appt-step__header">
-              <Icons.User />
-              <h3>Personal Information</h3>
-              <p>Tell us about yourself</p>
-            </div>
-
-            <div className="appt-form-grid">
-              <div className="appt-form__group">
-                <label htmlFor="fullName">Full Name *</label>
-                <div className="appt-input-wrap">
-                  <Icons.User />
-                  <input id="fullName" type="text" placeholder="Fatima Rahman" value={formData.fullName}
-                    onChange={(e) => updateField("fullName", e.target.value)}
-                    className={`appt-input ${errors.fullName ? "error" : ""}`} aria-invalid={!!errors.fullName} />
-                </div>
-                {errors.fullName && <span className="appt-error">{errors.fullName}</span>}
-              </div>
-
-              <div className="appt-form__group">
-                <label htmlFor="email">Email Address *</label>
-                <div className="appt-input-wrap">
-                  <Icons.Mail />
-                  <input id="email" type="email" placeholder="you@example.com" value={formData.email}
-                    onChange={(e) => updateField("email", e.target.value)}
-                    className={`appt-input ${errors.email ? "error" : ""}`} aria-invalid={!!errors.email} />
-                </div>
-                {errors.email && <span className="appt-error">{errors.email}</span>}
-              </div>
-
-              <div className="appt-form__group">
-                <label htmlFor="phone">Phone Number *</label>
-                <div className="appt-input-wrap">
-                  <Icons.Phone />
-                  <input id="phone" type="tel" placeholder="+880 1XXX-XXXXXX" value={formData.phone}
-                    onChange={(e) => updateField("phone", e.target.value)}
-                    className={`appt-input ${errors.phone ? "error" : ""}`} aria-invalid={!!errors.phone} />
-                </div>
-                {errors.phone && <span className="appt-error">{errors.phone}</span>}
-              </div>
-
-              <div className="appt-form__group">
-                <label htmlFor="dob">Date of Birth *</label>
-                <div className="appt-input-wrap">
-                  <Icons.Calendar />
-                  <input id="dob" type="date" value={formData.dob}
-                    onChange={(e) => updateField("dob", e.target.value)}
-                    className={`appt-input ${errors.dob ? "error" : ""}`} max={minDate} aria-invalid={!!errors.dob} />
-                </div>
-                {errors.dob && <span className="appt-error">{errors.dob}</span>}
-              </div>
-
-              <div className="appt-form__group">
-                <label>Gender *</label>
-                <div className="appt-radio-group">
-                  {["Male", "Female", "Other"].map((g) => (
-                    <label key={g} className={`appt-radio ${formData.gender === g.toLowerCase() ? "selected" : ""}`}>
-                      <input type="radio" name="gender" value={g.toLowerCase()}
-                        checked={formData.gender === g.toLowerCase()}
-                        onChange={(e) => updateField("gender", e.target.value)} />
-                      <span>{g}</span>
-                    </label>
-                  ))}
-                </div>
-                {errors.gender && <span className="appt-error">{errors.gender}</span>}
-              </div>
-            </div>
-
-            <div className="appt-step__footer">
-              <Button type="button" variant="primary" onClick={nextStep} className="appt-btn-next">
-                Continue <Icons.ArrowRight />
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {/* Step 2: Appointment Details */}
-        {step === 2 && (
-          <div className="appt-step card">
-            <div className="appt-step__header">
-              <Icons.Calendar />
-              <h3>Appointment Details</h3>
-              <p>Choose your preferred schedule</p>
-            </div>
-
-            <div className="appt-form__group">
-              <label>Select Department *</label>
-              <div className="appt-dept-grid">
-                {DEPARTMENTS.map((dept) => (
-                  <button key={dept.id} type="button"
-                    className={`appt-dept-card ${formData.department === dept.id ? "selected" : ""}`}
-                    onClick={() => { updateField("department", dept.id); updateField("doctor", ""); }}>
-                    <span className="appt-dept-icon">{dept.icon}</span>
-                    <span className="appt-dept-name">{dept.name}</span>
-                    <span className="appt-dept-wait">~{dept.waitTime}</span>
-                  </button>
-                ))}
-              </div>
-              {errors.department && <span className="appt-error">{errors.department}</span>}
-            </div>
-
-            {formData.department && availableDoctors.length > 0 && (
-              <div className="appt-form__group">
-                <label>Select Doctor *</label>
-                <div className="appt-doctor-grid">
-                  {availableDoctors.map((doc) => (
-                    <label key={doc.id} className={`appt-doctor-card ${formData.doctor === doc.id ? "selected" : ""}`}>
-                      <input type="radio" name="doctor" value={doc.id}
-                        checked={formData.doctor === doc.id}
-                        onChange={(e) => updateField("doctor", e.target.value)} />
-                      <div className="appt-doctor-info">
-                        <span className="appt-doctor-avatar">{doc.img}</span>
-                        <div><strong>{doc.name}</strong><p>{doc.title} • {doc.exp}</p></div>
-                      </div>
-                    </label>
-                  ))}
-                </div>
-                {errors.doctor && <span className="appt-error">{errors.doctor}</span>}
-              </div>
-            )}
-
-            <div className="appt-form-row">
-              <div className="appt-form__group">
-                <label>Branch Location *</label>
-                <div className="appt-input-wrap">
-                  <Icons.Location />
-                  <select value={formData.branch} onChange={(e) => updateField("branch", e.target.value)}
-                    className={`appt-select ${errors.branch ? "error" : ""}`} aria-invalid={!!errors.branch}>
-                    <option value="">Select a branch</option>
-                    {BRANCHES.map((b) => (<option key={b.id} value={b.id}>{b.name}</option>))}
-                  </select>
-                </div>
-                {errors.branch && <span className="appt-error">{errors.branch}</span>}
-              </div>
-
-              <div className="appt-form__group">
-                <label>Preferred Date *</label>
-                <div className="appt-input-wrap">
-                  <Icons.Calendar />
-                  <input type="date" value={formData.appointmentDate}
-                    onChange={(e) => updateField("appointmentDate", e.target.value)}
-                    className={`appt-input ${errors.appointmentDate ? "error" : ""}`} min={minDate} aria-invalid={!!errors.appointmentDate} />
-                </div>
-                {errors.appointmentDate && <span className="appt-error">{errors.appointmentDate}</span>}
-              </div>
-            </div>
-
-            {formData.appointmentDate && (
-              <div className="appt-form__group">
-                <label>Select Time Slot *</label>
-                <div className="appt-time-grid">
-                  {TIME_SLOTS.map((slot) => {
-                    const isBooked = Math.random() > 0.7;
-                    return (
-                      <button key={slot} type="button" disabled={isBooked}
-                        className={`appt-time-slot ${formData.timeSlot === slot ? "selected" : ""} ${isBooked ? "booked" : ""}`}
-                        onClick={() => updateField("timeSlot", slot)}>
-                        {slot}{isBooked && <span className="appt-time-badge">Full</span>}
-                      </button>
-                    );
-                  })}
-                </div>
-                {errors.timeSlot && <span className="appt-error">{errors.timeSlot}</span>}
-              </div>
-            )}
-
-            <div className="appt-step__footer">
-              <Button type="button" variant="secondary" onClick={prevStep} className="appt-btn-prev">
-                <Icons.ArrowLeft /> Back
-              </Button>
-              <Button type="button" variant="primary" onClick={nextStep} className="appt-btn-next">
-                Continue <Icons.ArrowRight />
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {/* Step 3: Review & Confirm */}
-        {step === 3 && (
-          <div className="appt-step card">
-            <div className="appt-step__header">
-              <Icons.Check />
-              <h3>Review & Confirm</h3>
-              <p>Verify your details before booking</p>
-            </div>
-
-            <div className="appt-summary-grid">
-              <div className="appt-summary-card">
-                <h4>👤 Patient</h4>
-                <p><strong>{formData.fullName}</strong></p>
-                <p>{formData.email}</p>
-                <p>{formData.phone}</p>
-              </div>
-              <div className="appt-summary-card">
-                <h4>🏥 Appointment</h4>
-                <p><strong>{DEPARTMENTS.find(d => d.id === formData.department)?.name}</strong></p>
-                <p>{availableDoctors.find(d => d.id === formData.doctor)?.name}</p>
-                <p>{formData.appointmentDate} at {formData.timeSlot}</p>
-              </div>
-            </div>
-
-            <div className="appt-form__group">
-              <label htmlFor="symptoms">Describe Your Symptoms *</label>
-              <textarea id="symptoms" rows="4" placeholder="Briefly describe what you're experiencing..."
-                value={formData.symptoms} onChange={(e) => updateField("symptoms", e.target.value)}
-                className={`appt-textarea ${errors.symptoms ? "error" : ""}`} aria-invalid={!!errors.symptoms} />
-              {errors.symptoms && <span className="appt-error">{errors.symptoms}</span>}
-            </div>
-
-            <label className={`appt-checkbox ${errors.consent ? "error" : ""}`}>
-              <input type="checkbox" checked={formData.consent}
-                onChange={(e) => updateField("consent", e.target.checked)} />
-              <span>I agree to the <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>.</span>
-            </label>
-            {errors.consent && <span className="appt-error">{errors.consent}</span>}
-            {errors.submit && <span className="appt-error appt-error--submit">{errors.submit}</span>}
-
-            <div className="appt-step__footer">
-              <Button type="button" variant="secondary" onClick={prevStep} className="appt-btn-prev">
-                <Icons.ArrowLeft /> Edit
-              </Button>
-              <Button type="submit" variant="primary" disabled={submitting} className="appt-btn-confirm">
-                {submitting ? <><span className="appt-spinner" /> Processing...</> : <><Icons.Lock /> Confirm Booking</>}
-              </Button>
-            </div>
-          </div>
-        )}
-      </form>
     </>
   );
 }

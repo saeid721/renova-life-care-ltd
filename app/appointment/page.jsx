@@ -1,80 +1,80 @@
+/* ═══════════════════════════════════════════════════════════════
+   app/appointment/page.jsx  —  Next.js Server Component
+   ═══════════════════════════════════════════════════════════════ */
+
 import { siteConfig } from "@/constants/siteData";
 import AppointmentForm from "./AppointmentForm";
-import "@/styles/pages/appointment.css";
 
+/* ─── SEO metadata ───────────────────────────────────────────── */
 export const metadata = {
   title: `Book Appointment | ${siteConfig.name}`,
-  description: `Schedule your appointment with expert doctors at ${siteConfig.name}. Fast, secure, and convenient online booking for all medical specialties.`,
+  description: `Schedule your appointment with expert doctors at ${siteConfig.name}. Fast, secure, and convenient online booking for all medical specialties. Confirmed within 1 hour.`,
   openGraph: {
     title: `Book Appointment | ${siteConfig.name}`,
-    description: `Book your health consultation online in minutes.`,
+    description: "Book your health consultation online in minutes.",
     url: `${siteConfig.url}/appointment`,
     type: "website",
   },
 };
 
+/* ─── Page ───────────────────────────────────────────────────── */
 export default function AppointmentPage() {
   return (
-    <div className="appt-page">
-      {/* Page Hero */}
-      <section className="page-hero">
+    <main>
+
+      {/* ── HERO ────────────────────────────────────────────────── */}
+      
+      <section className="page-hero"  aria-label="Book an appointment">
         <div className="page-hero__container">
           <span className="page-hero__label">Book Online</span>
           <h1 className="page-hero__title">
             Schedule Your <span className="page-hero__highlight">Appointment</span>
           </h1>
           <p className="page-hero__subtitle">
-            Quick, secure booking with Bangladesh's trusted healthcare providers. 
-            Get confirmed within 1 hour.
+            Quick, secure booking with Bangladesh&apos;s trusted healthcare providers.
+            Confirmed within 1 hour, zero hassle.
           </p>
+          <nav aria-label="Breadcrumb" className="page-hero__breadcrumb">
+            <a href="/">Home</a>
+            <span aria-hidden="true"> / </span>
+            <span aria-current="page">About</span>
+          </nav>
           
-          {/* Progress indicator placeholder - rendered by client component */}
+
+          <div className="appt-hero__stats" aria-label="Key statistics">
+            {[
+              ["50K+", "Patients served"],
+              ["100+", "Expert doctors"],
+              ["8",    "Specialties"],
+              ["1hr",  "Avg confirmation"],
+            ].map(([value, label]) => (
+              <div key={label}>
+                <div className="appt-hero__stat-val">{value}</div>
+                <div className="appt-hero__stat-lbl">{label}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Form Section */}
-      <section className="page-section">
-        <div className="page-section__container">
-          {/* Client Component handles all interactivity */}
-          <AppointmentForm />
-          
-          {/* Sidebar Info */}
-          <aside className="appt-sidebar">
-            <div className="appt-sidebar__card card">
-              <h4>🛡️ Why Book With Us?</h4>
-              <ul className="appt-benefits">
-                <li>✓ Instant confirmation</li>
-                <li>✓ Free rescheduling</li>
-                <li>✓ SSL-encrypted data</li>
-                <li>✓ Expert doctors</li>
-                <li>✓ Digital reports</li>
-              </ul>
-            </div>
+      {/*
+        ── CLIENT COMPONENT ──────────────────────────────────────
+        AppointmentForm handles:
+          • Sticky progress bar (rendered inside the component)
+          • appt-body grid (form + sidebar)
+          • All 3 steps + confirmation view
+      */}
+      <AppointmentForm
+        phone={siteConfig.phone}
+        email={siteConfig.email}
+      />
 
-            <div className="appt-sidebar__card card">
-              <h4>📞 Need Help?</h4>
-              <p>Our support team is available 24/7</p>
-              <a href={`tel:${siteConfig.phone}`} className="appt-sidebar-phone">
-                📞 {siteConfig.phone}
-              </a>
-              <a href={`mailto:${siteConfig.email}`} className="appt-sidebar-email">
-                ✉️ {siteConfig.email}
-              </a>
-            </div>
+      {/* ── FOOTER TRUST BAR ────────────────────────────────────── */}
+      <footer className="page-section page-section--green appt-trust-bar" aria-label="Trust indicators">
+        Trusted by <strong>50,000+ patients</strong> across Bangladesh
+        &nbsp;·&nbsp; SSL Secured &nbsp;·&nbsp; HIPAA Compliant
+      </footer>
 
-            <div className="appt-sidebar__trust">
-              🛡️ <span>Your data is secure & never shared</span>
-            </div>
-          </aside>
-        </div>
-      </section>
-
-      {/* Trust Banner */}
-      <section className="appt-trust-banner">
-        <div className="appt-trust-banner__container">
-          ✨ <span>Trusted by 50,000+ patients across Bangladesh</span> ✨
-        </div>
-      </section>
-    </div>
+    </main>
   );
 }

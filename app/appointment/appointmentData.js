@@ -53,7 +53,7 @@ export const BRANCHES = [
   { id: "rajshahi",   name: "Rajshahi",       addr: "Shaheb Bazar" },
 ];
 
-/* ─── TIME SLOTS ──────────────────────────────────────────── */
+/* ─── TIME SLOTS (fallback / base list) ──────────────────── */
 export const SLOTS = [
   "08:00 AM", "08:30 AM", "09:00 AM", "09:30 AM",
   "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
@@ -61,21 +61,107 @@ export const SLOTS = [
   "04:00 PM", "04:30 PM", "05:00 PM", "05:30 PM",
 ];
 
+/* ─── DOCTOR SLOTS ────────────────────────────────────────── */
+/*
+   Each doctor has their own available time slots.
+   "booked" slots are marked so the UI can show "Full" badges.
+   Format: { time: string, booked: boolean }
+*/
+export const DOCTOR_SLOTS = {
+  // Cardiology
+  c1: [
+    { time: "08:00 AM", booked: false }, { time: "08:30 AM", booked: true  },
+    { time: "09:00 AM", booked: false }, { time: "09:30 AM", booked: false },
+    { time: "10:00 AM", booked: true  }, { time: "11:00 AM", booked: false },
+    { time: "02:00 PM", booked: false }, { time: "03:00 PM", booked: true  },
+    { time: "04:00 PM", booked: false }, { time: "05:00 PM", booked: false },
+  ],
+  c2: [
+    { time: "09:00 AM", booked: false }, { time: "09:30 AM", booked: true  },
+    { time: "10:30 AM", booked: false }, { time: "11:00 AM", booked: false },
+    { time: "02:30 PM", booked: true  }, { time: "03:30 PM", booked: false },
+    { time: "04:30 PM", booked: false }, { time: "05:30 PM", booked: true  },
+  ],
+  // Orthopedics
+  o1: [
+    { time: "08:00 AM", booked: true  }, { time: "09:00 AM", booked: false },
+    { time: "10:00 AM", booked: false }, { time: "11:30 AM", booked: false },
+    { time: "02:00 PM", booked: false }, { time: "03:00 PM", booked: true  },
+    { time: "04:00 PM", booked: false },
+  ],
+  // General
+  g1: [
+    { time: "08:00 AM", booked: false }, { time: "08:30 AM", booked: false },
+    { time: "09:00 AM", booked: true  }, { time: "10:00 AM", booked: false },
+    { time: "11:00 AM", booked: false }, { time: "02:00 PM", booked: true  },
+    { time: "03:00 PM", booked: false }, { time: "04:00 PM", booked: false },
+    { time: "05:00 PM", booked: false },
+  ],
+  g2: [
+    { time: "09:30 AM", booked: false }, { time: "10:30 AM", booked: true  },
+    { time: "11:30 AM", booked: false }, { time: "02:30 PM", booked: false },
+    { time: "03:30 PM", booked: false }, { time: "04:30 PM", booked: true  },
+  ],
+  // Pediatrics
+  p1: [
+    { time: "08:30 AM", booked: false }, { time: "09:30 AM", booked: true  },
+    { time: "10:30 AM", booked: false }, { time: "11:00 AM", booked: false },
+    { time: "02:00 PM", booked: false }, { time: "03:00 PM", booked: true  },
+    { time: "04:00 PM", booked: false }, { time: "05:00 PM", booked: false },
+  ],
+  // Dental
+  d1: [
+    { time: "08:00 AM", booked: false }, { time: "09:00 AM", booked: false },
+    { time: "10:00 AM", booked: true  }, { time: "11:00 AM", booked: false },
+    { time: "02:00 PM", booked: false }, { time: "04:00 PM", booked: false },
+    { time: "05:00 PM", booked: true  },
+  ],
+  // Neurology
+  n1: [
+    { time: "09:00 AM", booked: false }, { time: "10:00 AM", booked: false },
+    { time: "11:00 AM", booked: true  }, { time: "02:00 PM", booked: false },
+    { time: "03:00 PM", booked: false }, { time: "04:00 PM", booked: true  },
+    { time: "05:00 PM", booked: false },
+  ],
+  // Dermatology
+  sk1: [
+    { time: "08:00 AM", booked: false }, { time: "08:30 AM", booked: true  },
+    { time: "10:00 AM", booked: false }, { time: "11:00 AM", booked: false },
+    { time: "02:30 PM", booked: false }, { time: "03:30 PM", booked: true  },
+    { time: "04:30 PM", booked: false },
+  ],
+  // Eye Care
+  e1: [
+    { time: "09:00 AM", booked: false }, { time: "09:30 AM", booked: false },
+    { time: "10:30 AM", booked: true  }, { time: "11:30 AM", booked: false },
+    { time: "02:00 PM", booked: true  }, { time: "03:00 PM", booked: false },
+    { time: "04:00 PM", booked: false }, { time: "05:30 PM", booked: false },
+  ],
+};
+
 /* ─── INITIAL FORM STATE ──────────────────────────────────── */
 export const INITIAL_FORM = {
-  fullName:   "",
-  email:      "",
-  phone:      "",
-  dob:        "",
-  gender:     "",
-  dept:       "",
-  doctor:     "",
-  branch:     "",
-  date:       "",
-  slot:       "",
-  symptoms:   "",
-  medHistory: "",
-  consent:    false,
+  fullName:      "",
+  email:         "",
+  phone:         "",
+  dob:           "",
+  gender:        "",
+  mode:          "",        /* "online" | "offline" */
+  dept:          "",
+  doctor:        "",
+  branch:        "",
+  date:          "",
+  slot:          "",
+  paymentMethod: "",        /* "bkash" | "card" | "cash" */
+  bkashNumber:   "",        /* bKash sub-form */
+  transactionId: "",        /* bKash sub-form */
+  cardNumber:    "",        /* Card sub-form */
+  cardExpiry:    "",        /* Card sub-form */
+  cardCvv:       "",        /* Card sub-form */
+  cardName:      "",        /* Card sub-form */
+  symptoms:      "",
+  medHistory:    "",
+  consent:       false,
 };
 
 /* ─── VALIDATION ──────────────────────────────────────────── */
@@ -99,17 +185,27 @@ export const validateStep1 = (d) => {
 /** Step 2 — Scheduling */
 export const validateStep2 = (d) => {
   const e = {};
+  if (!d.mode)   e.mode   = "Select Online or Offline";
   if (!d.dept)   e.dept   = "Select a department";
   if (!d.doctor) e.doctor = "Select a doctor";
-  if (!d.branch) e.branch = "Select a branch";
+  /* branch required only for offline */
+  if (d.mode === "offline" && !d.branch) e.branch = "Select a branch";
   if (!d.date)   e.date   = "Choose a preferred date";
   if (!d.slot)   e.slot   = "Choose a time slot";
+  return e;
+};
+
+/** Step 3 — Payment method */
+export const validatePayment = (d) => {
+  const e = {};
+  if (!d.paymentMethod) e.paymentMethod = "Select a payment method";
   return e;
 };
 
 /** Step 3 — Confirm */
 export const validateStep3 = (d) => {
   const e = {};
+  if (!d.paymentMethod) e.paymentMethod = "Select a payment method";
   if (!d.symptoms?.trim() || d.symptoms.trim().length < 10)
     e.symptoms = "Describe your symptoms (min 10 characters)";
   if (!d.consent)

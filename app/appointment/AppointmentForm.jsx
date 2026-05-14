@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import {
-  DEPARTMENTS, DOCTORS, BRANCHES, SLOTS,
-  INITIAL_FORM, validateStep1, validateStep2, validateStep3,
+  DEPARTMENTS, DOCTORS, BRANCHES, DOCTOR_SLOTS,
+  INITIAL_FORM, validateStep1, validateStep2, validateStep3, validatePayment,
 } from "./appointmentData";
 import "@/styles/pages/appointment.css";
 
@@ -131,7 +132,7 @@ function Step1({ data, errors, upd, onNext }) {
 
       <div className="appt-card__foot">
         <span className="appt-step-counter">Step 1 of 3</span>
-        <button className="btn btn-primary" onClick={onNext} type="button">
+        <button className="appt-btn appt-btn-primary" onClick={onNext} type="button">
           Continue <IconArrowR size={16} />
         </button>
       </div>
@@ -141,12 +142,39 @@ function Step1({ data, errors, upd, onNext }) {
 
 /* ═══════════════════════════════════════════════════════════════
    STEP 2 — Appointment Details
+   Flow:
+     • Online:  Mode → Dept → Doctor list (scrollable) → Date → Slots
+     • Offline: Mode → Dept → Branch → Doctor list → Date → Slots
    ═══════════════════════════════════════════════════════════════ */
-function Step2({ data, errors, upd, onNext, onBack, bookedSlots, minDate }) {
+function Step2({ data, errors, upd, onNext, onBack, minDate }) {
+  const isOnline  = data.mode === "online";
+  const isOffline = data.mode === "offline";
+
+  /* Doctors for the chosen department */
   const doctors = useMemo(
     () => (data.dept ? DOCTORS[data.dept] || [] : []),
     [data.dept]
   );
+
+  /* Time slots for the chosen doctor */
+  const doctorSlots = useMemo(
+    () => (data.doctor ? DOCTOR_SLOTS[data.doctor] || [] : []),
+    [data.doctor]
+  );
+
+  /*
+   * Derived flags
+   * Online:  dept required (no branch) → show doctor list
+   * Offline: dept + branch both required → show doctor list
+   */
+  const showDoctorList = data.dept && (isOnline || (isOffline && data.branch));
+  const dateEnabled    = showDoctorList && !!data.doctor;
+  const showSlots      = dateEnabled && !!data.date;
+
+  /* step label numbers — branch step only exists offline */
+  const stepNum = isOnline
+    ? { dept:1, doctor:2, date:3, slot:4 }
+    : { dept:2, branch:2, doctor:3, date:4, slot:5 };
 
   return (
     <div className="appt-card">
@@ -154,35 +182,100 @@ function Step2({ data, errors, upd, onNext, onBack, bookedSlots, minDate }) {
         <div className="appt-card__icon">📅</div>
         <div>
           <div className="appt-card__title">Appointment Details</div>
-          <div className="appt-card__sub">Choose your department, doctor, and preferred time</div>
+          <div className="appt-card__sub">
+            {isOnline
+              ? "Online — choose department, doctor, date & time"
+              : "Offline — choose department, branch, doctor, date & time"}
+          </div>
         </div>
       </div>
 
       <div className="appt-card__body appt-stack">
 
-        {/* Department */}
-        <Field label="Select Department *" error={errors.dept}>
-          <div className="appt-dept-grid">
-            {DEPARTMENTS.map(dept => (
+        {/* ── 1. Consultation Mode ─────────────────────────────── */}
+        <Field label="1. Consultation Type *" error={errors.mode}>
+          <div className="appt-mode-group">
+            {[
+              { val:"online",  icon:"💻", label:"Online",  sub:"Video / teleconsultation" },
+              { val:"offline", icon:"🏥", label:"In-Person", sub:"Visit our branch" },
+            ].map(({ val, icon, label, sub }) => (
               <button
-                key={dept.id}
+                key={val}
                 type="button"
-                className={`appt-dept-card${data.dept === dept.id ? " sel" : ""}`}
-                onClick={() => { upd("dept", dept.id); upd("doctor", ""); }}
-                aria-pressed={data.dept === dept.id}
+                className={`appt-mode-card${data.mode === val ? " sel" : ""}`}
+                onClick={() => {
+                  upd("mode",   val);
+                  upd("branch", "");
+                  upd("doctor", "");
+                  upd("date",   "");
+                  upd("slot",   "");
+                }}
+                aria-pressed={data.mode === val}
               >
-                <span className="appt-dept-card__icon">{dept.icon}</span>
-                <span className="appt-dept-card__name">{dept.name}</span>
-                <span className="appt-dept-card__wait">{dept.wait}</span>
+                <span className="appt-mode-icon">{icon}</span>
+                <span className="appt-mode-label">{label}</span>
+                <span className="appt-mode-sub">{sub}</span>
               </button>
             ))}
           </div>
         </Field>
 
-        {/* Doctor */}
-        {data.dept && doctors.length > 0 && (
-          <Field label="Select Doctor *" error={errors.doctor}>
-            <div className="appt-doc-list">
+        {/* ── 2. Department ───────────────────────────────────── */}
+        {data.mode && (
+          <Field label={`${isOnline ? "2" : "2"}. Select Department *`} error={errors.dept}>
+            <div className="appt-dept-grid">
+              {DEPARTMENTS.map(dept => (
+                <button
+                  key={dept.id}
+                  type="button"
+                  className={`appt-dept-card${data.dept === dept.id ? " sel" : ""}`}
+                  onClick={() => {
+                    upd("dept",   dept.id);
+                    upd("doctor", "");
+                    upd("date",   "");
+                    upd("slot",   "");
+                  }}
+                  aria-pressed={data.dept === dept.id}
+                >
+                  <span className="appt-dept-card__icon">{dept.icon}</span>
+                  <span className="appt-dept-card__name">{dept.name}</span>
+                  <span className="appt-dept-card__wait">{dept.wait}</span>
+                </button>
+              ))}
+            </div>
+          </Field>
+        )}
+
+        {/* ── 3. Branch — OFFLINE only, shown after dept ──────── */}
+        {isOffline && data.dept && (
+          <Field label="3. Branch Location *" icon={IconPin} error={errors.branch}>
+            <select
+              className={`appt-sel${errors.branch ? " err" : ""}`}
+              value={data.branch}
+              onChange={e => {
+                upd("branch", e.target.value);
+                upd("doctor", "");
+                upd("date",   "");
+                upd("slot",   "");
+              }}
+              aria-invalid={!!errors.branch}
+            >
+              <option value="">Select a branch</option>
+              {BRANCHES.map(b => (
+                <option key={b.id} value={b.id}>{b.name} — {b.addr}</option>
+              ))}
+            </select>
+          </Field>
+        )}
+
+        {/* ── Doctor list ──────────────────────────────────────── */}
+        {showDoctorList && doctors.length > 0 && (
+          <Field
+            label={`${isOnline ? "3" : "4"}. Select Doctor *`}
+            error={errors.doctor}
+          >
+            {/* Scrollable when >10 doctors */}
+            <div className={`appt-doc-list${doctors.length > 10 ? " appt-doc-list--scroll" : ""}`}>
               {doctors.map(doc => (
                 <label
                   key={doc.id}
@@ -193,7 +286,11 @@ function Step2({ data, errors, upd, onNext, onBack, bookedSlots, minDate }) {
                     name="doctor"
                     value={doc.id}
                     checked={data.doctor === doc.id}
-                    onChange={e => upd("doctor", e.target.value)}
+                    onChange={e => {
+                      upd("doctor", e.target.value);
+                      upd("date",   "");
+                      upd("slot",   "");
+                    }}
                   />
                   <div className="appt-doc-avatar">{doc.avatar}</div>
                   <div>
@@ -206,68 +303,71 @@ function Step2({ data, errors, upd, onNext, onBack, bookedSlots, minDate }) {
           </Field>
         )}
 
-        {data.dept && doctors.length === 0 && (
+        {showDoctorList && doctors.length === 0 && (
           <div className="appt-doc-fallback">
             Our team will assign the most suitable specialist upon confirmation.
           </div>
         )}
 
-        {/* Branch & Date */}
-        <div className="appt-grid-2">
-          <Field label="Branch Location *" icon={IconPin} error={errors.branch}>
-            <select
-              className={`appt-sel${errors.branch ? " err" : ""}`}
-              value={data.branch}
-              onChange={e => upd("branch", e.target.value)}
-              aria-invalid={!!errors.branch}
-            >
-              <option value="">Select a branch</option>
-              {BRANCHES.map(b => (
-                <option key={b.id} value={b.id}>{b.name} — {b.addr}</option>
-              ))}
-            </select>
-          </Field>
-
-          <Field label="Preferred Date *" icon={IconCalendar} error={errors.date}>
+        {/* ── Preferred Date — unlocks after doctor selected ───── */}
+        {data.dept && (isOnline || (isOffline && data.branch)) && (
+          <Field
+            label={`${isOnline ? "4" : "5"}. Preferred Date *`}
+            icon={IconCalendar}
+            error={errors.date}
+          >
             <input
-              className={`appt-inp${errors.date ? " err" : ""}`}
+              className={`appt-inp${errors.date ? " err" : ""}${!dateEnabled ? " appt-inp--disabled" : ""}`}
               type="date"
               value={data.date}
-              onChange={e => upd("date", e.target.value)}
+              onChange={e => { upd("date", e.target.value); upd("slot", ""); }}
               min={minDate}
+              disabled={!dateEnabled}
               aria-invalid={!!errors.date}
+              aria-disabled={!dateEnabled}
+              title={!dateEnabled ? "Please select a doctor first" : undefined}
             />
+            {!dateEnabled && (
+              <p className="appt-field-hint">Select a doctor above to enable date selection</p>
+            )}
           </Field>
-        </div>
+        )}
 
-        {/* Time Slots */}
-        {data.date && (
-          <Field label="Select Time Slot *" error={errors.slot}>
+        {/* ── Time Slots — per-doctor, shown after date chosen ─── */}
+        {showSlots && doctorSlots.length > 0 && (
+          <Field
+            label={`${isOnline ? "5" : "6"}. Select Time Slot *`}
+            error={errors.slot}
+          >
             <div className="appt-time-grid">
-              {SLOTS.map(slot => {
-                const isBooked = bookedSlots.has(slot);
-                return (
-                  <button
-                    key={slot}
-                    type="button"
-                    disabled={isBooked}
-                    className={[
-                      "appt-slot-btn",
-                      data.slot === slot ? "active" : "",
-                      isBooked ? "booked" : "",
-                    ].join(" ").trim()}
-                    onClick={() => upd("slot", slot)}
-                    aria-pressed={data.slot === slot}
-                    aria-disabled={isBooked}
-                  >
-                    {slot}
-                    {isBooked && <span className="appt-slot-badge">Full</span>}
-                  </button>
-                );
-              })}
+              {doctorSlots.map(({ time, booked }) => (
+                <button
+                  key={time}
+                  type="button"
+                  disabled={booked}
+                  className={[
+                    "appt-slot-btn",
+                    data.slot === time ? "active" : "",
+                    booked ? "booked" : "",
+                  ].join(" ").trim()}
+                  onClick={() => upd("slot", time)}
+                  aria-pressed={data.slot === time}
+                  aria-disabled={booked}
+                >
+                  {time}
+                  {booked && <span className="appt-slot-badge">Full</span>}
+                </button>
+              ))}
             </div>
           </Field>
         )}
+
+        {showSlots && doctorSlots.length === 0 && (
+          <div className="appt-doc-fallback">
+            No available slots for this doctor. Please call us to arrange a time.
+          </div>
+        )}
+
       </div>
 
       <div className="appt-card__foot">
@@ -313,7 +413,7 @@ function Step3({ data, errors, upd, onBack, onSubmit, busy }) {
             <p>
               <strong>{dept?.name}</strong><br />
               {doctor?.name || "Doctor to be assigned"}<br />
-              {branch?.name}
+              {data.mode === "online" ? "🌐 Online Consultation" : branch?.name}
             </p>
           </div>
           <div className="appt-summ-card">
@@ -328,6 +428,144 @@ function Step3({ data, errors, upd, onBack, onSubmit, busy }) {
             </p>
           </div>
         </div>
+
+        <div className="appt-divider" />
+
+        {/* ── Payment Method ───────────────────────────────────── */}
+        <Field label="Payment Method *" error={errors.paymentMethod}>
+          <div className="appt-pay-group">
+            {/* Online → bKash + Card only; Offline → Cash only */}
+            {data.mode === "online" ? (
+              <>
+                {[
+                  { val:"bkash", icon:"📱", label:"bKash / Mobile Banking" },
+                  { val:"card",  icon:"💳", label:"Credit / Debit Card" },
+                ].map(({ val, icon, label }) => (
+                  <label
+                    key={val}
+                    className={`appt-pay-option${data.paymentMethod === val ? " sel" : ""}`}
+                  >
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value={val}
+                      checked={data.paymentMethod === val}
+                      onChange={e => upd("paymentMethod", e.target.value)}
+                    />
+                    <span className="appt-pay-icon">{icon}</span>
+                    <span className="appt-pay-label">{label}</span>
+                  </label>
+                ))}
+              </>
+            ) : (
+              <label className={`appt-pay-option${data.paymentMethod === "cash" ? " sel" : ""}`}>
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="cash"
+                  checked={data.paymentMethod === "cash"}
+                  onChange={e => upd("paymentMethod", e.target.value)}
+                />
+                <span className="appt-pay-icon">💵</span>
+                <span className="appt-pay-label">Cash on Visit</span>
+              </label>
+            )}
+          </div>
+        </Field>
+
+        {/* ── bKash sub-form ───────────────────────────────────── */}
+        {data.paymentMethod === "bkash" && (
+          <div className="appt-pay-subform">
+            <div className="appt-pay-subform__head">📱 bKash / Mobile Banking Details</div>
+            <div className="appt-pay-subform__info">
+              Send payment to: <strong>01712-345678</strong> (bKash Personal)
+            </div>
+            <Field label="Your bKash / Mobile Number *" error={errors.bkashNumber}>
+              <input
+                className={`appt-inp${errors.bkashNumber ? " err" : ""}`}
+                style={{ paddingLeft: "14px" }}
+                type="tel"
+                placeholder="+880 1XXX-XXXXXX"
+                value={data.bkashNumber || ""}
+                onChange={e => upd("bkashNumber", e.target.value)}
+              />
+            </Field>
+            <Field label="Transaction ID *" error={errors.transactionId}>
+              <input
+                className={`appt-inp${errors.transactionId ? " err" : ""}`}
+                style={{ paddingLeft: "14px" }}
+                type="text"
+                placeholder="e.g. 8N7A3B2C1D"
+                value={data.transactionId || ""}
+                onChange={e => upd("transactionId", e.target.value)}
+              />
+            </Field>
+          </div>
+        )}
+
+        {/* ── Card sub-form ────────────────────────────────────── */}
+        {data.paymentMethod === "card" && (
+          <div className="appt-pay-subform">
+            <div className="appt-pay-subform__head">💳 Card Details</div>
+            <Field label="Card Number *" error={errors.cardNumber}>
+              <input
+                className={`appt-inp${errors.cardNumber ? " err" : ""}`}
+                style={{ paddingLeft: "14px" }}
+                type="text"
+                placeholder="XXXX XXXX XXXX XXXX"
+                maxLength={19}
+                value={data.cardNumber || ""}
+                onChange={e => {
+                  /* auto-insert spaces every 4 digits */
+                  const raw = e.target.value.replace(/\D/g, "").slice(0, 16);
+                  const fmt = raw.match(/.{1,4}/g)?.join(" ") || raw;
+                  upd("cardNumber", fmt);
+                }}
+              />
+            </Field>
+            <div className="appt-grid-2">
+              <Field label="Expiry Date *" error={errors.cardExpiry}>
+                <input
+                  className={`appt-inp${errors.cardExpiry ? " err" : ""}`}
+                  style={{ paddingLeft: "14px" }}
+                  type="text"
+                  placeholder="MM / YY"
+                  maxLength={7}
+                  value={data.cardExpiry || ""}
+                  onChange={e => {
+                    const raw = e.target.value.replace(/\D/g, "").slice(0, 4);
+                    const fmt = raw.length > 2 ? raw.slice(0,2) + " / " + raw.slice(2) : raw;
+                    upd("cardExpiry", fmt);
+                  }}
+                />
+              </Field>
+              <Field label="CVV *" error={errors.cardCvv}>
+                <input
+                  className={`appt-inp${errors.cardCvv ? " err" : ""}`}
+                  style={{ paddingLeft: "14px" }}
+                  type="password"
+                  placeholder="•••"
+                  maxLength={4}
+                  value={data.cardCvv || ""}
+                  onChange={e => upd("cardCvv", e.target.value.replace(/\D/g, "").slice(0,4))}
+                />
+              </Field>
+            </div>
+            <Field label="Name on Card *" error={errors.cardName}>
+              <input
+                className={`appt-inp${errors.cardName ? " err" : ""}`}
+                style={{ paddingLeft: "14px" }}
+                type="text"
+                placeholder="As printed on the card"
+                value={data.cardName || ""}
+                onChange={e => upd("cardName", e.target.value)}
+              />
+            </Field>
+            <div className="appt-pay-secure">
+              🔒 Your card details are encrypted and never stored.
+            </div>
+          </div>
+        )}
 
         <div className="appt-divider" />
 
@@ -401,11 +639,15 @@ function Confirmation({ data, bookingRef, onReset }) {
 
   const rows = [
     ["Patient",    data.fullName],
+    ["Mode",       data.mode === "online" ? "🌐 Online" : "🏥 In-Person"],
     ["Department", dept?.name],
     ["Doctor",     doctor?.name || "To be assigned"],
-    ["Branch",     branch?.name],
+    ["Branch",     data.mode === "offline" ? branch?.name : "Online Consultation"],
     ["Date",       data.date],
     ["Time",       data.slot],
+    ["Payment",    data.paymentMethod === "bkash" ? "📱 bKash / Mobile Banking"
+                 : data.paymentMethod === "card"  ? "💳 Credit / Debit Card"
+                 : "💵 Cash on Visit"],
   ];
 
   return (
@@ -500,18 +742,34 @@ export default function AppointmentForm({
   phone = "+880 1234-567890",
   email = "appointments@clinic.com",
 }) {
-  const [step,   setStep]   = useState(1);
-  const [data,   setData]   = useState(INITIAL_FORM);
+  const searchParams = useSearchParams();
+
+  /*
+   * Lazy initial state — runs once on mount, reads ?doctor= URL param.
+   * Using useState lazy init (not useEffect) so data is correct on
+   * the very first render — avoids the flash/race condition.
+   */
+  const [data, setData] = useState(() => {
+    /* On the server searchParams may be null; guard with optional chaining */
+    const preDoctor = searchParams?.get?.("doctor") ?? null;
+    if (!preDoctor) return INITIAL_FORM;
+
+    /* Find which department this doctor belongs to */
+    const preDept = Object.keys(DOCTORS).find(deptId =>
+      DOCTORS[deptId].some(d => d.id === preDoctor)
+    );
+    if (!preDept) return INITIAL_FORM;
+
+    return { ...INITIAL_FORM, mode: "online", dept: preDept, doctor: preDoctor };
+  });
+
+  /* If data was pre-filled, start on step 2 immediately */
+  const [step,   setStep]   = useState(() => (data.dept && data.doctor ? 2 : 1));
   const [errors, setErrors] = useState({});
   const [busy,   setBusy]   = useState(false);
   const [done,   setDone]   = useState(false);
   const [ref,    setRef]    = useState("");
   const [minDate, setMinDate] = useState("");
-
-  /* Stable "booked" slots — generated once per session */
-  const [bookedSlots] = useState(
-    () => new Set(SLOTS.filter((_, i) => i % 3 === 2))
-  );
 
   useEffect(() => {
     setMinDate(new Date().toISOString().split("T")[0]);
@@ -618,7 +876,6 @@ export default function AppointmentForm({
             upd={upd}
             onNext={() => go(1)}
             onBack={() => go(-1)}
-            bookedSlots={bookedSlots}
             minDate={minDate}
           />
         )}

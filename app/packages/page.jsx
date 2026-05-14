@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useState, useEffect } from "react";
 import "@/styles/pages/package.css";
+import "@/styles/components/HeroSection.css";
 
 /* ═══════════════════════════════════════════════════════════════
    STATIC PLANS DATA

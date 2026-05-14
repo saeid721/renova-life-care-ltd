@@ -2,6 +2,7 @@ import { siteConfig } from "@/constants/siteData";
 import Link from "next/link";
 import PhotosClient from "./PhotosClient";
 import "@/styles/pages/photos.css";
+import "@/styles/components/HeroSection.css";
 
 export const metadata = {
   title: `Photo Gallery | ${siteConfig.name}`,

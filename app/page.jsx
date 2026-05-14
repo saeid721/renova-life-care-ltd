@@ -5,7 +5,7 @@ import {
   DoctorsSection,
   AppointmentCTASection,
   ShopSection,
-  PricingSection,
+  PackagesSection,
   PortfolioSection,
   TestimonialsSection,
   PartnersSection,
@@ -35,7 +35,7 @@ export default function HomePage() {
       <DoctorsSection />
       <AppointmentCTASection />
       <ShopSection />
-      <PricingSection />
+      <PackagesSection />
       <PortfolioSection />
       <TestimonialsSection />
       <PartnersSection />

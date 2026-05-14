@@ -2,6 +2,7 @@ import { siteConfig } from "@/constants/siteData";
 import Link from "next/link";
 import VideoClient from "./VideoClient";
 import "@/styles/pages/videos.css";
+import "@/styles/components/HeroSection.css";
 
 export const metadata = {
   title: `Video Gallery | ${siteConfig.name}`,

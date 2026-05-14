@@ -4,6 +4,7 @@
 
 import { siteConfig } from "@/constants/siteData";
 import AppointmentForm from "./AppointmentForm";
+import "@/styles/components/HeroSection.css";
 
 /* ─── SEO metadata ───────────────────────────────────────────── */
 export const metadata = {

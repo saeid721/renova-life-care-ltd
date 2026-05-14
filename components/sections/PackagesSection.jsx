@@ -6,7 +6,7 @@ import { Section, SectionHeader } from "@/components/common/Section";
 import Button from "@/components/common/Button";
 import { useCart } from "@/context/CartContext";
 import { useState, useEffect } from "react";
-import "./PricingSection.css";
+import "./PackagesSection.css";
 
 /* ═══════════════════════════════════════════════════════════════
    STATIC PLANS DATA
@@ -283,7 +283,7 @@ function PlanCard({ plan }) {
 /* ═══════════════════════════════════════════════════════════════
    SECTION
    ═══════════════════════════════════════════════════════════════ */
-export default function PricingSection() {
+export default function PackagesSection() {
   // ✅ ADD THESE LINES:
   const [toasts, setToasts] = useState([]);
 

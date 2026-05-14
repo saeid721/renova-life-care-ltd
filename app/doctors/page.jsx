@@ -1,6 +1,7 @@
 import { siteConfig } from "@/constants/siteData";
 import DoctorsGrid from "./DoctorsGrid";
 import "@/styles/pages/doctors.css";
+import "@/styles/components/HeroSection.css";
 
 export const metadata = {
   title: `Our Doctors | ${siteConfig.name}`,

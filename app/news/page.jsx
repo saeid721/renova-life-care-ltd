@@ -1,5 +1,6 @@
 import { siteConfig } from "@/constants/siteData";
 import Link from "next/link";
+import "@/styles/components/HeroSection.css";
 
 export const metadata = {
   title: `News | ${siteConfig.name}`,

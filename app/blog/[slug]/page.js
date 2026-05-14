@@ -4,6 +4,7 @@ import { siteConfig, blogs } from "@/constants/siteData";
 import Image from "next/image";
 import BlogShareButtons from "@/components/common/BlogShareButtons";
 import "@/styles/pages/blog-detail.css";
+import "@/styles/components/HeroSection.css";
 
 export async function generateMetadata({ params }) {
   const post = blogs.find((b) => b.slug === params.slug) || blogs[0];

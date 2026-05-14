@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Button from "@/components/common/Button";
 import "@/styles/pages/doctor-profile.css";
+import "@/styles/components/HeroSection.css";
 
 /* ═══════════════════════════════════════════════════════════════
    SVG ICONS

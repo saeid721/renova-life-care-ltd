@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import "@/styles/pages/shop.css";
+import "@/styles/components/HeroSection.css";
 
 /* ── Icons ──────────────────────────────────────────────────── */
 const CartIcon = () => (

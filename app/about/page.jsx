@@ -3,6 +3,7 @@ import { SectionHeader } from "@/components/common/Section";
 import { siteConfig, stats } from "@/constants/siteData";
 import Image from "next/image";
 import "@/styles/pages/about.css";
+import "@/styles/components/HeroSection.css";
 
 export const metadata = {
   title: `About Us | ${siteConfig.name}`,

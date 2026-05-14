@@ -57,6 +57,7 @@ export function CartProvider({ children }) {
   /* ── Totals ── */
   const totalItems = cartItems.reduce((s, i) => s + i.quantity, 0);
   const totalPrice = cartItems.reduce((s, i) => s + i.price * i.quantity, 0);
+  const hasPackage = cartItems.some((i) => i.category === "Health Package");
 
   return (
     <CartContext.Provider
@@ -68,6 +69,7 @@ export function CartProvider({ children }) {
         clearCart,
         totalItems,
         totalPrice,
+        hasPackage,
       }}
     >
       {children}

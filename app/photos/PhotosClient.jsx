@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import "@/styles/pages/photos.css";
+import "@/styles/components/HeroSection.css";
 
 /* ═══════════════════════════════════════════════════════════════
    SVG ICONS (Favorites removed)

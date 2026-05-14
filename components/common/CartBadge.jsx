@@ -19,7 +19,7 @@
    ═══════════════════════════════════════════════════════════════ */
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
-import "./CartBadge.css";
+import "../../styles/components/CartBadge.css";
 
 const CartIcon = ({ size = 15 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none"

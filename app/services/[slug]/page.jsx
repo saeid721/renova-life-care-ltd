@@ -6,6 +6,7 @@ import { doctors } from "@/constants/siteData";
 import ServiceIcon from "@/components/common/ServiceIcon";
 import DoctorsGrid from "./DoctorsGrid";
 import "@/styles/pages/service-details.css";
+import "@/styles/components/HeroSection.css";
 import "./doctor.css";
 
 // Generate static params for SSG/ISR

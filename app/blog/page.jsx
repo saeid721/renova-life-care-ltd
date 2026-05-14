@@ -2,6 +2,7 @@ import Link from "next/link";
 import { siteConfig, blogs } from "@/constants/siteData";
 import Image from "next/image";
 import "@/styles/pages/blog.css";
+import "@/styles/components/HeroSection.css";
 
 export const metadata = {
   title: `Health Blog | ${siteConfig.name}`,

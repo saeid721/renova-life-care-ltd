@@ -1,17 +1,11 @@
+"use client";
 import { siteConfig } from "@/constants/siteData";
 import Link from "next/link";
 import Button from "@/components/common/Button";
+import { useCart } from "@/context/CartContext";
+import { useState } from "react";
 import "@/styles/pages/checkout.css";
-
-export const metadata = {
-  title: `Checkout | ${siteConfig.name}`,
-  description: `Complete your health package booking at ${siteConfig.name}. Secure payment and instant confirmation.`,
-  openGraph: {
-    title: `Checkout | ${siteConfig.name}`,
-    description: `Secure checkout for your health packages.`,
-    url: `${siteConfig.url}/checkout`,
-  },
-};
+import "@/styles/components/HeroSection.css";
 
 /* ═══════════════════════════════════════════════════════════════
    MOCK CHECKOUT DATA
@@ -83,6 +77,8 @@ const CalendarIcon = () => (
 );
 
 export default function CheckoutPage() {
+  const { hasPackage } = useCart();
+  const [paymentMethod, setPaymentMethod] = useState("cash");
   return (
     <>
       {/* Page Hero */}
@@ -205,11 +201,12 @@ export default function CheckoutPage() {
               </fieldset>
 
               {/* Appointment Details */}
-              <fieldset className="checkout-section">
-                <legend className="checkout-section__title">
-                  <CalendarIcon />
-                  Appointment Preferences
-                </legend>
+              {hasPackage && (
+                <fieldset className="checkout-section">
+                  <legend className="checkout-section__title">
+                    <CalendarIcon />
+                    Appointment Preferences
+                  </legend>
 
                 <div className="form-group">
                   <label htmlFor="appointmentDate">Preferred Date *</label>
@@ -253,6 +250,7 @@ export default function CheckoutPage() {
                   />
                 </div>
               </fieldset>
+              )}
 
               {/* Payment Information */}
               <fieldset className="checkout-section">
@@ -262,32 +260,64 @@ export default function CheckoutPage() {
                 </legend>
 
                 <div className="payment-methods">
-                  <label className="payment-option">
-                    <input type="radio" name="payment" value="card" defaultChecked />
-                    <div className="payment-option__content">
-                      <CardIcon />
-                      <span>Credit/Debit Card</span>
-                    </div>
-                  </label>
                   
                   <label className="payment-option">
-                    <input type="radio" name="payment" value="bkash" />
-                    <div className="payment-option__content">
-                      <span className="payment-icon">📱</span>
-                      <span>bKash / Mobile Banking</span>
-                    </div>
-                  </label>
-                  
-                  <label className="payment-option">
-                    <input type="radio" name="payment" value="cash" />
+                    <input type="radio" name="payment" value="cash"
+                      checked={paymentMethod === "cash"}
+                      onChange={() => setPaymentMethod("cash")} />
                     <div className="payment-option__content">
                       <span className="payment-icon">💵</span>
                       <span>Cash on Visit</span>
                     </div>
                   </label>
+                  
+                  <label className="payment-option">
+                    <input type="radio" name="payment" value="bkash"
+                      checked={paymentMethod === "bkash"}
+                      onChange={() => setPaymentMethod("bkash")} />
+                    <div className="payment-option__content">
+                      <span className="payment-icon">📱</span>
+                      <span>bKash / Mobile Banking</span>
+                    </div>
+                  </label>
+
+                  <label className="payment-option">
+                    <input type="radio" name="payment" value="card"
+                      checked={paymentMethod === "card"}
+                      onChange={() => setPaymentMethod("card")} />
+                    <div className="payment-option__content">
+                      <CardIcon />
+                      <span>Credit/Debit Card</span>
+                    </div>
+                  </label>
                 </div>
 
+                {/* bKash / Mobile Banking */}
+                {paymentMethod === "bkash" && (
+                  <div className="card-details">
+                    <div className="form-group">
+                      <label htmlFor="bkashNumber">bKash / Mobile Banking Number *</label>
+                      <input
+                        type="tel"
+                        id="bkashNumber"
+                        className="input-field"
+                        placeholder="+880 1XXX-XXXXXX"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="transactionId">Transaction ID *</label>
+                      <input
+                        type="text"
+                        id="transactionId"
+                        className="input-field"
+                        placeholder="Enter transaction ID after payment"
+                      />
+                    </div>
+                  </div>
+                )}
+                
                 {/* Card Details (shown when card selected) */}
+                {paymentMethod === "card" && (
                 <div className="card-details">
                   <div className="form-group">
                     <label htmlFor="cardNumber">Card Number *</label>
@@ -333,6 +363,7 @@ export default function CheckoutPage() {
                     />
                   </div>
                 </div>
+                )}
 
                 <div className="secure-notice">
                   <LockIcon />

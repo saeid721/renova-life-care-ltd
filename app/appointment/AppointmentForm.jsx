@@ -132,7 +132,7 @@ function Step1({ data, errors, upd, onNext }) {
 
       <div className="appt-card__foot">
         <span className="appt-step-counter">Step 1 of 3</span>
-        <button className="appt-btn appt-btn-primary" onClick={onNext} type="button">
+        <button className="btn btn-primary" onClick={onNext} type="button">
           Continue <IconArrowR size={16} />
         </button>
       </div>
@@ -371,10 +371,10 @@ function Step2({ data, errors, upd, onNext, onBack, minDate }) {
       </div>
 
       <div className="appt-card__foot">
-        <button className="appt-btn appt-btn-ghost" onClick={onBack} type="button">
+        <button className="btn btn-secondary" onClick={onBack} type="button">
           <IconArrowL size={16} /> Back
         </button>
-        <button className="appt-btn appt-btn-primary" onClick={onNext} type="button">
+        <button className="btn btn-primary" onClick={onNext} type="button">
           Continue <IconArrowR size={16} />
         </button>
       </div>
@@ -614,10 +614,10 @@ function Step3({ data, errors, upd, onBack, onSubmit, busy }) {
       </div>
 
       <div className="appt-card__foot">
-        <button type="button" className="appt-btn appt-btn-ghost" onClick={onBack}>
+        <button type="button" className="btn btn-secondary" onClick={onBack}>
           <IconArrowL size={16} /> Edit Details
         </button>
-        <button type="submit" className="appt-btn appt-btn-primary" disabled={busy}>
+        <button type="submit" className="btn btn-primary" disabled={busy}>
           {busy
             ? <><span className="appt-spinner" /> Processing…</>
             : <><IconLock size={15} /> Confirm Booking</>
@@ -669,10 +669,10 @@ function Confirmation({ data, bookingRef, onReset }) {
           </div>
 
           <div className="appt-confirm-actions">
-            <a href="/" className="appt-btn appt-btn-primary">
+            <a href="/" className="btn btn-primary">
               <IconCheck size={16} /> Go to Homepage
             </a>
-            <button className="appt-btn appt-btn-ghost" onClick={onReset} type="button">
+            <button className="btn btn-secondary" onClick={onReset} type="button">
               Book Another Appointment
             </button>
           </div>

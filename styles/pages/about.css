@@ -66,7 +66,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0; /* ✅ FIX LINE 57: Added — prevents icon squishing on small screens */
+  flex-shrink: 0;
 }
 
 .about-badge-icon svg {
@@ -220,7 +220,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-4);
-  padding: var(--space-3) 0; /* ✅ FIX LINE 193: Was var(--space-8) horizontal padding — caused overflow on mobile; changed to 0 */
+  padding: var(--space-3) var(--space-8);
 }
 
 /* Responsive – About */
@@ -317,7 +317,6 @@
   position: relative;
   width: 260px;
   height: 260px;
-  margin: 0 auto; /* ✅ FIX LINE 282: Added — ensures frame is centered on all screen sizes */
 }
 
 @media (min-width: 1024px) {
@@ -492,7 +491,7 @@
 /* Mini stat pills */
 .md-stats-row {
   display: flex;
-  flex-wrap: wrap; /* ✅ FIX LINE 430: Already correct — keeping wrap for mobile overflow */
+  flex-wrap: wrap;
   gap: var(--space-4);
 }
 
@@ -504,8 +503,8 @@
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-lg);
   padding: var(--space-3) var(--space-5);
-  min-width: 0; /* ✅ FIX LINE 443: Was min-width: 100px — caused overflow on very small screens; changed to 0, flex handles sizing */
-  flex: 1 1 80px; /* ✅ FIX LINE 444: Was flex: 1 — added basis so pills shrink gracefully instead of overflowing */
+  min-width: 100px;
+  flex: 1;
 }
 
 .md-stat-val {
@@ -519,7 +518,6 @@
   font-size: var(--font-size-xs);
   color: var(--color-text-muted);
   margin-top: 2px;
-  text-align: center; /* ✅ FIX LINE 457: Added — prevents label misalignment when pill narrows */
 }
 
 /* Responsive – MD message */
@@ -527,7 +525,7 @@
   .md-bg-quote { font-size: 10rem; }
   .md-photo-frame { width: 200px; height: 200px; }
   .md-quote-wrap { padding: var(--space-4) var(--space-4) var(--space-4) var(--space-8); }
-  .md-stat-pill { min-width: 0; padding: var(--space-3) var(--space-4); } /* ✅ FIX LINE 464: min-width: 80px → 0 */
+  .md-stat-pill { min-width: 80px; }
 }
 
 
@@ -545,14 +543,6 @@
 @media (min-width: 640px) {
   .mgmt-grid {
     grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* ✅ FIX: Added new breakpoint (769px–1023px) — was missing; without it the grid jumped from 2-col straight to 5-col */
-@media (min-width: 769px) and (max-width: 1023px) {
-  .mgmt-grid {
-    grid-template-columns: repeat(3, 1fr); /* ✅ FIX LINE 484: Added 3-col for tablet range */
-    gap: var(--space-5);
   }
 }
 
@@ -581,7 +571,6 @@
 
 .mgmt-card:hover {
   box-shadow: 0 12px 32px rgba(66, 138, 38, 0.15);
-  transform: translateY(-4px); /* ✅ FIX LINE 512: Added — transition declared transform but no value was set; card never animated on hover */
 }
 
 /* Top accent bar */
@@ -664,7 +653,6 @@
   padding: 2px var(--space-3);
   margin-top: var(--space-2);
   border: 1px solid var(--color-border-default);
-  word-break: break-word; /* ✅ FIX LINE 581: Added — long specialty strings like "MBA (Healthcare Management)" overflow card on narrow widths */
 }
 
 /* Social strip */
@@ -717,10 +705,5 @@
 
   .mgmt-card {
     padding: var(--space-4) var(--space-3) var(--space-3);
-  }
-
-  .mgmt-specialty-tag {
-    font-size: 0.6rem; /* ✅ FIX LINE 627: Added — reduces tag font on very small cards to prevent overflow */
-    padding: 2px var(--space-2);
   }
 }

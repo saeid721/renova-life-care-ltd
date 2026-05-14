@@ -4,10 +4,6 @@
    All values pulled from global.css :root tokens
    ============================================= */
 
-/* ─────────────────────────────────────────────
-   SECTION 1 — Original About
-───────────────────────────────────────────── */
-
 /* Grid Layout */
 .about-grid {
   display: grid;
@@ -52,6 +48,12 @@
   box-shadow: var(--shadow-cta);
 }
 
+@media (min-width: 768px) {
+  .about-overlay-badge {
+    padding: var(--space-4);
+  }
+}
+
 .about-badge-content {
   display: flex;
   align-items: center;
@@ -66,7 +68,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0; /* ✅ FIX LINE 57: Added — prevents icon squishing on small screens */
 }
 
 .about-badge-icon svg {
@@ -171,7 +172,7 @@
   margin: 0;
 }
 
-/* Stats Grid */
+/* Stats Grid — ✅ Single Row Layout */
 .about-stats-grid {
   display: flex;
   gap: var(--space-4);
@@ -180,7 +181,7 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: var(--space-2);
+  padding-bottom: var(--space-2); /* for scrollbar space */
 }
 
 .about-stat-item {
@@ -208,8 +209,15 @@
   margin-bottom: 0;
 }
 
-.about-stats-grid::-webkit-scrollbar { height: 4px; }
-.about-stats-grid::-webkit-scrollbar-track { background: transparent; }
+/* Hide scrollbar but keep functionality */
+.about-stats-grid::-webkit-scrollbar {
+  height: 4px;
+}
+
+.about-stats-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .about-stats-grid::-webkit-scrollbar-thumb {
   background: var(--color-border-muted);
   border-radius: var(--radius-sm);
@@ -220,507 +228,110 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-4);
-  padding: var(--space-3) 0; /* ✅ FIX LINE 193: Was var(--space-8) horizontal padding — caused overflow on mobile; changed to 0 */
+  padding: var(--space-3) var(--space-8);
 }
 
-/* Responsive – About */
+/* Responsive Adjustments */
 @media (max-width: 640px) {
   .about-buttons {
     flex-direction: column;
     width: 100%;
   }
-  .about-buttons a { justify-content: center; width: 100%; }
-  .about-stat-item { min-width: 100px; padding: var(--space-3); }
-  .about-stat-value { font-size: var(--font-size-lg); }
-  .about-overlay-badge {
-    bottom: var(--space-4); left: var(--space-4);
-    right: var(--space-4); padding: var(--space-3);
+  
+  .about-buttons a {
+    justify-content: center;
+    width: 100%;
   }
-  .about-badge-icon { width: var(--space-10); height: var(--space-10); }
-  .about-badge-icon svg { width: var(--space-5); height: var(--space-5); }
-  .about-badge-title { font-size: var(--font-size-sm); }
-  .about-badge-subtitle { font-size: var(--font-size-xs); }
+  
+  .about-stat-item {
+    min-width: 100px;
+    padding: var(--space-3);
+  }
+  
+  .about-stat-value {
+    font-size: var(--font-size-lg);
+  }
+  
+  .about-overlay-badge {
+    bottom: var(--space-4);
+    left: var(--space-4);
+    right: var(--space-4);
+    padding: var(--space-3);
+  }
+  
+  .about-badge-icon {
+    width: var(--space-10);
+    height: var(--space-10);
+  }
+  
+  .about-badge-icon svg {
+    width: var(--space-5);
+    height: var(--space-5);
+  }
+  
+  .about-badge-title {
+    font-size: var(--font-size-sm);
+  }
+  
+  .about-badge-subtitle {
+    font-size: var(--font-size-xs);
+  }
 }
 
 @media (min-width: 641px) and (max-width: 768px) {
-  .about-stat-value { font-size: var(--font-size-xl); }
+  .about-stat-value {
+    font-size: var(--font-size-xl);
+  }
+  
   .about-floating-card {
     bottom: calc(-1 * var(--space-4));
     right: calc(-1 * var(--space-4));
     padding: var(--space-4);
   }
-  .about-floating-value { font-size: var(--font-size-xl); }
-  .about-feature-item { gap: var(--space-3); }
-  .about-feature-icon { font-size: var(--font-size-lg); }
+  
+  .about-floating-value {
+    font-size: var(--font-size-xl);
+  }
+  
+  .about-feature-item {
+    gap: var(--space-3);
+  }
+  
+  .about-feature-icon {
+    font-size: var(--font-size-lg);
+  }
 }
 
+/* Animation Classes - Using global transitions */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-12));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Print Styles */
 @media print {
-  .about-floating-card { display: none; }
+  .about-floating-card {
+    display: none;
+  }
+  
   .about-overlay-badge {
     background-color: var(--color-white);
     border: var(--border-default);
   }
-  .about-stats-grid { flex-wrap: wrap; overflow-x: visible; }
-  .about-stat-item { flex: 1 1 30%; min-width: auto; }
-}
-
-
-/* ─────────────────────────────────────────────
-   SECTION 2 — MD Message
-───────────────────────────────────────────── */
-
-.md-section-inner {
-  position: relative;
-  overflow: hidden;
-}
-
-/* Giant decorative quote mark */
-.md-bg-quote {
-  position: absolute;
-  top: -2rem;
-  left: -1rem;
-  font-size: 20rem;
-  line-height: 1;
-  font-family: Georgia, serif;
-  color: var(--color-authority);
-  opacity: 0.04;
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-}
-
-/* Two-column grid */
-.md-grid {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  gap: var(--space-12);
-  align-items: center;
-}
-
-@media (min-width: 1024px) {
-  .md-grid {
-    grid-template-columns: 340px 1fr;
-    gap: var(--space-16);
+  
+  .about-stats-grid {
+    flex-wrap: wrap;
+    overflow-x: visible;
   }
-}
-
-/* ── Photo column ── */
-.md-photo-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-6);
-}
-
-.md-photo-frame {
-  position: relative;
-  width: 260px;
-  height: 260px;
-  margin: 0 auto; /* ✅ FIX LINE 282: Added — ensures frame is centered on all screen sizes */
-}
-
-@media (min-width: 1024px) {
-  .md-photo-frame {
-    width: 300px;
-    height: 300px;
-  }
-}
-
-/* Animated rotating ring */
-.md-photo-ring {
-  position: absolute;
-  inset: -8px;
-  border-radius: var(--radius-full);
-  border: 2px dashed var(--color-authority);
-  opacity: 0.4;
-  animation: md-ring-spin 18s linear infinite;
-}
-
-@keyframes md-ring-spin {
-  to { transform: rotate(360deg); }
-}
-
-.md-photo-img-wrap {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: var(--radius-full);
-  overflow: hidden;
-  box-shadow: 0 0 0 6px rgba(66, 138, 38, 0.12), var(--shadow-card);
-}
-
-.md-photo-img {
-  object-fit: cover;
-  object-position: top;
-}
-
-/* Verified badge */
-.md-signature-badge {
-  position: absolute;
-  bottom: 10px;
-  right: -10px;
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  background-color: var(--color-authority);
-  color: #fff;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-full);
-  box-shadow: var(--shadow-cta);
-  white-space: nowrap;
-}
-
-.md-sig-icon {
-  width: 14px;
-  height: 14px;
-  flex-shrink: 0;
-}
-
-/* Identity card below photo */
-.md-identity {
-  text-align: center;
-}
-
-.md-name {
-  font-family: var(--font-heading);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-xl);
-  color: var(--color-text-heading);
-  margin: 0 0 var(--space-1);
-}
-
-.md-role {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-authority);
-  margin: 0 0 var(--space-1);
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-}
-
-.md-specialty {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-  margin: 0;
-}
-
-/* ── Message column ── */
-.md-message-col {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
-}
-
-.md-label-row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.md-label-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: var(--radius-full);
-  background-color: var(--color-authority);
-  flex-shrink: 0;
-}
-
-.md-label-text {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-authority);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.md-heading {
-  font-family: var(--font-heading);
-  font-weight: var(--font-weight-bold);
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  color: var(--color-text-heading);
-  line-height: 1.2;
-  margin: 0;
-}
-
-.md-heading-accent {
-  color: var(--color-authority);
-}
-
-/* Quote block */
-.md-quote-wrap {
-  position: relative;
-  padding: var(--space-6) var(--space-6) var(--space-6) var(--space-10);
-  background: linear-gradient(135deg,
-    rgba(66, 138, 38, 0.05) 0%,
-    rgba(66, 138, 38, 0.02) 100%
-  );
-  border-left: 3px solid var(--color-authority);
-  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-}
-
-.md-open-quote {
-  position: absolute;
-  top: var(--space-4);
-  left: var(--space-3);
-  width: 24px;
-  height: auto;
-  color: var(--color-authority);
-  opacity: 0.5;
-}
-
-.md-message-text {
-  font-size: var(--font-size-base);
-  color: var(--color-text-body, #4a5568);
-  line-height: 1.8;
-  margin: 0;
-  font-style: italic;
-}
-
-.md-divider {
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    var(--color-authority),
-    transparent
-  );
-  opacity: 0.25;
-}
-
-/* Mini stat pills */
-.md-stats-row {
-  display: flex;
-  flex-wrap: wrap; /* ✅ FIX LINE 430: Already correct — keeping wrap for mobile overflow */
-  gap: var(--space-4);
-}
-
-.md-stat-pill {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--color-bg-light);
-  border: 1px solid var(--color-border-default);
-  border-radius: var(--radius-lg);
-  padding: var(--space-3) var(--space-5);
-  min-width: 0; /* ✅ FIX LINE 443: Was min-width: 100px — caused overflow on very small screens; changed to 0, flex handles sizing */
-  flex: 1 1 80px; /* ✅ FIX LINE 444: Was flex: 1 — added basis so pills shrink gracefully instead of overflowing */
-}
-
-.md-stat-val {
-  font-family: var(--font-heading);
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-authority);
-}
-
-.md-stat-lbl {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
-  margin-top: 2px;
-  text-align: center; /* ✅ FIX LINE 457: Added — prevents label misalignment when pill narrows */
-}
-
-/* Responsive – MD message */
-@media (max-width: 768px) {
-  .md-bg-quote { font-size: 10rem; }
-  .md-photo-frame { width: 200px; height: 200px; }
-  .md-quote-wrap { padding: var(--space-4) var(--space-4) var(--space-4) var(--space-8); }
-  .md-stat-pill { min-width: 0; padding: var(--space-3) var(--space-4); } /* ✅ FIX LINE 464: min-width: 80px → 0 */
-}
-
-
-/* ─────────────────────────────────────────────
-   SECTION 3 — Management Team
-───────────────────────────────────────────── */
-
-.mgmt-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-6);
-  margin-top: var(--space-12);
-}
-
-@media (min-width: 640px) {
-  .mgmt-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* ✅ FIX: Added new breakpoint (769px–1023px) — was missing; without it the grid jumped from 2-col straight to 5-col */
-@media (min-width: 769px) and (max-width: 1023px) {
-  .mgmt-grid {
-    grid-template-columns: repeat(3, 1fr); /* ✅ FIX LINE 484: Added 3-col for tablet range */
-    gap: var(--space-5);
-  }
-}
-
-@media (min-width: 1024px) {
-  .mgmt-grid {
-    grid-template-columns: repeat(5, 1fr);
-    gap: var(--space-5);
-  }
-}
-
-/* Card */
-.mgmt-card {
-  position: relative;
-  background-color: var(--color-white);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-card);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: var(--space-6) var(--space-4) var(--space-4);
-  transition: box-shadow 0.25s ease, transform 0.25s ease;
-  border: 1px solid var(--color-border-default);
-}
-
-.mgmt-card:hover {
-  box-shadow: 0 12px 32px rgba(66, 138, 38, 0.15);
-  transform: translateY(-4px); /* ✅ FIX LINE 512: Added — transition declared transform but no value was set; card never animated on hover */
-}
-
-/* Top accent bar */
-.mgmt-card-accent {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(
-    90deg,
-    var(--color-authority) 0%,
-    rgba(66, 138, 38, 0.4) 100%
-  );
-}
-
-/* Avatar */
-.mgmt-avatar-wrap {
-  position: relative;
-  width: 88px;
-  height: 88px;
-  margin-bottom: var(--space-4);
-  flex-shrink: 0;
-}
-
-.mgmt-avatar-ring {
-  position: absolute;
-  inset: -4px;
-  border-radius: var(--radius-full);
-  border: 2px solid rgba(66, 138, 38, 0.25);
-}
-
-.mgmt-avatar-img {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: var(--radius-full);
-  overflow: hidden;
-  background-color: var(--color-bg-light);
-}
-
-.mgmt-img {
-  object-fit: cover;
-  object-position: top;
-}
-
-/* Info */
-.mgmt-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-1);
-  flex: 1;
-}
-
-.mgmt-name {
-  font-family: var(--font-heading);
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-sm);
-  color: var(--color-text-heading);
-  margin: 0;
-  line-height: 1.3;
-}
-
-.mgmt-role {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-authority);
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.mgmt-specialty-tag {
-  display: inline-block;
-  font-size: 0.65rem;
-  color: var(--color-text-muted);
-  background-color: var(--color-bg-light);
-  border-radius: var(--radius-full);
-  padding: 2px var(--space-3);
-  margin-top: var(--space-2);
-  border: 1px solid var(--color-border-default);
-  word-break: break-word; /* ✅ FIX LINE 581: Added — long specialty strings like "MBA (Healthcare Management)" overflow card on narrow widths */
-}
-
-/* Social strip */
-.mgmt-social {
-  display: flex;
-  gap: var(--space-2);
-  margin-top: var(--space-4);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--color-border-default);
-  width: 100%;
-  justify-content: center;
-}
-
-.mgmt-social-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--color-border-default);
-  color: var(--color-text-muted);
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-}
-
-.mgmt-social-btn:hover {
-  background-color: var(--color-authority);
-  color: #fff;
-  border-color: var(--color-authority);
-}
-
-/* Bottom CTA */
-.mgmt-cta {
-  display: flex;
-  justify-content: center;
-  margin-top: var(--space-12);
-}
-
-/* Responsive – Management */
-@media (max-width: 480px) {
-  .mgmt-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-4);
-  }
-
-  .mgmt-avatar-wrap {
-    width: 72px;
-    height: 72px;
-  }
-
-  .mgmt-card {
-    padding: var(--space-4) var(--space-3) var(--space-3);
-  }
-
-  .mgmt-specialty-tag {
-    font-size: 0.6rem; /* ✅ FIX LINE 627: Added — reduces tag font on very small cards to prevent overflow */
-    padding: 2px var(--space-2);
+  
+  .about-stat-item {
+    flex: 1 1 30%;
+    min-width: auto;
   }
 }

@@ -6,10 +6,10 @@ import {
   AppointmentCTASection,
   ShopSection,
   PackagesSection,
-  PortfolioSection,
+  // PortfolioSection,
   TestimonialsSection,
-  PartnersSection,
   BlogSection,
+  PartnersSection,
   EmergencyBanner,
 } from "@/components/sections";
 import { siteConfig } from "@/constants/siteData";
@@ -36,10 +36,10 @@ export default function HomePage() {
       <AppointmentCTASection />
       <ShopSection />
       <PackagesSection />
-      <PortfolioSection />
+      {/* <PortfolioSection /> */}
       <TestimonialsSection />
-      <PartnersSection />
       <BlogSection />
+      <PartnersSection />
       <EmergencyBanner />
     </>
   );

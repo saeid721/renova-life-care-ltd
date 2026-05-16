@@ -395,9 +395,9 @@ export default function Navbar() {
 
           {/* Desktop CTA Buttons */}
           <div className="nav-buttons">
-            <Link href="/PatientPortal/pportal" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+            <Link href="/DoctorPortal/dportal" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
               <ReportIcon size={15} />
-              Report Download
+              Doctor Login
             </Link>
             <Link href="/appointment" className="btn btn-primary">
               <CalendarIcon size={15} />
@@ -560,6 +560,14 @@ export default function Navbar() {
           </nav>
         </div>
       </aside>
+
+      {/* ── Fixed Right Side Button ── */}
+      <div className="fixed-report-wrapper">
+        <Link href="/PatientPortal/pportal" target="_blank" rel="noopener noreferrer" className="fixed-report-btn">
+          <ReportIcon size={15} />
+          Report Download
+        </Link>
+      </div>
     </>
   );
 }

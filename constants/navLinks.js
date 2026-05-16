@@ -70,6 +70,7 @@ export const footerLinks = {
     { label: "Patient Portal", href: "/patient-portal" },
     { label: "FAQ", href: "/faq" },
     { label: "Privacy Policy", href: "/privacy" },
+    { label: "Terms of Service", href: "/terms-of-service" },
     { label: "Complain & Advise", href: "/complain" },
   ],
 };

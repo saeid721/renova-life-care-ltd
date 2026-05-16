@@ -1027,3 +1027,49 @@
     transition: none;
   }
 }
+
+/* ── Fixed Right Side Report Button ── */
+.fixed-report-wrapper {
+  position: fixed;
+  top: 30%;
+  right: 0;
+  z-index: 1000;
+}
+
+.fixed-report-btn {
+  position: absolute;
+  bottom: 0;
+  right: -1px;
+  transform-origin: bottom right;
+  transform: rotate(-90deg) translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--gradient-authority);
+  color: var(--color-white);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  box-shadow: 0px -4px 12px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fixed-report-btn:hover {
+  background: var(--gradient-primary);
+  box-shadow: 0px -6px 16px rgba(0, 0, 0, 0.2);
+  color: var(--color-white);
+}
+
+.fixed-report-btn svg {
+  transform: rotate(90deg);
+}
+
+@media (max-width: 1024px) {
+  .fixed-report-wrapper {
+    display: none;
+  }
+}

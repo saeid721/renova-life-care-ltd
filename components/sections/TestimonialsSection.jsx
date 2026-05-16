@@ -3,7 +3,7 @@ import { Section, SectionHeader } from "@/components/common/Section";
 
 export default function TestimonialsSection() {
   return (
-    <Section id="testimonials" variant="alternate">
+    <Section id="testimonials">
       <SectionHeader
         label="Patient Stories"
         title="Real Patients, <span class='text-primary'>Real Transformations</span>"

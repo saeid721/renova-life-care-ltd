@@ -35,7 +35,7 @@ export default function PatientPortalForm() {
       {/* Background Image */}
       <div className="patient-portal__background">
         <Image
-          src="/images/bg-login.jpg"
+          src="/images/pbg-login.jpg"
           alt="Compassionate care at Renova Life Care"
           fill
           className="object-cover"

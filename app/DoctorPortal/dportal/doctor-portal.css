@@ -1,0 +1,295 @@
+/* ═══════════════════════════════════════════════════════════════
+   DOCTOR PORTAL STYLES — Renova Life Care Ltd.
+   Uses design tokens from global.css
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Standalone page wrapper */
+.doctor-portal-standalone {
+  min-height: 100vh;
+  background: var(--color-white);
+}
+
+/* Error message styling */
+.doctor-portal__error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-4);
+  text-align: center;
+}
+
+/* Security notice */
+.doctor-portal__security-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border-muted);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+.doctor-portal__security-notice svg {
+  color: var(--color-status-success);
+  flex-shrink: 0;
+}
+
+/* Ensure full viewport height */
+.doctor-portal-container {
+  min-height: 100vh;
+}
+
+/* Prevent scroll on body when portal is active */
+:has(.doctor-portal-container) {
+  overflow: hidden;
+}
+
+/* ─── 📦 Container & Layout ───────────────────────────────────── */
+.doctor-portal-page {
+  min-height: 100vh;
+}
+
+.doctor-portal-container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  overflow: hidden;
+}
+
+.doctor-portal__background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.doctor-portal__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.doctor-portal__card {
+  position: relative;
+  z-index: 2;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  width: 100%;
+  max-width: 480px;
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── 🏷️ Logo Section ────────────────────────────────────────── */
+.doctor-portal__logo-section {
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.doctor-portal__logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-2);
+}
+
+.doctor-portal__logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ───  Header & Typography ─────────────────────────────────── */
+.doctor-portal__header {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.doctor-portal__title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-heading);
+  margin-bottom: var(--space-2);
+}
+
+.doctor-portal__subtitle {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-regular);
+}
+
+/* ─── 📋 Form Styles ─────────────────────────────────────────── */
+.doctor-portal__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.doctor-portal__input-group {
+  position: relative;
+}
+
+.doctor-portal__input {
+  width: 100%;
+  padding: var(--space-4) var(--space-12);
+  border: var(--border-default);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  background: var(--color-white);
+  transition: var(--transition-fast);
+}
+
+.doctor-portal__input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-border-focus);
+}
+
+.doctor-portal__input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.doctor-portal__icon {
+  position: absolute;
+  right: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+/* ─── 🔘 Button Styles ───────────────────────────────────────── */
+.doctor-portal__buttons {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.btn-doctor-portal {
+  flex: 1;
+  min-width: 100px;
+  padding: var(--space-3) var(--space-5);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn-signin {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.btn-signin:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-reset {
+  background: #dc2626;
+  color: var(--color-white);
+}
+
+.btn-reset:hover {
+  background: #b91c1c;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-forgot {
+  background: #f59e0b;
+  color: var(--color-white);
+}
+
+.btn-forgot:hover {
+  background: #d97706;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ─── 🔗 Help Link ───────────────────────────────────────────── */
+.doctor-portal__help {
+  text-align: center;
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border-muted);
+}
+
+.doctor-portal__help-link {
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition: var(--transition-fast);
+}
+
+.doctor-portal__help-link:hover {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+}
+
+/* ───  Responsive Styles ───────────────────────────────────── */
+@media (max-width: 640px) {
+  .doctor-portal__card {
+    padding: var(--space-6);
+  }
+
+  .doctor-portal__title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .doctor-portal__buttons {
+    flex-direction: column;
+  }
+
+  .btn-doctor-portal {
+    width: 100%;
+  }
+
+  .doctor-portal__logos {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+}
+
+/* ─── ♿ Accessibility ───────────────────────────────────────── */
+.doctor-portal__input:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.btn-doctor-portal:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}

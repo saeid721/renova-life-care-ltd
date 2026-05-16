@@ -76,8 +76,8 @@ export const footerLinks = {
 };
 
 export const loginLinks = [
-  { label: "Sign Up", href: "/signup" },
-  { label: "Signin", href: "/signin" },
+  { label: "Sign Up", href: "/AuthScreen?tab=signup" },
+  { label: "Signin", href: "/AuthScreen?tab=signin" },
 ];
 
 export const socialLinks = [

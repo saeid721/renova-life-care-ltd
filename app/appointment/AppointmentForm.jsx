@@ -23,6 +23,9 @@ const IconArrowR   = ({ size = 18 }) => <svg width={size} height={size} viewBox=
 const IconArrowL   = ({ size = 18 }) => <svg width={size} height={size} viewBox="0 0 24 24" {...SVG_PROPS} strokeWidth="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>;
 const IconLock     = ({ size = 16 }) => <svg width={size} height={size} viewBox="0 0 24 24" {...SVG_PROPS}><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>;
 const IconInfo     = ({ size = 16 }) => <svg width={size} height={size} viewBox="0 0 24 24" {...SVG_PROPS}><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>;
+const IconDownload = ({ size = 16 }) => <svg width={size} height={size} viewBox="0 0 24 24" {...SVG_PROPS} strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>;
+const IconSearch   = ({ size = 16 }) => <svg width={size} height={size} viewBox="0 0 24 24" {...SVG_PROPS} strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>;
+const IconX        = ({ size = 16 }) => <svg width={size} height={size} viewBox="0 0 24 24" {...SVG_PROPS} strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>;
 
 /* ═══════════════════════════════════════════════════════════════
    FIELD WRAPPER — label + icon + error message
@@ -42,6 +45,240 @@ function Field({ label, error, icon: IconComponent, children }) {
       }
       {error && <span className="appt-err-msg">{error}</span>}
     </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MODAL — generic overlay used for Terms / Privacy popups
+   ═══════════════════════════════════════════════════════════════ */
+function Modal({ open, onClose, title, children }) {
+  if (!open) return null;
+  return (
+    <div className="appt-modal-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-label={title}>
+      <div className="appt-modal" onClick={e => e.stopPropagation()}>
+        <div className="appt-modal__head">
+          <h3 className="appt-modal__title">{title}</h3>
+          <button className="appt-modal__close" onClick={onClose} aria-label="Close"><IconX size={18} /></button>
+        </div>
+        <div className="appt-modal__body">{children}</div>
+        <div className="appt-modal__foot">
+          <button className="btn btn-primary" onClick={onClose}>I Understand</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TERMS / PRIVACY CONTENT (inline — no external link needed)
+   ═══════════════════════════════════════════════════════════════ */
+const TERMS_CONTENT = (
+  <div className="appt-legal-content">
+    <h4>1. Appointment Booking</h4>
+    <p>By booking an appointment you agree to attend at the scheduled time or cancel at least 24 hours in advance. Repeated no-shows may result in restricted booking access.</p>
+    <h4>2. Medical Information</h4>
+    <p>Information you provide is used solely to facilitate your healthcare appointment. It is shared only with the treating physician and necessary clinical staff.</p>
+    <h4>3. Payment</h4>
+    <p>For online payments, charges are processed securely. Refunds for cancellations made 24+ hours before the appointment will be processed within 5-7 business days.</p>
+    <h4>4. Limitation of Liability</h4>
+    <p>The clinic is not liable for indirect or consequential damages arising from scheduling errors or service delays beyond our reasonable control.</p>
+    <h4>5. Governing Law</h4>
+    <p>These terms are governed by the laws of Bangladesh. Any disputes shall be subject to the jurisdiction of courts in Dhaka.</p>
+  </div>
+);
+
+const PRIVACY_CONTENT = (
+  <div className="appt-legal-content">
+    <h4>1. Data We Collect</h4>
+    <p>We collect your name, contact details, date of birth, gender, and medical history as provided during booking.</p>
+    <h4>2. How We Use It</h4>
+    <p>Your data is used to confirm your appointment, contact you with reminders, and provide clinical care. We do not sell or share your data with third parties.</p>
+    <h4>3. Data Security</h4>
+    <p>All data is encrypted in transit (TLS 1.3) and at rest (AES-256). Access is restricted to authorised clinical and administrative staff only.</p>
+    <h4>4. Retention</h4>
+    <p>Medical records are retained for a minimum of 10 years as required by Bangladesh health regulations. You may request deletion of non-clinical booking data at any time.</p>
+    <h4>5. Your Rights</h4>
+    <p>You have the right to access, correct, or delete your personal data. Contact our data protection officer at privacy@clinic.com.</p>
+  </div>
+);
+
+/* ═══════════════════════════════════════════════════════════════
+   DOCTOR DROPDOWN — searchable select replacing radio list
+   ═══════════════════════════════════════════════════════════════ */
+function DoctorDropdown({ doctors, value, onChange }) {
+  const [open, setOpen]       = useState(false);
+  const [query, setQuery]     = useState("");
+
+  const filtered = doctors.filter(d =>
+    d.name.toLowerCase().includes(query.toLowerCase()) ||
+    d.title.toLowerCase().includes(query.toLowerCase())
+  );
+  const selected = doctors.find(d => d.id === value);
+
+  return (
+    <div className="appt-doc-dd" style={{ position: "relative" }}>
+      {/* Trigger */}
+      <button
+        type="button"
+        className={`appt-doc-dd__trigger${open ? " open" : ""}`}
+        onClick={() => setOpen(o => !o)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+      >
+        {selected
+          ? <><div className="appt-doc-avatar" style={{ width:28, height:28, fontSize:".65rem" }}>{selected.avatar}</div><span>{selected.name}</span><span className="appt-doc-dd__meta">{selected.title}</span></>
+          : <span className="appt-doc-dd__placeholder">Search & select a doctor…</span>
+        }
+        <span className="appt-doc-dd__chevron" style={{ marginLeft:"auto", color:"var(--appt-ink3)" }}>▾</span>
+      </button>
+
+      {/* Dropdown panel */}
+      {open && (
+        <div className="appt-doc-dd__panel" role="listbox">
+          {/* Search */}
+          <div className="appt-doc-dd__search-wrap">
+            <IconSearch size={14} />
+            <input
+              className="appt-doc-dd__search"
+              type="text"
+              placeholder="Search by name or specialty…"
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+              autoFocus
+            />
+            {query && (
+              <button type="button" className="appt-doc-dd__clear" onClick={() => setQuery("")}><IconX size={12} /></button>
+            )}
+          </div>
+
+          {/* List */}
+          <div className="appt-doc-dd__list">
+            {filtered.length === 0 && (
+              <div className="appt-doc-dd__empty">No doctors found</div>
+            )}
+            {filtered.map(doc => (
+              <div
+                key={doc.id}
+                role="option"
+                aria-selected={value === doc.id}
+                className={`appt-doc-dd__item${value === doc.id ? " sel" : ""}`}
+                onClick={() => { onChange(doc.id); setOpen(false); setQuery(""); }}
+              >
+                <div className="appt-doc-avatar" style={{ width:36, height:36, fontSize:".7rem", flexShrink:0 }}>{doc.avatar}</div>
+                <div>
+                  <div className="appt-doc-name">{doc.name}</div>
+                  <div className="appt-doc-meta">{doc.title} · {doc.exp} experience</div>
+                </div>
+                {value === doc.id && <span style={{ marginLeft:"auto", color:"var(--appt-teal)", fontWeight:700 }}>✓</span>}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   INVOICE — printable/downloadable on confirmation
+   ═══════════════════════════════════════════════════════════════ */
+function InvoicePrint({ data, bookingRef }) {
+  const dept   = DEPARTMENTS.find(d => d.id === data.dept);
+  const doctors = data.dept ? (DOCTORS[data.dept] || []) : [];
+  const doctor  = doctors.find(d => d.id === data.doctor);
+  const branch  = BRANCHES.find(b => b.id === data.branch);
+
+  const FEE = { cardiology:2000, orthopedics:1800, general:800, pediatrics:900,
+                dental:1200, neurology:2500, dermatology:1500, "eye-care":1400 };
+  const consultFee  = FEE[data.dept] || 1000;
+  const serviceFee  = data.mode === "online" ? 100 : 0;
+  const total       = consultFee + serviceFee;
+  const isOnlinePay = data.paymentMethod === "bkash" || data.paymentMethod === "card";
+  const today       = new Date().toLocaleDateString("en-GB", { day:"2-digit", month:"short", year:"numeric" });
+
+  const handlePrint = () => {
+    const el = document.getElementById("appt-invoice");
+    if (!el) return;
+    const w = window.open("", "_blank");
+    w.document.write(`<!DOCTYPE html><html><head><title>Invoice ${bookingRef}</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',Arial,sans-serif;color:#0d1b2a;background:#fff;padding:32px}
+  .inv{max-width:680px;margin:0 auto}
+  .inv-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;padding-bottom:20px;border-bottom:2px solid #1E6FAF}
+  .inv-logo{font-size:1.4rem;font-weight:800;color:#1E6FAF}
+  .inv-logo span{display:block;font-size:.75rem;font-weight:400;color:#6b7b8d;margin-top:2px}
+  .inv-ref{text-align:right}
+  .inv-ref h2{font-size:1rem;color:#1E6FAF;font-weight:700;letter-spacing:.08em}
+  .inv-ref p{font-size:.8rem;color:#6b7b8d;margin-top:4px}
+  .inv-status{display:inline-block;background:#e0f4f1;color:#1E6FAF;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:50px;margin-top:6px;text-transform:uppercase;letter-spacing:.06em}
+  .inv-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:24px 0}
+  .inv-box{background:#f7f6f2;border-radius:10px;padding:16px}
+  .inv-box h4{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6b7b8d;margin-bottom:10px}
+  .inv-box p{font-size:.85rem;line-height:1.7;color:#3a4a5c}
+  .inv-box strong{color:#0d1b2a}
+  table{width:100%;border-collapse:collapse;margin:20px 0}
+  th{background:#1E6FAF;color:#fff;font-size:.78rem;font-weight:600;text-align:left;padding:10px 14px}
+  td{padding:10px 14px;font-size:.85rem;border-bottom:1px solid #e2ddd8}
+  tr:last-child td{border-bottom:none}
+  .amt{text-align:right}
+  .total-row td{font-weight:700;font-size:.95rem;background:#f0faf8;color:#1E6FAF}
+  .inv-foot{margin-top:28px;padding-top:16px;border-top:1px solid #e2ddd8;font-size:.75rem;color:#6b7b8d;text-align:center;line-height:1.8}
+  @media print{@page{size:A4 portrait;margin:18mm 16mm 18mm 16mm}html,body{width:210mm;margin:0;padding:0;background:#fff}.inv{max-width:100%;padding:0}body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style></head><body>
+<div class="inv">
+  <div class="inv-head">
+    <div class="inv-logo">🏥 Renova Life Care Ltd</div>
+    <div class="inv-ref">
+      <h2>INVOICE</h2>
+      <p>Ref: ${bookingRef}</p>
+      <p>Date: ${today}</p>
+      <span class="inv-status">Confirmed</span>
+    </div>
+  </div>
+  <div class="inv-grid">
+    <div class="inv-box"><h4>Patient</h4>
+      <p><strong>${data.fullName}</strong><br>${data.email}<br>${data.phone}<br>DOB: ${data.dob}</p>
+    </div>
+    <div class="inv-box"><h4>Appointment</h4>
+      <p><strong>${dept?.name || ""} Dept.</strong><br>${doctor?.name || "To be assigned"}<br>${data.mode === "online" ? "🌐 Online Consultation" : branch?.name || ""}<br>${data.date} at ${data.slot}</p>
+    </div>
+  </div>
+  <table>
+    <thead><tr><th>Description</th><th class="amt">Amount (BDT)</th></tr></thead>
+    <tbody>
+      <tr><td>Consultation Fee — ${dept?.name || ""} (${doctor?.name || ""})</td><td class="amt">${consultFee.toLocaleString()}.00</td></tr>
+      ${data.mode === "online" ? `<tr><td>Online Service Fee</td><td class="amt">${serviceFee}.00</td></tr>` : ""}
+      <tr class="total-row"><td><strong>Total Payable</strong></td><td class="amt"><strong>${total.toLocaleString()}.00</strong></td></tr>
+    </tbody>
+  </table>
+  <div class="inv-box"><h4>Payment</h4>
+    <p>Method: <strong>${data.paymentMethod === "bkash" ? "bKash / Mobile Banking" : data.paymentMethod === "card" ? "Credit / Debit Card" : "Cash on Visit"}</strong>
+    ${isOnlinePay ? `<br>Status: <strong style="color:#1E6FAF">Paid</strong>` : `<br>Status: <strong style="color:#c94040">Due on Visit</strong>`}</p>
+  </div>
+  <div class="inv-foot">
+    Thank you for choosing Renova Life Care Ltd. For queries call +880 1700-000000 or email appointments@@renovalifecare.com<br>
+    This is a computer-generated invoice and does not require a physical signature.
+  </div>
+</div>
+</body></html>`);
+    w.document.close();
+    w.focus();
+    setTimeout(() => { w.print(); }, 400);
+  };
+
+  return (
+    <>
+      <div id="appt-invoice" style={{ display: "none" }} />
+      <button
+        type="button"
+        className="appt-btn appt-btn-ghost appt-btn--invoice"
+        onClick={handlePrint}
+        style={{ width:"100%", marginTop:10 }}
+      >
+        <IconDownload size={16} /> Download &amp; Print Invoice
+      </button>
+    </>
   );
 }
 
@@ -196,7 +433,7 @@ function Step2({ data, errors, upd, onNext, onBack, minDate }) {
         <Field label="1. Consultation Type *" error={errors.mode}>
           <div className="appt-mode-group">
             {[
-              { val:"online",  icon:"💻", label:"Online",  sub:"Video / teleconsultation" },
+              { val:"online",  icon:"💻", label:"Online",  sub:"Video / teleconsult" },
               { val:"offline", icon:"🏥", label:"In-Person", sub:"Visit our branch" },
             ].map(({ val, icon, label, sub }) => (
               <button
@@ -213,8 +450,10 @@ function Step2({ data, errors, upd, onNext, onBack, minDate }) {
                 aria-pressed={data.mode === val}
               >
                 <span className="appt-mode-icon">{icon}</span>
-                <span className="appt-mode-label">{label}</span>
-                <span className="appt-mode-sub">{sub}</span>
+                <div>
+                  <span className="appt-mode-label">{label}</span>
+                  <span className="appt-mode-sub">{sub}</span>
+                </div>
               </button>
             ))}
           </div>
@@ -223,12 +462,12 @@ function Step2({ data, errors, upd, onNext, onBack, minDate }) {
         {/* ── 2. Department ───────────────────────────────────── */}
         {data.mode && (
           <Field label={`${isOnline ? "2" : "2"}. Select Department *`} error={errors.dept}>
-            <div className="appt-dept-grid">
+            <div className="appt-dept-chips">
               {DEPARTMENTS.map(dept => (
                 <button
                   key={dept.id}
                   type="button"
-                  className={`appt-dept-card${data.dept === dept.id ? " sel" : ""}`}
+                  className={`appt-dept-chip${data.dept === dept.id ? " sel" : ""}`}
                   onClick={() => {
                     upd("dept",   dept.id);
                     upd("doctor", "");
@@ -237,9 +476,8 @@ function Step2({ data, errors, upd, onNext, onBack, minDate }) {
                   }}
                   aria-pressed={data.dept === dept.id}
                 >
-                  <span className="appt-dept-card__icon">{dept.icon}</span>
-                  <span className="appt-dept-card__name">{dept.name}</span>
-                  <span className="appt-dept-card__wait">{dept.wait}</span>
+                  <span className="appt-dept-chip__icon">{dept.icon}</span>
+                  <span className="appt-dept-chip__name">{dept.name}</span>
                 </button>
               ))}
             </div>
@@ -274,32 +512,11 @@ function Step2({ data, errors, upd, onNext, onBack, minDate }) {
             label={`${isOnline ? "3" : "4"}. Select Doctor *`}
             error={errors.doctor}
           >
-            {/* Scrollable when >10 doctors */}
-            <div className={`appt-doc-list${doctors.length > 10 ? " appt-doc-list--scroll" : ""}`}>
-              {doctors.map(doc => (
-                <label
-                  key={doc.id}
-                  className={`appt-doc-card${data.doctor === doc.id ? " sel" : ""}`}
-                >
-                  <input
-                    type="radio"
-                    name="doctor"
-                    value={doc.id}
-                    checked={data.doctor === doc.id}
-                    onChange={e => {
-                      upd("doctor", e.target.value);
-                      upd("date",   "");
-                      upd("slot",   "");
-                    }}
-                  />
-                  <div className="appt-doc-avatar">{doc.avatar}</div>
-                  <div>
-                    <div className="appt-doc-name">{doc.name}</div>
-                    <div className="appt-doc-meta">{doc.title} · {doc.exp} experience</div>
-                  </div>
-                </label>
-              ))}
-            </div>
+            <DoctorDropdown
+              doctors={doctors}
+              value={data.doctor}
+              onChange={id => { upd("doctor", id); upd("date", ""); upd("slot", ""); }}
+            />
           </Field>
         )}
 
@@ -478,7 +695,7 @@ function Step3({ data, errors, upd, onBack, onSubmit, busy }) {
           <div className="appt-pay-subform">
             <div className="appt-pay-subform__head">📱 bKash / Mobile Banking Details</div>
             <div className="appt-pay-subform__info">
-              Send payment to: <strong>01712-345678</strong> (bKash Personal)
+              Send payment to: <strong>+880 1700-000000</strong> (bKash Merchant)
             </div>
             <Field label="Your bKash / Mobile Number *" error={errors.bkashNumber}>
               <input
@@ -592,21 +809,28 @@ function Step3({ data, errors, upd, onBack, onSubmit, busy }) {
           />
         </Field>
 
-        {/* Consent */}
-        <label className={`appt-check-wrap${errors.consent ? " err" : ""}`}>
-          <input
-            type="checkbox"
-            checked={data.consent}
-            onChange={e => upd("consent", e.target.checked)}
-          />
-          <span>
-            I agree to the{" "}
-            <a href="/terms" onClick={e => e.stopPropagation()}>Terms of Service</a> and{" "}
-            <a href="/privacy" onClick={e => e.stopPropagation()}>Privacy Policy</a>.
-            I consent to my information being used to facilitate this appointment.
-          </span>
-        </label>
-        {errors.consent && <span className="appt-err-msg">{errors.consent}</span>}
+        {/* Consent + modal state */}
+        {(() => {
+          const [termsOpen, setTermsOpen]     = useState(false);
+          const [privacyOpen, setPrivacyOpen] = useState(false);
+          return (
+            <>
+              <Modal open={termsOpen}   onClose={() => setTermsOpen(false)}   title="Terms of Service">{TERMS_CONTENT}</Modal>
+              <Modal open={privacyOpen} onClose={() => setPrivacyOpen(false)} title="Privacy Policy">{PRIVACY_CONTENT}</Modal>
+              <label className={`appt-check-wrap${errors.consent ? " err" : ""}`}>
+                <input type="checkbox" checked={data.consent} onChange={e => upd("consent", e.target.checked)} />
+                <span>
+                  I agree to the{" "}
+                  <button type="button" className="appt-link-btn" onClick={e => { e.preventDefault(); setTermsOpen(true); }}>Terms of Service</button>
+                  {" "}and{" "}
+                  <button type="button" className="appt-link-btn" onClick={e => { e.preventDefault(); setPrivacyOpen(false); setPrivacyOpen(true); }}>Privacy Policy</button>.
+                  I consent to my information being used to facilitate this appointment.
+                </span>
+              </label>
+              {errors.consent && <span className="appt-err-msg">{errors.consent}</span>}
+            </>
+          );
+        })()}
 
         {errors.submit && (
           <div className="appt-submit-err">⚠️ {errors.submit}</div>
@@ -654,9 +878,9 @@ function Confirmation({ data, bookingRef, onReset }) {
     <div className="appt-confirm-wrap">
       <div className="appt-confirm-card appt-card">
         <div className="appt-card__body">
-          <div className="appt-confirm-icon">✅</div>
+          {/* <div className="appt-confirm-icon">✅</div> */}
           <h2 className="appt-confirm-title">Booking Confirmed!</h2>
-          <p style={{ color: "var(--appt-ink3)", marginBottom: 8 }}>Your reference number</p>
+          <p style={{ color: "var(--appt-ink3)"}}>Your reference number</p>
           <div className="appt-confirm-ref">{bookingRef}</div>
 
           <div className="appt-confirm-rows">
@@ -668,14 +892,16 @@ function Confirmation({ data, bookingRef, onReset }) {
             ))}
           </div>
 
-          <div className="appt-confirm-actions">
-            <a href="/" className="btn btn-primary">
-              <IconCheck size={16} /> Go to Homepage
-            </a>
+          <div className="appt-confirm-actions appt-confirm-actions--row">
             <button className="btn btn-secondary" onClick={onReset} type="button">
               Book Another Appointment
             </button>
+            <a href="/" className="btn btn-primary">
+              <IconCheck size={16} /> Go to Homepage
+            </a>
           </div>
+
+          <InvoicePrint data={data} bookingRef={bookingRef} />
 
           <div className="appt-confirm-note">
             <span style={{ fontSize: 18, flexShrink: 0, marginTop: 1 }}>💡</span>

@@ -72,7 +72,7 @@ export default function AppointmentPage() {
 
       {/* ── FOOTER TRUST BAR ────────────────────────────────────── */}
       <footer className="page-section page-section--green appt-trust-bar" aria-label="Trust indicators">
-        Trusted by <strong>50,000+ patients</strong> across Bangladesh
+        Trusted by <strong>50,000+ patients </strong> across Bangladesh
         &nbsp;·&nbsp; SSL Secured &nbsp;·&nbsp; HIPAA Compliant
       </footer>
 

@@ -4,25 +4,11 @@
    Depends on: global.css (Single Source of Truth for colors, fonts, buttons)
    ═══════════════════════════════════════════════════════════════ */
 
-/* ─── Page-level tokens (ONLY appointment-specific extensions) ── */
-:root {
-  /* Fallback colors — ONLY use if global tokens don't cover the need */
-  --appt-teal-fallback: #0a7c6e;      /* Use --color-primary first */
-  --appt-teal-light: rgba(30, 111, 175, 0.1);   /* --color-primary @ 10% */
-  --appt-teal-lighter: rgba(30, 111, 175, 0.05); /* --color-primary @ 5% */
-  --appt-err: var(--color-status-error);
-  --appt-radius-sm: var(--radius-sm);
-  --appt-radius-md: var(--radius-md);
-  --appt-radius-lg: var(--radius-lg);
-  --appt-radius-xl: var(--radius-xl);
-  --appt-shadow: var(--shadow-card);
-}
-
 /* ═══════════════════════════════════════════════════════════════
    HERO
    ═══════════════════════════════════════════════════════════════ */
 .appt-hero {
-  background: var(--color-bg-dark); /* or var(--gradient-hero) */
+  background: var(--color-bg-dark);
   background: var(--gradient-hero);
   color: #fff;
   padding: var(--space-section) 24px var(--space-section-lg);
@@ -78,7 +64,7 @@
 
 .appt-hero__title {
   font-family: var(--font-heading);
-  font-size: clamp(2.2rem, 5vw, 3.8rem); /* Use global h1 clamp */
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
   font-weight: var(--font-weight-bold);
   line-height: 1.2;
   margin-bottom: var(--space-4);
@@ -256,7 +242,7 @@
   width: 48px;
   height: 48px;
   border-radius: var(--radius-md);
-  background: var(--appt-teal-light);
+  background: rgba(30, 111, 175, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -357,8 +343,6 @@
 .appt-inp,
 .appt-sel,
 .appt-ta {
-  composes: input-field from global; /* If your build supports CSS Modules */
-  /* Fallback if composes not supported: */
   width: 100%;
   padding: 11px 14px 11px 40px;
   border: var(--border-default);
@@ -447,12 +431,12 @@
 
 .appt-radio-pill:hover { 
   border-color: var(--color-primary); 
-  background: var(--appt-teal-light); 
+  background: rgba(30, 111, 175, 0.1); 
 }
 
 .appt-radio-pill.sel {
   border-color: var(--color-primary);
-  background: var(--appt-teal-light);
+  background: rgba(30, 111, 175, 0.1);
   font-weight: var(--font-weight-semibold);
   color: var(--color-primary);
 }
@@ -487,12 +471,12 @@
 
 .appt-dept-chip:hover {
   border-color: var(--color-primary);
-  background: var(--appt-teal-light);
+  background: rgba(30, 111, 175, 0.1);
 }
 
 .appt-dept-chip.sel {
   border-color: var(--color-primary);
-  background: var(--appt-teal-light);
+  background: rgba(30, 111, 175, 0.1);
   box-shadow: 0 0 0 3px rgba(30, 111, 175, 0.1);
 }
 
@@ -526,12 +510,12 @@
 
 .appt-doc-card:hover { 
   border-color: var(--color-primary); 
-  background: var(--appt-teal-light); 
+  background: rgba(30, 111, 175, 0.1); 
 }
 
 .appt-doc-card.sel {
   border-color: var(--color-primary);
-  background: var(--appt-teal-light);
+  background: rgba(30, 111, 175, 0.1);
   box-shadow: 0 0 0 3px rgba(30, 111, 175, 0.1);
 }
 
@@ -572,7 +556,7 @@
 /* ─── No-doctor fallback ─────────────────────────────────────── */
 .appt-doc-fallback {
   padding: var(--space-4);
-  background: var(--appt-teal-light);
+  background: rgba(30, 111, 175, 0.1);
   border-radius: var(--radius-md);
   border: 1px solid rgba(30, 111, 175, 0.15);
   font-size: var(--font-size-sm);
@@ -605,7 +589,7 @@
 
 .appt-slot-btn:hover:not(.booked) {
   border-color: var(--color-primary);
-  background: var(--appt-teal-light);
+  background: rgba(30, 111, 175, 0.1);
 }
 
 .appt-slot-btn.active {
@@ -652,7 +636,7 @@
 .appt-summ-card {
   padding: var(--space-5);
   border-radius: var(--radius-lg);
-  background: var(--appt-teal-light);
+  background: rgba(30, 111, 175, 0.1);
   border: 1px solid rgba(30, 111, 175, 0.15);
   border-left: 4px solid var(--color-primary);
 }
@@ -735,8 +719,6 @@
 
 /* Fallback: If you MUST keep .appt-btn wrapper (not recommended) */
 .appt-btn {
-  composes: btn from global; /* If CSS Modules supported */
-  /* Fallback styles below */
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -827,7 +809,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--appt-teal-light);
+  background: rgba(30, 111, 175, 0.1);
   border: 1.5px solid rgba(30, 111, 175, 0.25);
   display: flex;
   align-items: center;
@@ -854,7 +836,7 @@
 }
 
 .appt-contact-link:hover { 
-  background: var(--appt-teal-light); 
+  background: rgba(30, 111, 175, 0.1); 
   color: var(--color-primary); 
 }
 
@@ -890,7 +872,7 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: var(--appt-teal-light);
+  background: rgba(30, 111, 175, 0.1);
   border: 3px solid rgba(30, 111, 175, 0.2);
   display: flex;
   align-items: center;
@@ -913,7 +895,7 @@
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.06em;
   color: var(--color-primary);
-  background: var(--appt-teal-light);
+  background: rgba(30, 111, 175, 0.1);
   padding: var(--space-1) var(--space-6);
   border-radius: var(--radius-full);
   display: inline-block;
@@ -949,7 +931,7 @@
   margin-bottom: var(--space-5);
 }
 
-.appt-confirm-actions .btn { width: 100%; } /* Use global .btn */
+.appt-confirm-actions .btn { width: 100%; }
 
 .appt-confirm-note {
   display: flex;
@@ -988,8 +970,6 @@
 /* ═══════════════════════════════════════════════════════════════
    ACCESSIBILITY — Uses global :focus-visible
    ═══════════════════════════════════════════════════════════════ */
-/* Global.css already handles :focus-visible, no override needed */
-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -1055,7 +1035,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .appt-mode-card.sel {
   border-color: var(--color-primary);
-  background: var(--appt-teal-light);
+  background: rgba(30, 111, 175, 0.1);
   box-shadow: 0 0 0 3px rgba(30, 111, 175, 0.12);
 }
 
@@ -1119,12 +1099,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .appt-pay-option:hover {
   border-color: var(--color-primary);
-  background: var(--appt-teal-light);
+  background: rgba(30, 111, 175, 0.1);
 }
 
 .appt-pay-option.sel {
   border-color: var(--color-primary);
-  background: var(--appt-teal-light);
+  background: rgba(30, 111, 175, 0.1);
   box-shadow: 0 0 0 3px rgba(30, 111, 175, 0.1);
 }
 
@@ -1151,7 +1131,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
    PAYMENT SUB-FORMS
    ═══════════════════════════════════════════════════════════════ */
 .appt-pay-subform {
-  background: var(--appt-teal-light);
+  background: rgba(30, 111, 175, 0.1);
   border: 1px solid rgba(30, 111, 175, 0.18);
   border-radius: var(--radius-lg);
   padding: var(--space-5) var(--space-5) var(--space-4);
@@ -1207,7 +1187,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .appt-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.55); /* var(--color-text-heading) @ 55% */
+  background: rgba(15, 23, 42, 0.55);
   backdrop-filter: blur(3px);
   z-index: 9999;
   display: flex;
@@ -1403,8 +1383,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .appt-doc-dd__item:last-child { border-bottom: none; }
-.appt-doc-dd__item:hover { background: var(--appt-teal-light); }
-.appt-doc-dd__item.sel { background: var(--appt-teal-light); }
+.appt-doc-dd__item:hover { background: rgba(30, 111, 175, 0.1); }
+.appt-doc-dd__item.sel { background: rgba(30, 111, 175, 0.1); }
 
 .appt-doc-dd__empty {
   padding: var(--space-5);
@@ -1436,5 +1416,5 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .appt-btn--invoice:hover {
   border-color: var(--color-primary);
   color: var(--color-primary);
-  background: var(--appt-teal-light);
+  background: rgba(30, 111, 175, 0.1);
 }

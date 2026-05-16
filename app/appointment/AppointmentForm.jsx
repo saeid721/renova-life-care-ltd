@@ -7,7 +7,6 @@ import {
   INITIAL_FORM, validateStep1, validateStep2, validateStep3, validatePayment,
 } from "./appointmentData";
 import "@/styles/pages/appointment.css";
-import "@/styles/pages/invoice.css";
 
 /* ═══════════════════════════════════════════════════════════════
    INLINE SVG ICONS
@@ -197,24 +196,46 @@ function InvoicePrint({ data, bookingRef }) {
   const isOnlinePay = data.paymentMethod === "bkash" || data.paymentMethod === "card";
   const today       = new Date().toLocaleDateString("en-GB", { day:"2-digit", month:"short", year:"numeric" });
 
-  const handlePrint = () => {
+const handlePrint = () => {
     const el = document.getElementById("appt-invoice");
     if (!el) return;
     const w = window.open("", "_blank");
-    
-    // External CSS link + invoice HTML
     w.document.write(`<!DOCTYPE html><html><head><title>Invoice ${bookingRef}</title>
-      <link rel="stylesheet" href="/styles/pages/invoice.css" />
-      </head><body>
+      <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:'DM Sans',Arial,sans-serif;color:#0d1b2a;background:#fff;padding:32px}
+        .inv{max-width:680px;margin:0 auto}
+        .inv-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;padding-bottom:20px;border-bottom:2px solid #1E6FAF}
+        .inv-left{display:flex;flex-direction:column;gap:4px}
+        .inv-logo{font-size:1.4rem;font-weight:800;color:#1E6FAF}
+        .inv-logo span{display:block;font-size:.75rem;font-weight:400;color:#6b7b8d;margin-top:2px}
+        .inv-logo-img{display:block;max-width:220px;height:auto;object-fit:contain;margin-bottom:8px}
+        .inv-phoneAddress{font-size:.72rem;font-weight:400;color:#6b7b8d;line-height:1.5}
+        .inv-ref{text-align:right}
+        .inv-ref h2{font-size:1rem;color:#1E6FAF;font-weight:700;letter-spacing:.08em}
+        .inv-ref p{font-size:.8rem;color:#6b7b8d;margin-top:4px}
+        .inv-status{display:inline-block;background:#e0f4f1;color:#1E6FAF;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:50px;margin-top:6px;text-transform:uppercase;letter-spacing:.06em}
+        .inv-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:24px 0}
+        .inv-box{background:#f7f6f2;border-radius:10px;padding:16px}
+        .inv-box h4{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6b7b8d;margin-bottom:10px}
+        .inv-box p{font-size:.85rem;line-height:1.7;color:#3a4a5c}
+        .inv-box strong{color:#0d1b2a}
+        table{width:100%;border-collapse:collapse;margin:20px 0}
+        th{background:#1E6FAF;color:#fff;font-size:.78rem;font-weight:600;text-align:left;padding:10px 14px}
+        td{padding:10px 14px;font-size:.85rem;border-bottom:1px solid #e2ddd8}
+        tr:last-child td{border-bottom:none}
+        .amt{text-align:right}
+        .total-row td{font-weight:700;font-size:.95rem;background:#f0faf8;color:#1E6FAF}
+        .inv-foot{margin-top:28px;padding-top:16px;border-top:1px solid #e2ddd8;font-size:.75rem;color:#6b7b8d;text-align:center;line-height:1.8}
+        @media print{@page{size:A4 portrait;margin:18mm 16mm 18mm 16mm}html,body{width:210mm;margin:0;padding:0;background:#fff}.inv-logo-img{-webkit-print-color-adjust:exact;print-color-adjust:exact}.inv{max-width:100%;padding:0}body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+      </style></head><body>
       <div class="inv">
         <div class="inv-head">
-          <div class="inv-brand">
-            <img src="/images/logo2.png" alt="Renova Life Care Ltd." class="inv-logo-img" />
-            <div class="inv-contact">
-              <div class="inv-phoneAddress">House #12, Gulshan 2, Dhaka-1212, Bangladesh</div>
-              <div class="inv-phoneAddress">+880 1700-000000</div>
-              <div class="inv-phoneAddress">info@renovalifecare.com</div>
-            </div>
+          <div class="inv-left">
+            <img src="/images/logo2.png" alt="Renova Life Care Ltd." class="inv-logo-img" style="height:56px;width:auto" />
+            <div class="inv-phoneAddress">House #12, Gulshan 2, Dhaka-1212, Bangladesh</div>
+            <div class="inv-phoneAddress">+880 1700-000000</div>
+            <div class="inv-phoneAddress">info@renovalifecare.com</div>
           </div>
           <div class="inv-ref">
             <h2>INVOICE</h2>
@@ -249,11 +270,10 @@ function InvoicePrint({ data, bookingRef }) {
         </div>
       </div>
       </body></html>`);
-    
-    w.document.close();
-    w.focus();
-    setTimeout(() => { w.print(); }, 400);
-  };
+          w.document.close();
+          w.focus();
+          setTimeout(() => { w.print(); }, 400);
+      };
 
   return (
     <>
@@ -860,13 +880,15 @@ function Confirmation({ data, bookingRef, onReset }) {
     ["Payment",    data.paymentMethod === "bkash" ? "📱 bKash / Mobile Banking"
                  : data.paymentMethod === "card"  ? "💳 Credit / Debit Card"
                  : "💵 Cash on Visit"],
-    ["Amount",       "TK 500.00"],
+                 
+    ["Amount",       "BDT "+data.ConsultationFee],
   ];
 
   return (
     <div className="appt-confirm-wrap">
       <div className="appt-confirm-card appt-card">
         <div className="appt-card__body">
+          {/* <div className="appt-confirm-icon">✅</div> */}
           <h2 className="appt-confirm-title">Booking Confirmed!</h2>
           <p style={{ color: "var(--appt-ink3)"}}>Your reference number</p>
           <div className="appt-confirm-ref">{bookingRef}</div>
@@ -958,10 +980,17 @@ export default function AppointmentForm({
 }) {
   const searchParams = useSearchParams();
 
+  /*
+   * Lazy initial state — runs once on mount, reads ?doctor= URL param.
+   * Using useState lazy init (not useEffect) so data is correct on
+   * the very first render — avoids the flash/race condition.
+   */
   const [data, setData] = useState(() => {
+    /* On the server searchParams may be null; guard with optional chaining */
     const preDoctor = searchParams?.get?.("doctor") ?? null;
     if (!preDoctor) return INITIAL_FORM;
 
+    /* Find which department this doctor belongs to */
     const preDept = Object.keys(DOCTORS).find(deptId =>
       DOCTORS[deptId].some(d => d.id === preDoctor)
     );
@@ -970,6 +999,7 @@ export default function AppointmentForm({
     return { ...INITIAL_FORM, mode: "online", dept: preDept, doctor: preDoctor };
   });
 
+  /* If data was pre-filled, start on step 2 immediately */
   const [step,   setStep]   = useState(() => (data.dept && data.doctor ? 2 : 1));
   const [errors, setErrors] = useState({});
   const [busy,   setBusy]   = useState(false);
@@ -981,11 +1011,13 @@ export default function AppointmentForm({
     setMinDate(new Date().toISOString().split("T")[0]);
   }, []);
 
+  /* Field updater — also clears the matching error */
   const upd = (key, value) => {
     setData(prev => ({ ...prev, [key]: value }));
     if (errors[key]) setErrors(prev => ({ ...prev, [key]: null }));
   };
 
+  /* Advance / retreat step */
   const go = (direction) => {
     if (direction === 1) {
       const validators = { 1: validateStep1, 2: validateStep2, 3: validateStep3 };
@@ -997,6 +1029,7 @@ export default function AppointmentForm({
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  /* Final submit */
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errs = validateStep3(data);
@@ -1015,6 +1048,7 @@ export default function AppointmentForm({
     }
   };
 
+  /* Reset back to step 1 */
   const handleReset = () => {
     setDone(false);
     setStep(1);
@@ -1022,6 +1056,7 @@ export default function AppointmentForm({
     setErrors({});
   };
 
+  /* ── PROGRESS BAR ── */
   const STEPS = [
     { label: "Patient Info",  sub: "Personal details" },
     { label: "Schedule",      sub: "Date & doctor" },
@@ -1030,6 +1065,7 @@ export default function AppointmentForm({
 
   return (
     <>
+      {/* Sticky progress */}
       {!done && (
         <div className="appt-progress-wrap">
           <nav className="appt-progress" aria-label="Booking progress">
@@ -1054,13 +1090,19 @@ export default function AppointmentForm({
         </div>
       )}
 
+      {/* Main body */}
       <div className="appt-body">
         {done && (
           <Confirmation data={data} bookingRef={ref} onReset={handleReset} />
         )}
 
         {!done && step === 1 && (
-          <Step1 data={data} errors={errors} upd={upd} onNext={() => go(1)} />
+          <Step1
+            data={data}
+            errors={errors}
+            upd={upd}
+            onNext={() => go(1)}
+          />
         )}
 
         {!done && step === 2 && (
@@ -1085,7 +1127,10 @@ export default function AppointmentForm({
           />
         )}
 
-        {!done && <Sidebar phone={phone} email={email} />}
+        {/* Sidebar only during form steps */}
+        {!done && (
+          <Sidebar phone={phone} email={email} />
+        )}
       </div>
     </>
   );
